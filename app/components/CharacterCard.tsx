@@ -57,11 +57,11 @@ export function CharacterCard({ c, index }: { c: Character; index: number }) {
 
       <header className={s.head}>
         <span className={s.code}>{c.code}</span>
-        <span className={s.id}>{c.id}</span>
+        <span className={s.id}>{c.title}</span>
       </header>
 
       <div className={s.body}>
-        <h3 className={s.title}>{c.title}</h3>
+        <h3 className={s.title}>{c.id}</h3>
         <p className={s.desc}>{c.desc}</p>
       </div>
 
