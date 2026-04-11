@@ -219,13 +219,26 @@ export default function HomePage() {
             </div>
           </section>
 
+          {/* PHASE TRANSITION */}
+          <div className={s.phaseTransition} aria-hidden>
+            <span className={s.phaseComplete}>FASE_01 · COMPLETA</span>
+            <div className={s.phaseBar}><div className={s.phaseBarFill} /></div>
+            <span className={s.phaseNext}>▶ INICIANDO · SIMULACIÓN</span>
+          </div>
+
           {/* MODULE 02 — CHARACTER SELECT */}
           <section className={s.select} aria-labelledby="m02">
-            <p className={s.selectIntro}>
-              Ya con esto tienes lo más importante, pero como no toda la
-              educación es igual, vamos a jugar un poco: Selecciona el personaje
-              que más se parece a ti (que refleje mejor lo que buscas).
-            </p>
+            <Typewriter
+              className={s.selectIntro}
+              speed={12}
+              segments={[
+                { text: "Ya con esto tienes " },
+                { text: "lo más importante", color: "var(--neon-cyan)" },
+                { text: ", pero como no toda la educación es igual," },
+                { text: " vamos a jugar", color: "var(--neon-orange)" },
+                { text: " un poco: Selecciona el personaje que más se parece a ti." },
+              ]}
+            />
             <h2 id="m02" className={s.selectTitle}>
               <small>[ iniciando simulación ]</small>
               Selecciona tu personaje
