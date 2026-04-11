@@ -113,7 +113,7 @@ export default function HomePage() {
                 <svg viewBox="0 0 24 24" aria-hidden>
                   <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
                 </svg>
-                Logro desbloqueado · <strong>iSpring 2025 — Ganador</strong>
+                Ganador del Concurso Internacional de Creación de Cursos iSpring 2025
               </span>
 
               <h1 className={s.h1}>
