@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 import s from "./page.module.css";
 import {
   CustomCursor,
@@ -109,48 +110,63 @@ export default function HomePage() {
             </div>
 
             <div className={s.heroInner}>
-              <span className={s.achievement}>
-                <svg viewBox="0 0 24 24" aria-hidden>
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
-                Ganador del Concurso Internacional de Creación de Cursos iSpring 2025
-              </span>
-
-              <h1 className={s.h1}>
-                <span>
-                  <ScrambleText text="OLIVER" duration={1100} delay={200} />
+              <div className={s.heroText}>
+                <span className={s.achievement}>
+                  <svg viewBox="0 0 24 24" aria-hidden>
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  Ganador del Concurso Internacional de Creación de Cursos iSpring 2025
                 </span>
-                <span>
-                  <GlitchText className="">BARONA</GlitchText>
-                </span>
-              </h1>
 
-              <p className={s.role}>Diseñador Instruccional Sr.</p>
+                <h1 className={s.h1}>
+                  <span>
+                    <ScrambleText text="OLIVER" duration={1100} delay={200} />
+                  </span>
+                  <span>
+                    <GlitchText className="">BARONA</GlitchText>
+                  </span>
+                </h1>
 
-              <dl className={s.heroMeta}>
-                <div>
-                  <dt>Experiencia</dt>
-                  <dd>
-                    <Counter to={15} duration={1800} style={{ minWidth: "2ch", display: "inline-block" }} />+ años
-                  </dd>
-                </div>
-                <div>
-                  <dt>Proyectos</dt>
-                  <dd>
-                    <Counter to={120} duration={2200} style={{ minWidth: "3ch", display: "inline-block" }} />+
-                  </dd>
-                </div>
-                <div>
-                  <dt>Audiencia impactada</dt>
-                  <dd>
-                    <Counter to={3} duration={1800} style={{ minWidth: "1ch", display: "inline-block" }} />M+
-                  </dd>
-                </div>
-                <div>
-                  <dt>Reconocimientos</dt>
-                  <dd>★ iSpring 2025</dd>
-                </div>
-              </dl>
+                <p className={s.role}>Diseñador Instruccional Sr.</p>
+
+                <dl className={s.heroMeta}>
+                  <div>
+                    <dt>Experiencia</dt>
+                    <dd>
+                      <Counter to={15} duration={1800} style={{ minWidth: "2ch", display: "inline-block" }} />+ años
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Proyectos</dt>
+                    <dd>
+                      <Counter to={120} duration={2200} style={{ minWidth: "3ch", display: "inline-block" }} />+
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Audiencia impactada</dt>
+                    <dd>
+                      <Counter to={3} duration={1800} style={{ minWidth: "1ch", display: "inline-block" }} />M+
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>Reconocimientos</dt>
+                    <dd>★ iSpring 2025</dd>
+                  </div>
+                </dl>
+              </div>
+
+              <div className={s.heroImageWrap} aria-hidden>
+                <Image
+                  src="/oliver-hero.jpg"
+                  alt="Oliver Barona — Diseñador Instruccional Sr."
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 45vw"
+                  className={s.heroImage}
+                  style={{ objectFit: "cover", objectPosition: "center top" }}
+                />
+                <div className={s.heroImageGlow} />
+              </div>
             </div>
           </header>
 

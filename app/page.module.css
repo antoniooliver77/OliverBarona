@@ -157,7 +157,53 @@
 .heroInner {
   position: relative;
   z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
   text-align: center;
+}
+@media (min-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr 1fr;
+    text-align: left;
+    gap: 4rem;
+  }
+}
+
+/* ---- hero text column ---- */
+.heroText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .heroText { align-items: flex-start; }
+}
+
+/* ---- hero image column ---- */
+.heroImageWrap {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 560px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  box-shadow:
+    0 0 40px -10px rgba(0, 240, 255, 0.4),
+    inset 0 0 60px -20px rgba(0, 240, 255, 0.1);
+  order: -1; /* imagen arriba en móvil */
+}
+@media (min-width: 900px) {
+  .heroImageWrap { order: 0; max-height: none; }
+}
+.heroImage { display: block; }
+.heroImageGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, rgba(5, 5, 9, 0.55) 0%, transparent 35%),
+    linear-gradient(to top, rgba(5, 5, 9, 0.6) 0%, transparent 30%);
 }
 
 .achievement {
@@ -217,6 +263,9 @@
   text-transform: uppercase;
   color: var(--neon-cyan);
 }
+@media (min-width: 900px) {
+  .role { margin-left: 0; }
+}
 .role::before,
 .role::after {
   content: "";
@@ -236,6 +285,9 @@
   font-size: 0.72rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+}
+@media (min-width: 900px) {
+  .heroMeta { justify-content: flex-start; }
 }
 .heroMeta div {
   display: flex;
