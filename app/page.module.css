@@ -336,7 +336,6 @@
   gap: 1.5rem;
   grid-template-columns: 1fr;
   margin-top: 0;
-  max-width: 680px;
 }
 
 .defCard {
@@ -390,6 +389,8 @@
 }
 .accentOrange { color: var(--neon-orange); font-weight: 700; }
 .accentPurple { color: var(--neon-purple); font-weight: 700; }
+.accentCyan { color: var(--neon-cyan); font-weight: 700; text-shadow: 0 0 12px rgba(0, 240, 255, 0.5); }
+.accentOrangeGlow { color: var(--neon-orange); font-weight: 700; text-shadow: 0 0 14px rgba(255, 102, 0, 0.5); }
 .defText strong { color: #fff; }
 
 /* ============ CHARACTER SELECT ============ */

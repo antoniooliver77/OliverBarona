@@ -204,13 +204,15 @@ export default function HomePage() {
                   {"> ¿qué es el diseño instruccional?"}
                 </p>
                 <p className={s.defText}>
-                  Pues es "eso" que une pedagogía, tecnología, experiencia,
+                  Pues es{" "}
+                  <strong className={s.accentCyan}>"eso"</strong>{" "}
+                  que une pedagogía, tecnología, experiencia,
                   pensamiento crítico y dos kilos de{" "}
-                  <strong className={s.accentOrange}>sentido común</strong>,
+                  <strong className={s.accentOrangeGlow}>sentido común</strong>,
                   para lograr que los
                   estudiantes/hijos/trabajadores/
-                  <strong className={s.accentPurple}>tumisma</strong>/
-                  <strong className={s.accentPurple}>tumismo</strong> en verdad
+                  <strong className={s.accentOrange}>tú misma</strong>/
+                  <strong className={s.accentPurple}>tú mismo</strong> en verdad
                   aprendan.
                 </p>
               </article>
