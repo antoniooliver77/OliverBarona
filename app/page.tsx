@@ -166,8 +166,24 @@ export default function HomePage() {
 
             <Typewriter
               className={s.lede}
-              text="Vamos a ponernos de acuerdo: Tú estás buscando algún tipo de capacitación, la que sea: en línea, presencial, para tus hijos, tus alumnos, tus trabajadores, tu público."
               speed={14}
+              segments={[
+                { text: "Vamos a ponernos de acuerdo: Tú estás buscando algún tipo de " },
+                { text: "capacitación", color: "var(--neon-orange)" },
+                { text: ", la que sea: " },
+                { text: "en línea", color: "var(--neon-cyan)" },
+                { text: ", " },
+                { text: "presencial", color: "var(--neon-cyan)" },
+                { text: ", para tus " },
+                { text: "hijos", color: "var(--neon-purple)" },
+                { text: ", tus " },
+                { text: "alumnos", color: "var(--neon-purple)" },
+                { text: ", tus " },
+                { text: "trabajadores", color: "var(--neon-orange)" },
+                { text: ", tu " },
+                { text: "público", color: "var(--neon-orange)" },
+                { text: "." },
+              ]}
             />
 
             <h2 className={s.statement}>

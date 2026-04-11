@@ -282,35 +282,69 @@ export function GlitchText({
 
 /* ==========================================================================
    TYPEWRITER — escribe al entrar al viewport
+   Acepta `segments` para colorear palabras durante la animación.
    ========================================================================== */
+type Segment = { text: string; color?: string };
+
+// Aplana segmentos en chars con metadatos de color
+function buildChars(segments: Segment[]) {
+  return segments.flatMap((seg) =>
+    seg.text.split("").map((char) => ({ char, color: seg.color }))
+  );
+}
+
 export function Typewriter({
   text,
+  segments,
   className,
   speed = 18,
 }: {
-  text: string;
+  text?: string;
+  segments?: Segment[];
   className?: string;
   speed?: number;
 }) {
+  const chars = segments ? buildChars(segments) : (text ?? "").split("").map((c) => ({ char: c, color: undefined }));
+  const fullText = chars.map((c) => c.char).join("");
+
   const ref = useRef<HTMLParagraphElement>(null);
   const inView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
-  const [out, setOut] = useState("");
+  const [count, setCount] = useState(0);
 
   useEffect(() => {
     if (!inView) return;
     let i = 0;
     const id = setInterval(() => {
       i++;
-      setOut(text.slice(0, i));
-      if (i >= text.length) clearInterval(id);
+      setCount(i);
+      if (i >= chars.length) clearInterval(id);
     }, speed);
     return () => clearInterval(id);
-  }, [inView, text, speed]);
+  }, [inView, chars.length, speed]);
+
+  const visible = chars.slice(0, count);
+
+  // Agrupa chars consecutivos del mismo color para minimizar spans
+  const grouped: { text: string; color?: string }[] = [];
+  for (const c of visible) {
+    const last = grouped[grouped.length - 1];
+    if (last && last.color === c.color) {
+      last.text += c.char;
+    } else {
+      grouped.push({ text: c.char, color: c.color });
+    }
+  }
 
   return (
-    <p ref={ref} className={className} aria-label={text}>
-      {out}
-      {inView && out.length < text.length && (
+    <p ref={ref} className={className} aria-label={fullText}>
+      {grouped.map((g, i) =>
+        g.color ? (
+          <span key={i} style={{ color: g.color, fontWeight: 600 }}>{g.text}</span>
+        ) : (
+          <React.Fragment key={i}>{g.text}</React.Fragment>
+        )
+      )}
+      {inView && count < chars.length && (
         <span
           style={{
             display: "inline-block",
