@@ -320,14 +320,23 @@
   text-shadow: 0 0 80px rgba(0, 240, 255, 0.4);
 }
 
+.defProse {
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: 1.6;
+  color: var(--fg);
+  margin: 0 0 2rem;
+  max-width: 60ch;
+  padding-left: 1.25rem;
+  border-left: 3px solid var(--neon-orange);
+}
+.defProse strong { color: #fff; }
+
 .defs {
   display: grid;
   gap: 1.5rem;
   grid-template-columns: 1fr;
-  margin-top: 2rem;
-}
-@media (min-width: 860px) {
-  .defs { grid-template-columns: 1fr 1fr; }
+  margin-top: 0;
+  max-width: 680px;
 }
 
 .defCard {

@@ -190,19 +190,15 @@ export default function HomePage() {
               En fin, que buscas que <span>alguien aprenda algo.</span>
             </h2>
 
-            <div className={s.defs}>
-              <article className={`${s.defCard} ${s.orange}`}>
-                <p className={s.defLabel}>{"> definición.01"}</p>
-                <p className={s.defText}>
-                  Para que esto suceda, hay que crearla y para que sea útil
-                  (para que en verdad alguien aprenda), esa formación necesita{" "}
-                  <strong className={s.accentOrange}>
-                    Diseño Instruccional
-                  </strong>
-                  .
-                </p>
-              </article>
+            <p className={s.defProse}>
+              Para que esto suceda, hay que crearla y para que sea{" "}
+              <strong>útil</strong> (para que{" "}
+              <span className={s.accentOrange}>en verdad alguien aprenda</span>
+              ), esa formación necesita{" "}
+              <strong className={s.accentOrange}>Diseño Instruccional</strong>.
+            </p>
 
+            <div className={s.defs}>
               <article className={`${s.defCard} ${s.cyan}`}>
                 <p className={s.defLabel}>
                   {"> ¿qué es el diseño instruccional?"}
