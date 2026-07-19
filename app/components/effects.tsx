@@ -185,7 +185,7 @@ export function ScrollProgress() {
           textShadow: "0 0 8px rgba(67,198,212,0.5)",
         }}
       >
-        ARCO · {String(val).padStart(3, "0")}%
+        LMS_OS · {String(val).padStart(3, "0")}%
       </div>
     </div>
   );

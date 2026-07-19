@@ -90,14 +90,14 @@ export default function HomePage() {
           <div className={s.hud} role="presentation">
             <div className={s.hudLeft}>
               <span className={s.dot} />
-              <span className={s.brand}>OLIVER BARONA</span>
+              <span className={s.brand}>LMS_OS v2.5</span>
               <span className={s.hudPipe}>//</span>
-              <span>arco: diseño_instruccional</span>
+              <span>módulo: oliver_barona.exe</span>
             </div>
             <div className={s.hudRight}>
-              <span>canal: mx-01</span>
+              <span>node: mx-01</span>
               <span className={s.hudPipe}>//</span>
-              <span>señal: al aire</span>
+              <span>status: online</span>
             </div>
           </div>
 
@@ -170,12 +170,12 @@ export default function HomePage() {
             </div>
           </header>
 
-          {/* MISIÓN 01 — PLANTEAMIENTO */}
+          {/* MODULE 01 — MANIFIESTO */}
           <section className={s.module} aria-labelledby="m01">
             <div className={s.moduleHeader}>
-              <span className={s.moduleNum}>MISIÓN 01</span>
+              <span className={s.moduleNum}>MOD_01</span>
               <span id="m01" className={s.moduleTitle}>
-                planteamiento · <strong>el problema</strong>
+                lección · <strong>el problema</strong>
               </span>
               <span className={s.moduleLine} />
             </div>
@@ -237,12 +237,12 @@ export default function HomePage() {
 
           {/* PHASE TRANSITION */}
           <div className={s.phaseTransition} aria-hidden>
-            <span className={s.phaseComplete}>MISIÓN 01 · COMPLETA</span>
+            <span className={s.phaseComplete}>FASE_01 · COMPLETA</span>
             <div className={s.phaseBar}><div className={s.phaseBarFill} /></div>
-            <span className={s.phaseNext}>▶ SIGUIENTE · LA DECISIÓN</span>
+            <span className={s.phaseNext}>▶ INICIANDO · SIMULACIÓN</span>
           </div>
 
-          {/* MISIÓN 02 — LA DECISIÓN (character select) */}
+          {/* MODULE 02 — CHARACTER SELECT */}
           <section className={s.select} aria-labelledby="m02">
             <Typewriter
               className={s.selectIntro}
@@ -256,7 +256,7 @@ export default function HomePage() {
               ]}
             />
             <h2 id="m02" className={s.selectTitle}>
-              <small>[ misión 02 · la decisión ]</small>
+              <small>[ iniciando simulación ]</small>
               Selecciona tu personaje
             </h2>
 
@@ -270,12 +270,12 @@ export default function HomePage() {
             </nav>
           </section>
 
-          {/* MISIÓN 03 — RESOLUCIÓN */}
+          {/* MODULE 03 — REVIEW */}
           <section className={s.review} aria-labelledby="m03">
             <div className={s.moduleHeader}>
-              <span className={s.moduleNum}>MISIÓN 03</span>
+              <span className={s.moduleNum}>MOD_03</span>
               <span id="m03" className={s.moduleTitle}>
-                resolución · <strong>prueba social</strong>
+                lección · <strong>prueba social</strong>
               </span>
               <span className={s.moduleLine} />
             </div>
@@ -306,7 +306,7 @@ export default function HomePage() {
               </div>
 
               <a href="/portafolio" className={s.cta}>
-                Iniciar misión · ver portafolio
+                Ejecutar protocolo · ver portafolio
               </a>
             </div>
           </section>
@@ -337,7 +337,7 @@ export default function HomePage() {
 
           <footer className={s.footer}>
             © {new Date().getFullYear()} Oliver Barona ·{" "}
-            <span>hecho con código</span> · sistema narrativo v1.0
+            <span>hecho con código</span> · LMS_OS v2.5
           </footer>
         </div>
       </main>
