@@ -5,53 +5,85 @@ import { PageShell } from "../components/PageShell";
 import { ElUltimoCurso } from "../components/ElUltimoCurso";
 
 export const metadata: Metadata = {
-  title: "Capacitación Online para empresas",
+  title: "Capacitación empresarial que tu equipo sí termina",
   description:
-    "Capacitación empresarial con diseño instruccional: diagnóstico, pensamiento crítico, storytelling, pedagogía avanzada y neuroeducación. Descúbrelo jugando.",
+    "Capacitación para empresas con diseño instruccional profesional: cursos e-learning a la medida, academias internas y onboarding — con diagnóstico real y evidencia de aprendizaje. Ganador iSpring 2025.",
   alternates: { canonical: "/capacitacion-empresarial" },
+};
+
+const faqs = [
+  {
+    q: "¿Por qué la capacitación que compramos antes no funcionó?",
+    a: "Porque la mayoría de los cursos corporativos se diseñan para cumplir un requisito, no para que alguien aprenda: contenido genérico, cero conexión con tu operación y evaluaciones que se aprueban sin pensar. Tu equipo no es el problema — el diseño lo es. La capacitación funciona cuando parte de un diagnóstico de TU empresa y se construye con pedagogía real.",
+  },
+  {
+    q: "¿Qué tipo de capacitación empresarial haces?",
+    a: "Cursos e-learning a la medida de tu operación, academias internas que organizan el conocimiento de tu empresa en rutas de aprendizaje, y programas de onboarding para que los nuevos entiendan su puesto rápido. Todo construido con diagnóstico, pensamiento crítico, storytelling, pedagogía avanzada y neuroeducación.",
+  },
+  {
+    q: "¿Cómo mides que de verdad aprendieron?",
+    a: "Con evaluación auténtica: evidencia de desempeño real, no exámenes de trivia que se aprueban copiando. Desde el diseño defino qué conducta debe cambiar en el trabajo, y al final te entrego indicadores claros: quién aprendió qué, y qué cambió en la operación gracias a eso.",
+  },
+  {
+    q: "¿Cuánto cuesta un curso a la medida para mi empresa?",
+    a: "Depende de lo que tu equipo necesita aprender — y eso se descubre con el diagnóstico, no con un catálogo de precios. Cuéntame tu necesidad y te respondo con una propuesta concreta y honesta: alcance, tiempos y costo sin letra chica. Y si no te conviene contratarme, también te lo digo.",
+  },
+];
+
+const faqJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
 };
 
 export default function CapacitacionEmpresarialPage() {
   return (
     <PageShell modulo="capacitacion_empresarial.exe" accent="var(--neon-orange)" accentSoft="rgba(255, 106, 0, 0.12)">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+
       <header className={sv.head}>
         <span className={sv.code}>CH_01 · Líder corporativo</span>
         <h1 className={sv.title}>
-          Capacitación que tu equipo <span>sí termina.</span>
+          Capacitación empresarial que tu equipo <span>sí termina.</span>
         </h1>
         <p className={sv.lede}>
           Diriges una empresa y ya lo viviste: compraste cursos, tu gente les dio
           clic a todo hasta el final y <strong>nadie aprendió nada</strong>. El
           problema no es tu equipo. Es que ese curso no fue diseñado para que
-          alguien aprendiera — fue diseñado para cumplir.
+          alguien aprendiera — fue diseñado para cumplir. Yo hago lo contrario:{" "}
+          <strong>cursos e-learning a la medida, academias internas y
+          onboarding</strong> construidos con diseño instruccional profesional,
+          para que lo aprendido se use el lunes y se note en la operación.
         </p>
       </header>
 
-      <section className={sv.section} aria-labelledby="arsenal">
+      {/* ============ LA PROPUESTA, EXPLICADA ============ */}
+      <section className={sv.section} aria-labelledby="propuesta">
         <div className={home.moduleHeader}>
           <span className={home.moduleNum}>MOD_01</span>
-          <span id="arsenal" className={home.moduleTitle}>
-            lección jugable · <strong>el arsenal</strong>
+          <span className={home.moduleTitle}>
+            lección · <strong>la propuesta</strong>
           </span>
           <span className={home.moduleLine} />
         </div>
+        <h2 id="propuesta" className={sv.h2}>
+          Qué hago por tu empresa: aprendizaje <span>que produce</span>
+        </h2>
         <p className={sv.prose}>
-          Podría explicarte mi método con un diagrama de flujo y viñetas. Pero
-          soy diseñador instruccional: <em>sé que aprendes más jugando</em>. Así
-          que mejor te lo demuestro con un jefe final. Derrota al Aburrimiento
-          Corporativo — y en el camino conocerás mis 5 armas:
+          Aclaremos qué NO es esto: no es un catálogo de cursos genéricos, ni un
+          PDF con voz en off, ni horas de video que tu gente reproduce en
+          silencio mientras contesta correos. Es{" "}
+          <em>capacitación diseñada desde tu operación</em>, por un diseñador
+          instruccional con 15 años de experiencia y un premio internacional
+          (iSpring 2025). Esto es lo que obtienes:
         </p>
-        <ElUltimoCurso />
-      </section>
-
-      <section className={sv.section} aria-labelledby="entregables">
-        <div className={home.moduleHeader}>
-          <span className={home.moduleNum}>MOD_02</span>
-          <span id="entregables" className={home.moduleTitle}>
-            lección · <strong>qué obtienes</strong>
-          </span>
-          <span className={home.moduleLine} />
-        </div>
         <ul className={sv.list}>
           <li>
             <span>
@@ -69,7 +101,7 @@ export default function CapacitacionEmpresarialPage() {
           <li>
             <span>
               <strong>Experiencias que la gente termina</strong> — como el juego
-              que acabas de jugar, pero sobre lo que tu operación necesita.
+              que está aquí abajo, pero sobre lo que tu operación necesita.
             </span>
           </li>
           <li>
@@ -79,6 +111,49 @@ export default function CapacitacionEmpresarialPage() {
             </span>
           </li>
         </ul>
+      </section>
+
+      {/* ============ EL JUEGO ============ */}
+      <section className={sv.section} aria-labelledby="arsenal">
+        <div className={home.moduleHeader}>
+          <span className={home.moduleNum}>MOD_02</span>
+          <span className={home.moduleTitle}>
+            lección jugable · <strong>el arsenal</strong>
+          </span>
+          <span className={home.moduleLine} />
+        </div>
+        <h2 id="arsenal" className={sv.h2}>
+          Conoce mi método <span>jugando</span>: derrota al aburrimiento
+        </h2>
+        <p className={sv.prose}>
+          Podría explicarte mi método con un diagrama de flujo y viñetas. Pero
+          soy diseñador instruccional: <em>sé que aprendes más jugando</em>. Así
+          que mejor te lo demuestro con un jefe final. Derrota al Aburrimiento
+          Corporativo — y en el camino conocerás mis 5 armas:
+        </p>
+        <ElUltimoCurso />
+      </section>
+
+      {/* ============ FAQ ============ */}
+      <section className={sv.section} aria-labelledby="preguntas">
+        <div className={home.moduleHeader}>
+          <span className={home.moduleNum}>MOD_03</span>
+          <span className={home.moduleTitle}>
+            lección · <strong>las dudas</strong>
+          </span>
+          <span className={home.moduleLine} />
+        </div>
+        <h2 id="preguntas" className={sv.h2}>
+          Preguntas que me hacen <span>los líderes</span>
+        </h2>
+        <div className={sv.faq}>
+          {faqs.map((f) => (
+            <details key={f.q}>
+              <summary>{f.q}</summary>
+              <p className={sv.faqBody}>{f.a}</p>
+            </details>
+          ))}
+        </div>
       </section>
 
       <div className={sv.ctaPanel}>
