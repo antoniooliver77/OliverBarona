@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
-import { MapaRuta } from "../components/MapaRuta";
+import { BatallaAtencion } from "../components/BatallaAtencion";
 
 export const metadata: Metadata = {
   title: "Academia Digital para instituciones educativas",
@@ -10,25 +10,6 @@ export const metadata: Metadata = {
     "Innovación académica con calidad pedagógica: academias digitales, contenidos que compiten contra la distracción y formación docente. Vanguardia sin sacrificar educación.",
   alternates: { canonical: "/innovacion-academica" },
 };
-
-const pasos = [
-  {
-    titulo: "Auditoría académica",
-    desc: "Qué está funcionando en tu institución y qué solo parece moderno pero no enseña.",
-  },
-  {
-    titulo: "Modelo pedagógico digital",
-    desc: "Un diseño que une tu proyecto educativo con la tecnología correcta — no la de moda.",
-  },
-  {
-    titulo: "Producción de contenidos",
-    desc: "Materiales y experiencias que compiten (y ganan) contra la distracción.",
-  },
-  {
-    titulo: "Formación docente",
-    desc: "Tus maestros dominan las herramientas. El cambio se queda, no se va conmigo.",
-  },
-];
 
 export default function InnovacionAcademicaPage() {
   return (
@@ -47,21 +28,21 @@ export default function InnovacionAcademicaPage() {
         </p>
       </header>
 
-      <section className={sv.section} aria-labelledby="metodo">
+      <section className={sv.section} aria-labelledby="batalla">
         <div className={home.moduleHeader}>
           <span className={home.moduleNum}>MOD_01</span>
-          <span id="metodo" className={home.moduleTitle}>
-            lección · <strong>el método</strong>
+          <span id="batalla" className={home.moduleTitle}>
+            lección jugable · <strong>la batalla por la atención</strong>
           </span>
           <span className={home.moduleLine} />
         </div>
         <p className={sv.prose}>
-          Quince años trabajando con instituciones y editoriales — UNAM,
-          Santillana, SM, Pearson — me enseñaron algo simple:{" "}
-          <em>la innovación sin pedagogía es decoración</em>. Por eso la ruta
-          empieza por lo académico, no por el software:
+          Podría darte un discurso sobre innovación educativa. Prefiero que la
+          vivas: defiende un salón real del scroll infinito y mira cómo{" "}
+          <em>cada solución transforma el aula en vivo</em>. Spoiler: prohibir
+          celulares no va a funcionar.
         </p>
-        <MapaRuta pasos={pasos} />
+        <BatallaAtencion />
       </section>
 
       <section className={sv.section} aria-labelledby="entregables">
@@ -75,26 +56,26 @@ export default function InnovacionAcademicaPage() {
         <ul className={sv.list}>
           <li>
             <span>
-              <strong>Tu academia digital</strong>: cursos y programas en línea con
-              el sello de tu institución y calidad pedagógica real.
+              <strong>Cursos</strong> que compiten contra la distracción y ganan:
+              storytelling, interacción y ritmo — con el sello de tu institución.
             </span>
           </li>
           <li>
             <span>
-              <strong>Contenidos educativos</strong> diseñados para aprender — con
-              storytelling, interacción y evaluación bien pensada.
+              <strong>Metodologías activas</strong>: modelos pedagógicos que
+              reorganizan cómo se enseña, no solo con qué software.
             </span>
           </li>
           <li>
             <span>
-              <strong>Docentes preparados</strong>: acompañamiento y formación para
-              que tu equipo se apropie del modelo.
+              <strong>Evaluaciones auténticas</strong> que miden desempeño real —
+              no memoria de trivia — y despiertan a los estudiantes.
             </span>
           </li>
           <li>
             <span>
-              <strong>Diferenciación honesta</strong>: una oferta educativa que
-              puedes presumir porque sí funciona.
+              <strong>Academias digitales completas</strong>: todo el sistema
+              integrado, con tus docentes formados para sostenerlo.
             </span>
           </li>
         </ul>
