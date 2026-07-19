@@ -17,6 +17,11 @@ const nextConfig = {
     ];
   },
   async headers() {
+    // En desarrollo, sin headers de caché: rompen el hot-reload
+    // (sirven chunks viejos). Solo aplican en producción.
+    if (process.env.NODE_ENV !== "production") {
+      return [];
+    }
     return [
       {
         source: "/:path*",

@@ -1,0 +1,277 @@
+/* ============================================================
+   EL ÚLTIMO CURSO — boss fight
+   ============================================================ */
+
+.wrap {
+  margin-top: 2.5rem;
+  border: 1px solid rgba(67, 198, 212, 0.35);
+  border-radius: var(--di-radius);
+  background: var(--bg);
+  box-shadow: 0 0 50px -15px rgba(67, 198, 212, 0.25);
+  overflow: hidden;
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  background: rgba(18, 35, 58, 0.4);
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+.barTitle { color: var(--fg); font-weight: 700; }
+.barRight { color: var(--neon-cyan); }
+
+.stage {
+  position: relative;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+/* ---- overlays ---- */
+.overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: clamp(1.25rem, 4vw, 2.5rem);
+  text-align: center;
+  background: rgba(6, 10, 14, 0.88);
+  backdrop-filter: blur(3px);
+}
+
+.kicker {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--neon-orange);
+  margin: 0;
+}
+
+.big {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.9rem, 5vw, 3.2rem);
+  letter-spacing: 0.04em;
+  color: var(--fg);
+  margin: 0;
+  text-shadow: 0 0 40px rgba(255, 106, 0, 0.3);
+}
+
+.bossSays {
+  max-width: 52ch;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--fg-mid);
+  border: 1px solid rgba(255, 106, 0, 0.4);
+  border-radius: var(--di-radius-sm);
+  background: rgba(255, 106, 0, 0.06);
+  padding: 1rem 1.3rem;
+  margin: 0;
+}
+.bossSays strong { color: var(--neon-orange); }
+.bossName {
+  display: block;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  color: var(--neon-orange);
+  margin-bottom: 0.4rem;
+}
+
+.instrucciones {
+  max-width: 52ch;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+  margin: 0;
+}
+.instrucciones strong { color: var(--neon-cyan); }
+
+.start {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 1.05rem 2.2rem;
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--di-radius-sm);
+  color: var(--neon-cyan);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  background: rgba(67, 198, 212, 0.06);
+  transition: all 0.3s;
+  animation: coinBlink 1.6s step-end infinite;
+}
+.start:hover {
+  background: var(--neon-cyan);
+  color: var(--bg);
+  box-shadow: 0 0 30px -6px var(--neon-cyan);
+  animation: none;
+}
+@keyframes coinBlink {
+  50% { border-color: rgba(67, 198, 212, 0.25); }
+}
+
+/* ---- anuncio de arma: GIGANTE ---- */
+.announce {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 1.5rem;
+  text-align: center;
+  background: rgba(6, 10, 14, 0.82);
+  pointer-events: none;
+  animation: announceIn 0.35s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+@keyframes announceIn {
+  0% { opacity: 0; transform: scale(0.7); }
+  100% { opacity: 1; transform: scale(1); }
+}
+.announceGet {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin: 0;
+}
+.announceName {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 6.5vw, 4rem);
+  line-height: 1;
+  letter-spacing: 0.05em;
+  color: var(--arma, var(--neon-cyan));
+  text-shadow: 0 0 50px var(--arma, var(--neon-cyan));
+  margin: 0;
+  animation: armaPulse 0.5s ease-in-out 2;
+}
+@keyframes armaPulse {
+  50% { transform: scale(1.06); }
+}
+.announceGrito {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 2.4vw, 1.5rem);
+  color: var(--fg);
+  margin: 0.4rem 0 0;
+}
+.announceEfecto {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--fg-mid);
+  max-width: 46ch;
+  margin: 0.4rem 0 0;
+}
+
+/* ---- taunt del jefe (toast) ---- */
+.taunt {
+  position: absolute;
+  top: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 90%;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid rgba(255, 106, 0, 0.5);
+  border-radius: var(--di-radius-sm);
+  background: rgba(6, 10, 14, 0.9);
+  color: var(--neon-orange);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  pointer-events: none;
+  animation: tauntIn 0.25s ease-out;
+}
+@keyframes tauntIn {
+  from { opacity: 0; transform: translate(-50%, -8px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ---- victoria ---- */
+.rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 62px;
+  border: 3px solid var(--neon-orange);
+  border-radius: var(--di-radius-sm);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+  color: var(--neon-orange);
+  box-shadow: 0 0 28px rgba(255, 106, 0, 0.35);
+}
+.rangoTexto {
+  font-size: 0.95rem;
+  color: var(--fg-dim);
+  margin: 0;
+}
+.quote {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.4vw, 1.5rem);
+  line-height: 1.5;
+  color: var(--fg);
+  max-width: 44ch;
+  margin: 0;
+}
+.quote em {
+  font-style: normal;
+  color: var(--neon-orange);
+}
+.winActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.winActions :global(a) { margin-top: 0 !important; }
+.replay {
+  padding: 0.9rem 1.6rem;
+  border: 1px solid var(--neon-cyan);
+  border-radius: var(--di-radius-sm);
+  color: var(--neon-cyan);
+  background: rgba(67, 198, 212, 0.06);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+.replay:hover {
+  background: var(--neon-cyan);
+  color: var(--bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .start, .announce, .announceName, .taunt { animation: none !important; }
+}

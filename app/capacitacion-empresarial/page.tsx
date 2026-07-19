@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
-import { JuegoCapacitacion } from "../components/JuegoCapacitacion";
+import { ElUltimoCurso } from "../components/ElUltimoCurso";
 
 export const metadata: Metadata = {
   title: "Capacitación Online para empresas",
@@ -38,10 +38,10 @@ export default function CapacitacionEmpresarialPage() {
         <p className={sv.prose}>
           Podría explicarte mi método con un diagrama de flujo y viñetas. Pero
           soy diseñador instruccional: <em>sé que aprendes más jugando</em>. Así
-          que mejor te lo demuestro. Derrota las 5 amenazas que hoy atacan la
-          capacitación de tu empresa:
+          que mejor te lo demuestro con un jefe final. Derrota al Aburrimiento
+          Corporativo — y en el camino conocerás mis 5 armas:
         </p>
-        <JuegoCapacitacion />
+        <ElUltimoCurso />
       </section>
 
       <section className={sv.section} aria-labelledby="entregables">
