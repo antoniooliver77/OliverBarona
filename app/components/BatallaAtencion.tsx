@@ -103,7 +103,7 @@ type G = {
 /* filas 4x2 (antes de metodología) */
 const posFilas = (i: number) => ({
   x: 130 + (i % 4) * 140,
-  y: 196 + Math.floor(i / 4) * 86,
+  y: 208 + Math.floor(i / 4) * 88,
 });
 /* círculos de equipo (después de metodología) */
 const posCirculos = (i: number) => {
@@ -111,7 +111,7 @@ const posCirculos = (i: number) => {
   const ang = ((i % 4) / 4) * Math.PI * 2 + Math.PI / 4;
   return {
     x: (grupo === 0 ? 230 : 530) + Math.cos(ang) * 60,
-    y: 238 + Math.sin(ang) * 44,
+    y: 250 + Math.sin(ang) * 46,
   };
 };
 
