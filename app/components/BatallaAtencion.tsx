@@ -670,17 +670,55 @@ export function BatallaAtencion() {
         </span>
       </div>
 
-      <div className={s.stage}>
-        <canvas
-          ref={canvasRef}
-          className={s.canvas}
-          style={{ aspectRatio: `${W} / ${H}` }}
-          aria-label="Videojuego: defiende la atención de tu salón de los videos verticales activando las soluciones de diseño instruccional"
-        />
+      <div className={s.body}>
+        <div className={s.stage}>
+          <canvas
+            ref={canvasRef}
+            className={s.canvas}
+            style={{ aspectRatio: `${W} / ${H}` }}
+            aria-label="Videojuego: defiende la atención de tu salón de los videos verticales activando las soluciones de diseño instruccional"
+          />
+
+          {announce && (
+            <div className={s.announce}>
+              <p className={s.announceGet}>¡SOLUCIÓN ACTIVADA!</p>
+              <p className={s.announceName}>{announce.nombre}</p>
+              <p className={s.announceEfecto}>{announce.efecto}</p>
+              <p className={s.announceDetalle}>{announce.detalle}</p>
+            </div>
+          )}
+        </div>
+
+        {/* ---- soluciones (se desbloquean con el tiempo) ---- */}
+        <div className={s.soluciones}>
+          {SOLUCIONES.map((sol) => {
+            const activa = g.activas.has(sol.id);
+            const lista = ui === "play" && !activa && g.t >= sol.desbloqueo;
+            const faltan = Math.max(0, Math.ceil((sol.desbloqueo - g.t) / 1000));
+            return (
+              <button
+                key={sol.id}
+                className={`${s.sol} ${lista ? s.solListo : ""} ${activa ? s.solActiva : ""}`}
+                onClick={() => activar(sol)}
+                disabled={!lista}
+              >
+                {sol.nombre}
+                <small>
+                  {activa
+                    ? "ACTIVA ✓"
+                    : lista
+                      ? "¡actívala ahora!"
+                      : ui === "play"
+                        ? `disponible en ${faltan}s`
+                        : "bloqueada"}
+                </small>
+              </button>
+            );
+          })}
+        </div>
 
         {ui === "title" && (
           <div className={s.overlay}>
-            <p className={s.kicker}>⚠ amenaza detectada en tu institución</p>
             <h3 className={s.big}>LA BATALLA POR LA ATENCIÓN</h3>
             <div className={s.enemigo}>
               <span className={s.enemigoName}>EL SCROLL INFINITO:</span>
@@ -704,15 +742,6 @@ export function BatallaAtencion() {
             <button className={s.start} onClick={empezar}>
               ▶ Abrir el salón
             </button>
-          </div>
-        )}
-
-        {announce && (
-          <div className={s.announce}>
-            <p className={s.announceGet}>¡SOLUCIÓN ACTIVADA!</p>
-            <p className={s.announceName}>{announce.nombre}</p>
-            <p className={s.announceEfecto}>{announce.efecto}</p>
-            <p className={s.announceDetalle}>{announce.detalle}</p>
           </div>
         )}
 
@@ -759,34 +788,6 @@ export function BatallaAtencion() {
             </div>
           </div>
         )}
-      </div>
-
-      {/* ---- soluciones (se desbloquean con el tiempo) ---- */}
-      <div className={s.soluciones}>
-        {SOLUCIONES.map((sol) => {
-          const activa = g.activas.has(sol.id);
-          const lista = ui === "play" && !activa && g.t >= sol.desbloqueo;
-          const faltan = Math.max(0, Math.ceil((sol.desbloqueo - g.t) / 1000));
-          return (
-            <button
-              key={sol.id}
-              className={`${s.sol} ${lista ? s.solListo : ""} ${activa ? s.solActiva : ""}`}
-              onClick={() => activar(sol)}
-              disabled={!lista}
-            >
-              {sol.nombre}
-              <small>
-                {activa
-                  ? "ACTIVA ✓"
-                  : lista
-                    ? "¡actívala ahora!"
-                    : ui === "play"
-                      ? `disponible en ${faltan}s`
-                      : "bloqueada"}
-              </small>
-            </button>
-          );
-        })}
       </div>
     </div>
   );

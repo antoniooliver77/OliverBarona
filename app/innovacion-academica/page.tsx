@@ -20,11 +20,12 @@ export default function InnovacionAcademicaPage() {
           Vanguardia, sí. Pero que <span>eduque.</span>
         </h1>
         <p className={sv.lede}>
-          Diriges una institución educativa y conoces al enemigo: son los{" "}
-          <strong>videos verticales</strong>. Compites todos los días contra la
-          máquina de distracción más eficaz de la historia. La respuesta no es
+          Diriges una institución educativa y tu problema — entre muchos otros —
+          es <strong>obtener y mantener la atención de tus estudiantes</strong>.
+          ¿Un ejemplo poderoso de contra qué compites? Los videos verticales: la
+          máquina de distracción más eficaz jamás construida. La respuesta no es
           prohibir pantallas ni comprar tecnología por comprar: es diseñar
-          experiencias de aprendizaje que valgan la atención de tus estudiantes.
+          experiencias que valgan esa atención.
         </p>
       </header>
 
