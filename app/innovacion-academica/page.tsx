@@ -3,6 +3,7 @@ import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
 import { BatallaAtencion } from "../components/BatallaAtencion";
+import { waLink } from "../lib/contacto";
 
 export const metadata: Metadata = {
   title: "Academias digitales e innovación educativa para instituciones",
@@ -51,7 +52,7 @@ export default function InnovacionAcademicaPage() {
       <header className={sv.head}>
         <span className={sv.code}>CH_02 · Visionario académico</span>
         <h1 className={sv.title}>
-          Innovación educativa que <span>sí enseña</span>: tu academia digital.
+          Innovación educativa que <span>sí enseña</span>: tu academia digital
         </h1>
         <p className={sv.lede}>
           Diriges una institución educativa y tu problema — entre muchos otros —
@@ -161,9 +162,21 @@ export default function InnovacionAcademicaPage() {
           Cuéntame dónde está tu proyecto educativo hoy y hasta dónde quieres
           llevarlo. Yo pongo la ruta.
         </p>
-        <a href="/contacto" className={home.cta}>
-          Iniciar contacto
-        </a>
+        <div className={sv.ctaRow}>
+          <a href="/contacto" className={home.cta}>
+            Iniciar contacto
+          </a>
+          <a
+            href={waLink(
+              "Hola Oliver, dirijo una institución educativa y quiero platicar sobre nuestra academia digital."
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={sv.whatsapp}
+          >
+            Mejor por WhatsApp
+          </a>
+        </div>
       </div>
     </PageShell>
   );

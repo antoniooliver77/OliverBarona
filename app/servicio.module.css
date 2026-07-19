@@ -256,6 +256,14 @@
   margin: 0 auto 2rem;
   max-width: 48ch;
 }
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.ctaRow a { margin-top: 0; }
 
 /* ============================================================
    CALCULADORA DE CREADORES

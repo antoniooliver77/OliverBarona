@@ -18,7 +18,7 @@ export default function ContactoPage() {
       <header className={sv.head}>
         <span className={sv.code}>TRANSMISIÓN ABIERTA</span>
         <h1 className={sv.title}>
-          Iniciar <span>contacto.</span>
+          Iniciar <span>contacto</span>
         </h1>
         <p className={sv.lede}>
           Empresa, escuela o creador: cuéntame qué necesitas que alguien aprenda.

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import s from "./TratoCreadores.module.css";
 import home from "../page.module.css";
+import { waLink } from "../lib/contacto";
 
 /* ============================================================
    EL AUDITORIO — tu comunidad decide el trato
@@ -271,6 +272,19 @@ export function TratoCreadores() {
                 <div className={s.repartoTuyo} style={{ flex: tuyo }} />
                 <div className={s.repartoMio} style={{ flex: Math.max(mio, 0.5) }} />
               </div>
+              <p className={s.ajuste}>
+                ¿Quieres mover estos porcentajes?{" "}
+                <a
+                  href={waLink(
+                    `Hola Oliver, vengo del Auditorio: tengo ${num(seguidores)} seguidores y quiero platicar los porcentajes del trato (simulé pagar ${usd(pagoActual)} con reparto ${tuyo}/${mio}).`
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Mándame un WhatsApp y lo platicamos
+                </a>{" "}
+                — los números finos siempre se negocian de frente.
+              </p>
             </div>
 
             {/* ---- EL CONTRATO (al final) ---- */}

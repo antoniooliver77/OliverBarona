@@ -258,6 +258,18 @@
 }
 .repartoTuyo { background: var(--neon-cyan); transition: flex 0.3s; }
 .repartoMio { background: var(--neon-orange); transition: flex 0.3s; }
+.ajuste {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+.ajuste a {
+  color: var(--neon-cyan);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(67, 198, 212, 0.4);
+}
+.ajuste a:hover { border-bottom-color: var(--neon-cyan); }
 
 /* ---- el contrato (al final) ---- */
 .contrato {

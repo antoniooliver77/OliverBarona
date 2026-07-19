@@ -3,6 +3,7 @@ import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
 import { ElUltimoCurso } from "../components/ElUltimoCurso";
+import { waLink } from "../lib/contacto";
 
 export const metadata: Metadata = {
   title: "Capacitación empresarial que tu equipo sí termina",
@@ -51,7 +52,7 @@ export default function CapacitacionEmpresarialPage() {
       <header className={sv.head}>
         <span className={sv.code}>CH_01 · Líder corporativo</span>
         <h1 className={sv.title}>
-          Capacitación empresarial que tu equipo <span>sí termina.</span>
+          Capacitación empresarial que tu equipo <span>sí termina</span>
         </h1>
         <p className={sv.lede}>
           Diriges una empresa y ya lo viviste: compraste cursos, tu gente les dio
@@ -162,9 +163,21 @@ export default function CapacitacionEmpresarialPage() {
           Cuéntame qué necesitan aprender y te digo, sin rodeos, cómo lo
           lograríamos — y si de verdad te conviene.
         </p>
-        <a href="/contacto" className={home.cta}>
-          Iniciar contacto
-        </a>
+        <div className={sv.ctaRow}>
+          <a href="/contacto" className={home.cta}>
+            Iniciar contacto
+          </a>
+          <a
+            href={waLink(
+              "Hola Oliver, dirijo una empresa y quiero capacitación que mi equipo sí termine. ¿Platicamos?"
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={sv.whatsapp}
+          >
+            Mejor por WhatsApp
+          </a>
+        </div>
       </div>
     </PageShell>
   );

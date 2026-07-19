@@ -4,6 +4,7 @@ import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
 import { MapaRuta } from "../components/MapaRuta";
 import { TratoCreadores } from "../components/TratoCreadores";
+import { waLink } from "../lib/contacto";
 
 export const metadata: Metadata = {
   title: "Crea y vende tu curso en línea con plataforma propia",
@@ -71,7 +72,7 @@ export default function ConsejeriaCreadoresPage() {
       <header className={sv.head}>
         <span className={sv.code}>CH_03 · Divulgador en redes</span>
         <h1 className={sv.title}>
-          Monetiza tu comunidad con <span>tu propio curso en línea.</span>
+          Monetiza tu comunidad con <span>tu propio curso en línea</span>
         </h1>
         <p className={sv.lede}>
           Voy a confesarte algo: los creadores son <strong>mis favoritos</strong>.
@@ -210,9 +211,21 @@ export default function ConsejeriaCreadoresPage() {
           Cuéntame qué enseñas y a quién. Te respondo con una propuesta honesta —
           incluido el trato que más te convenga a ti, no a mí.
         </p>
-        <a href="/contacto" className={home.cta}>
-          Iniciar contacto
-        </a>
+        <div className={sv.ctaRow}>
+          <a href="/contacto" className={home.cta}>
+            Iniciar contacto
+          </a>
+          <a
+            href={waLink(
+              "Hola Oliver, soy creador y quiero convertir mi comunidad en un curso en línea. ¿Platicamos?"
+            )}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={sv.whatsapp}
+          >
+            Mejor por WhatsApp
+          </a>
+        </div>
       </div>
     </PageShell>
   );
