@@ -97,14 +97,36 @@
   margin-bottom: 0.4rem;
 }
 
-.instrucciones {
-  max-width: 52ch;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: var(--fg-dim);
-  margin: 0;
+/* ---- instrucciones de inicio ---- */
+.howto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  text-align: left;
+  max-width: 420px;
+  width: 100%;
 }
-.instrucciones strong { color: var(--neon-cyan); }
+.howtoItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: var(--di-radius-sm);
+  background: rgba(18, 35, 58, 0.35);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--fg-mid);
+}
+.howtoIcon {
+  flex: 0 0 64px;
+  text-align: center;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--neon-cyan);
+  letter-spacing: 0.05em;
+}
 
 .start {
   display: inline-flex;
@@ -189,28 +211,39 @@
   margin: 0.4rem 0 0;
 }
 
-/* ---- taunt del jefe (toast) ---- */
+/* ---- diálogo del jefe: grande, el juego se pausa para leerlo ---- */
 .taunt {
   position: absolute;
-  top: 14%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  max-width: 90%;
-  padding: 0.7rem 1.2rem;
-  border: 1px solid rgba(255, 106, 0, 0.5);
-  border-radius: var(--di-radius-sm);
-  background: rgba(6, 10, 14, 0.9);
-  color: var(--neon-orange);
+  transform: translate(-50%, -50%);
+  width: min(88%, 560px);
+  padding: 1.4rem 1.8rem 1.5rem;
+  border: 2px solid rgba(255, 106, 0, 0.7);
+  border-radius: var(--di-radius);
+  background: rgba(6, 10, 14, 0.94);
+  box-shadow: 0 0 60px -10px rgba(255, 106, 0, 0.5);
+  color: var(--fg);
   font-family: var(--font-display), sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
-  letter-spacing: 0.04em;
+  font-size: clamp(1.15rem, 2.8vw, 1.65rem);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-align: center;
   pointer-events: none;
-  animation: tauntIn 0.25s ease-out;
+  animation: tauntIn 0.3s cubic-bezier(0.2, 1.4, 0.4, 1);
+}
+.tauntName {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  color: var(--neon-orange);
+  margin-bottom: 0.6rem;
 }
 @keyframes tauntIn {
-  from { opacity: 0; transform: translate(-50%, -8px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.85); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
 }
 
 /* ---- victoria ---- */

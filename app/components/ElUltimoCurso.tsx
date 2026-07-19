@@ -115,7 +115,7 @@ const nuevoJuego = (): Game => ({
   pup: null,
   t: 0,
   spawnT: 0,
-  pupT: 1600,
+  pupT: 900,
   fireT: 0,
   shake: 0,
   dissolve: 0,
@@ -289,16 +289,16 @@ export function ElUltimoCurso() {
 
       /* spawn de proyectiles según fase */
       g.spawnT -= dt;
-      const intervalos = [760, 640, 800, 700, 560];
+      const intervalos = [760, 640, 800, 700, 680];
       if (g.spawnT <= 0 && g.mode !== "dying") {
         g.spawnT = intervalos[g.fase];
         const cx = bx + BOSS_W / 2;
         const cy = by + BOSS_H - 10;
         const f = g.fase;
-        if (f === 0 || (f === 4 && Math.random() < 0.4)) {
+        if (f === 0) {
           g.projs.push({ x: 30 + Math.random() * (W - 60), y: -20, vx: 0, vy: 0.16, tipo: "slide", t: 0 });
         }
-        if (f === 1 || (f === 4 && Math.random() < 0.4)) {
+        if (f === 1) {
           g.projs.push({ x: cx, y: cy, vx: 0, vy: 0.15, tipo: "wave", t: Math.random() * 6 });
         }
         if (f === 2) {
@@ -309,6 +309,13 @@ export function ElUltimoCurso() {
           const dy = PLAYER_Y - cy;
           const m = Math.hypot(dx, dy) || 1;
           g.projs.push({ x: cx, y: cy, vx: (dx / m) * 0.15, vy: (dy / m) * 0.15, tipo: "aim", t: 0 });
+        }
+        if (f === 4 && Math.random() < 0.35) {
+          if (Math.random() < 0.5) {
+            g.projs.push({ x: 30 + Math.random() * (W - 60), y: -20, vx: 0, vy: 0.16, tipo: "slide", t: 0 });
+          } else {
+            g.projs.push({ x: cx, y: cy, vx: 0, vy: 0.15, tipo: "wave", t: Math.random() * 6 });
+          }
         }
       }
 
@@ -342,7 +349,7 @@ export function ElUltimoCurso() {
         if (g.pupT <= 0) g.pup = { x: 60 + Math.random() * (W - 120), y: -24 };
       }
       if (g.pup) {
-        g.pup.y += 0.085 * dt;
+        g.pup.y += 0.105 * dt;
         if (g.pup.y > H + 24) {
           g.pup = null;
           g.pupT = 900; // reaparece: nadie se queda sin aprender
@@ -360,6 +367,9 @@ export function ElUltimoCurso() {
           }, 120);
           window.setTimeout(() => {
             gRef.current.paused = false;
+            // Con el método completo (5a arma) quedas blindado para el remate:
+            // el final debe sentirse como poder total, no como ruleta.
+            gRef.current.inv = Math.max(gRef.current.inv, gRef.current.owned >= 5 ? 5000 : 900);
             setAnnounce(null);
           }, 2300);
         }
@@ -380,7 +390,7 @@ export function ElUltimoCurso() {
       }
 
       /* mover disparos + colisiones */
-      const dmg = (g.owned >= 3 ? 2 : 1) * 1.15;
+      const dmg = (g.owned >= 3 ? 2 : 1) * 1.7;
       for (const sh of g.shots) {
         sh.y -= 0.5 * dt;
         sh.x += sh.vx * dt;
@@ -422,10 +432,16 @@ export function ElUltimoCurso() {
             } else {
               g.mode = "dodge";
               g.fase = Math.min(4, g.fase + 1);
-              g.pupT = 2800;
+              g.pupT = 1400;
               g.shake = 10;
+              /* diálogo del jefe: el juego se detiene para leerlo */
+              g.paused = true;
               setTaunt(TAUNTS_FASE[g.owned - 1]);
-              window.setTimeout(() => setTaunt(null), 2000);
+              window.setTimeout(() => {
+                gRef.current.paused = false;
+                gRef.current.inv = Math.max(gRef.current.inv, 900); // misericordia al reanudar
+                setTaunt(null);
+              }, 2400);
               beep(196, 0.2, "sawtooth", 0.04);
             }
           }
@@ -434,7 +450,7 @@ export function ElUltimoCurso() {
 
       /* muerte del jefe */
       if (g.mode === "dying") {
-        g.dissolve += dt * 0.0006;
+        g.dissolve += dt * 0.0004;
         if (g.dissolve > 0.2 && Math.random() < 0.3) {
           explosion(g, bx + Math.random() * BOSS_W, by + Math.random() * BOSS_H, Math.random() < 0.5 ? "#ff6a00" : "#edf2f7", 4);
         }
@@ -800,11 +816,20 @@ export function ElUltimoCurso() {
               «¿Otro héroe? Llevo 20 años durmiendo a tu equipo con diapositivas.
               Nadie termina tus cursos. <strong>Nadie terminará este.</strong>»
             </div>
-            <p className={s.instrucciones}>
-              Esquiva sus ataques con <strong>← →</strong> (o arrastra el dedo).
-              Atrapa las <strong>5 armas del diseño instruccional</strong> que
-              irán cayendo: cada una cambia tu forma de pelear. Tienes 3 vidas.
-            </p>
+            <div className={s.howto}>
+              <div className={s.howtoItem}>
+                <span className={s.howtoIcon}>← →</span>
+                <span>Muévete con las flechas o arrastrando el dedo</span>
+              </div>
+              <div className={s.howtoItem}>
+                <span className={s.howtoIcon}>⬡</span>
+                <span>Atrapa las 5 armas que caen — cada una cambia tu poder</span>
+              </div>
+              <div className={s.howtoItem}>
+                <span className={s.howtoIcon}>♥♥♥</span>
+                <span>Esquiva sus ataques — tienes 3 vidas</span>
+              </div>
+            </div>
             <button className={s.start} onClick={empezar}>
               ▶ Insertar moneda
             </button>
@@ -821,8 +846,13 @@ export function ElUltimoCurso() {
           </div>
         )}
 
-        {/* ---- TAUNT DEL JEFE ---- */}
-        {taunt && ui === "play" && <div className={s.taunt}>{taunt}</div>}
+        {/* ---- DIÁLOGO DEL JEFE (el juego se pausa para leerlo) ---- */}
+        {taunt && ui === "play" && (
+          <div className={s.taunt}>
+            <span className={s.tauntName}>EL ABURRIMIENTO CORPORATIVO</span>
+            «{taunt}»
+          </div>
+        )}
 
         {/* ---- GAME OVER ---- */}
         {ui === "over" && (
