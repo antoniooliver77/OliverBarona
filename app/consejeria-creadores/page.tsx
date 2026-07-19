@@ -3,12 +3,12 @@ import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
 import { MapaRuta } from "../components/MapaRuta";
-import { CalculadoraCreadores } from "../components/CalculadoraCreadores";
+import { TratoCreadores } from "../components/TratoCreadores";
 
 export const metadata: Metadata = {
   title: "Cursos En Línea para creadores y divulgadores",
   description:
-    "Convierte tu conocimiento en un curso en línea que sí se vende. Plataforma propia, diseño instruccional y un trato flexible: desde $12,000 USD hasta $0 con reparto 50/50.",
+    "Ya construiste una comunidad; ahora monetízala. Plataforma de cursos propia con diseño instruccional. Tu comunidad decide el trato: desde $25,000 USD hasta $0 con reparto 50/50.",
   alternates: { canonical: "/consejeria-creadores" },
 };
 
@@ -41,10 +41,11 @@ export default function ConsejeriaCreadoresPage() {
         </h1>
         <p className={sv.lede}>
           Voy a confesarte algo: los creadores son <strong>mis favoritos</strong>.
-          Enseñan por puro amor — sin presupuesto, sin equipo, sin que nadie se los
-          pida. Eres el héroe solitario de esta historia: tu misión es compartir lo
-          que sabes. La mía es que además puedas{" "}
-          <strong>comer tres veces al día</strong> haciéndolo.
+          Enseñan por puro amor — y ya hicieron <strong>lo más importante</strong>:
+          construir una comunidad. Eso no se compra ni se delega. Esa comunidad
+          merece contenido organizado de verdad, y tú mereces{" "}
+          <strong>monetizar todo ese esfuerzo</strong> — no solo vivir de la
+          esperanza del algoritmo.
         </p>
       </header>
 
@@ -57,14 +58,14 @@ export default function ConsejeriaCreadoresPage() {
           <span className={home.moduleLine} />
         </div>
         <p className={sv.prose}>
-          Sé perfectamente que un divulgador no tiene el presupuesto de un
-          corporativo. Por eso el trato es distinto — y es simple: tu plataforma de
-          cursos completa cuesta <em>$12,000 USD</em>. Si los pagas, es tuya al
-          100% y no me debes nada más. Si hoy no puedes pagar nada,{" "}
-          <em>yo le apuesto a tu proyecto</em>: la construyo gratis y nos vamos 50
-          y 50 en los ingresos. ¿Estás en medio? Mueve la barra:
+          Tu plataforma de cursos completa vale <em>$25,000 USD</em>. Pero aquí
+          tu comunidad es moneda: mientras más grande sea,{" "}
+          <em>más del proyecto estoy dispuesto a apostarle</em> y menos efectivo
+          necesitas poner — hasta llegar a $0 y ganar los dos a mitades, como
+          hice con El Profe Luis y sus millones de seguidores. Muéstrame tu
+          auditorio:
         </p>
-        <CalculadoraCreadores />
+        <TratoCreadores />
       </section>
 
       <section className={sv.section} aria-labelledby="metodo">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import s from "./ContactForm.module.css";
 import { CONTACTO } from "../lib/contacto";
 
@@ -54,6 +54,18 @@ export function ContactForm() {
   const [values, setValues] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [focused, setFocused] = useState<string | null>(null);
+
+  // Si vienen del Auditorio de creadores (?trato=...), precarga el mensaje
+  useEffect(() => {
+    const trato = new URLSearchParams(window.location.search).get("trato");
+    if (trato) {
+      setValues((prev) => ({
+        ...prev,
+        mensaje: prev.mensaje ?? trato,
+        perfil: prev.perfil ?? "Creador — quiero lanzar un curso en línea",
+      }));
+    }
+  }, []);
 
   const set = (id: string, v: string) =>
     setValues((prev) => ({ ...prev, [id]: v }));
