@@ -91,29 +91,29 @@ export function CustomCursor() {
             cy="18"
             r="14"
             fill="none"
-            stroke="#00f0ff"
+            stroke="#43c6d4"
             strokeWidth="1"
             opacity="0.9"
           />
-          <line x1="18" y1="2" x2="18" y2="9" stroke="#00f0ff" strokeWidth="1" />
+          <line x1="18" y1="2" x2="18" y2="9" stroke="#43c6d4" strokeWidth="1" />
           <line
             x1="18"
             y1="27"
             x2="18"
             y2="34"
-            stroke="#00f0ff"
+            stroke="#43c6d4"
             strokeWidth="1"
           />
-          <line x1="2" y1="18" x2="9" y2="18" stroke="#00f0ff" strokeWidth="1" />
+          <line x1="2" y1="18" x2="9" y2="18" stroke="#43c6d4" strokeWidth="1" />
           <line
             x1="27"
             y1="18"
             x2="34"
             y2="18"
-            stroke="#00f0ff"
+            stroke="#43c6d4"
             strokeWidth="1"
           />
-          <circle cx="18" cy="18" r="1.5" fill="#ff6600" />
+          <circle cx="18" cy="18" r="1.5" fill="#ff6a00" />
         </svg>
       </motion.div>
       <motion.div
@@ -128,11 +128,11 @@ export function CustomCursor() {
           height: 4,
           marginLeft: -2,
           marginTop: -2,
-          background: "#00f0ff",
+          background: "#43c6d4",
           borderRadius: "50%",
           pointerEvents: "none",
           zIndex: 9999,
-          boxShadow: "0 0 8px #00f0ff",
+          boxShadow: "0 0 8px #43c6d4",
         }}
       />
     </>
@@ -168,8 +168,8 @@ export function ScrollProgress() {
           transformOrigin: "0 0",
           height: 2,
           background:
-            "linear-gradient(90deg, #00f0ff, #b200ff 50%, #ff6600)",
-          boxShadow: "0 0 10px #00f0ff",
+            "linear-gradient(90deg, #ff6a00, #43c6d4)",
+          boxShadow: "0 0 10px rgba(255,106,0,0.5)",
         }}
       />
       <div
@@ -180,12 +180,12 @@ export function ScrollProgress() {
           fontFamily: "var(--font-mono), monospace",
           fontSize: 10,
           letterSpacing: "0.15em",
-          color: "#00f0ff",
+          color: "#43c6d4",
           textTransform: "uppercase",
-          textShadow: "0 0 8px rgba(0,240,255,0.6)",
+          textShadow: "0 0 8px rgba(67,198,212,0.5)",
         }}
       >
-        LMS_OS · {String(val).padStart(3, "0")}%
+        ARCO · {String(val).padStart(3, "0")}%
       </div>
     </div>
   );
@@ -351,7 +351,7 @@ export function Typewriter({
             width: "0.55em",
             height: "1em",
             verticalAlign: "-0.15em",
-            background: "#00f0ff",
+            background: "#43c6d4",
             marginLeft: 2,
             animation: "blinkCaret 0.8s step-end infinite",
           }}
@@ -425,7 +425,7 @@ export function Particles({ density = 60 }: { density?: number }) {
     let raf = 0;
 
     type P = { x: number; y: number; vx: number; vy: number; r: number; col: string };
-    const colors = ["#00f0ff", "#b200ff", "#ff6600"];
+    const colors = ["#43c6d4", "#ff6a00", "#c4cfda"];
     const ps: P[] = Array.from({ length: count }, () => ({
       x: Math.random() * w,
       y: Math.random() * h,

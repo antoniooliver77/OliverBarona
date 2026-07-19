@@ -35,7 +35,7 @@ const RESPONSES: Record<string, string[]> = {
 
 export function Terminal() {
   const [lines, setLines] = useState<Line[]>([
-    { kind: "out", text: "LMS_OS v2.5 — consola interactiva" },
+    { kind: "out", text: "señal al aire — consola interactiva" },
     { kind: "out", text: 'escribe "help" para ver comandos.' },
   ]);
   const [val, setVal] = useState("");
@@ -76,8 +76,8 @@ export function Terminal() {
         <span className={s.dots}>
           <i /> <i /> <i />
         </span>
-        <span className={s.title}>oliver@lms_os: ~</span>
-        <span className={s.status}>● online</span>
+        <span className={s.title}>oliver@mx-01: ~</span>
+        <span className={s.status}>● al aire</span>
       </header>
       <div className={s.scroll} ref={scrollRef}>
         {lines.map((l, i) => (

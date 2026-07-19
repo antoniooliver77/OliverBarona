@@ -1,25 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Sans, Chakra_Petch, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const sans = Inter({
+const sans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600"],
   display: "swap",
   variable: "--font-sans",
   preload: true,
   fallback: ["system-ui", "sans-serif"],
 });
 
-const display = Space_Grotesk({
+const display = Chakra_Petch({
   subsets: ["latin"],
+  weight: ["400", "600", "700"],
   display: "swap",
   variable: "--font-display",
   preload: true,
   fallback: ["system-ui", "sans-serif"],
 });
 
-const mono = JetBrains_Mono({
+const mono = IBM_Plex_Mono({
   subsets: ["latin"],
+  weight: ["400", "500"],
   display: "swap",
   variable: "--font-mono",
   preload: false, // Mono solo se usa en etiquetas secundarias, no bloquea LCP
@@ -97,7 +100,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07070b",
+  themeColor: "#060A0E",
   width: "device-width",
   initialScale: 1,
   colorScheme: "dark",

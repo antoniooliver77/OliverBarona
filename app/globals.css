@@ -1,13 +1,21 @@
+/* Sistema "Circuito narrativo" — identidad DisrupTV aplicada a Oliver Barona
+   Naranja = marca y énfasis (escaso). Cian = SOLO lo interactivo/decisiones. */
 :root {
-  --neon-orange: #ff6600;
-  --neon-cyan: #00f0ff;
-  --neon-purple: #b200ff;
-  --bg: #050509;
-  --bg-elev: #0b0b14;
-  --fg: #e7e9ee;
-  --fg-dim: #8089a0;
-  --rule: rgba(255, 255, 255, 0.08);
+  --neon-orange: #ff6a00; /* Neón — marca y énfasis */
+  --neon-cyan: #43c6d4;   /* Cian — solo interactivo */
+  --neon-purple: #43c6d4; /* legado: mapeado a cian (el sistema no usa morado) */
+  --bg: #060a0e;          /* Carbón */
+  --bg-elev: #0a1119;     /* panel elevado */
+  --navy: #12233a;        /* Navy — superficies */
+  --fg: #edf2f7;          /* Niebla — texto principal */
+  --fg-mid: #c4cfda;      /* texto secundario */
+  --fg-dim: #7c8da0;      /* metadatos */
+  --rule: #1c2a38;        /* bordes */
   --max: 1280px;
+  /* Contenedor DI: recta → curva (geometría del monograma) */
+  --di-radius-sm: 3px 14px 14px 3px;
+  --di-radius: 4px 20px 20px 4px;
+  --di-radius-lg: 4px 28px 28px 4px;
 }
 
 *,
@@ -30,16 +38,17 @@ body {
   overflow-x: hidden;
 }
 
+/* Luz: navy frío arriba, naranja como única fuente cálida (regla de imaginería) */
 body {
   background-image:
-    radial-gradient(900px 600px at 10% -10%, rgba(0, 240, 255, 0.07), transparent 60%),
-    radial-gradient(800px 600px at 90% 10%, rgba(178, 0, 255, 0.06), transparent 60%),
-    radial-gradient(700px 500px at 50% 100%, rgba(255, 102, 0, 0.05), transparent 60%);
+    radial-gradient(900px 600px at 15% -10%, rgba(18, 35, 58, 0.85), transparent 60%),
+    radial-gradient(800px 600px at 90% 5%, rgba(18, 35, 58, 0.5), transparent 60%),
+    radial-gradient(700px 500px at 50% 100%, rgba(255, 106, 0, 0.06), transparent 60%);
 }
 
 ::selection {
-  background: var(--neon-cyan);
-  color: #000;
+  background: var(--neon-orange);
+  color: #060a0e;
 }
 
 a {
@@ -63,8 +72,8 @@ h2,
 h3,
 h4 {
   font-family: var(--font-display), var(--font-sans), sans-serif;
-  font-weight: 500;
-  letter-spacing: -0.025em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   margin: 0;
 }
 
@@ -104,8 +113,8 @@ html.has-custom-cursor * {
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 102, 0, 0.4); }
-  50% { box-shadow: 0 0 0 14px rgba(255, 102, 0, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.4); }
+  50% { box-shadow: 0 0 0 14px rgba(255, 106, 0, 0); }
 }
 
 @keyframes scanlineMove {

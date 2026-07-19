@@ -90,14 +90,14 @@ export default function HomePage() {
           <div className={s.hud} role="presentation">
             <div className={s.hudLeft}>
               <span className={s.dot} />
-              <span className={s.brand}>LMS_OS v2.5</span>
+              <span className={s.brand}>OLIVER BARONA</span>
               <span className={s.hudPipe}>//</span>
-              <span>módulo: oliver_barona.exe</span>
+              <span>arco: diseño_instruccional</span>
             </div>
             <div className={s.hudRight}>
-              <span>node: mx-01</span>
+              <span>canal: mx-01</span>
               <span className={s.hudPipe}>//</span>
-              <span>status: online</span>
+              <span>señal: al aire</span>
             </div>
           </div>
 
@@ -170,12 +170,12 @@ export default function HomePage() {
             </div>
           </header>
 
-          {/* MODULE 01 — MANIFIESTO */}
+          {/* MISIÓN 01 — PLANTEAMIENTO */}
           <section className={s.module} aria-labelledby="m01">
             <div className={s.moduleHeader}>
-              <span className={s.moduleNum}>MOD_01</span>
+              <span className={s.moduleNum}>MISIÓN 01</span>
               <span id="m01" className={s.moduleTitle}>
-                lección · <strong>el problema</strong>
+                planteamiento · <strong>el problema</strong>
               </span>
               <span className={s.moduleLine} />
             </div>
@@ -191,9 +191,9 @@ export default function HomePage() {
                 { text: ", " },
                 { text: "presencial", color: "var(--neon-cyan)" },
                 { text: ", para tus " },
-                { text: "hijos", color: "var(--neon-purple)" },
+                { text: "hijos", color: "var(--fg)" },
                 { text: ", tus " },
-                { text: "alumnos", color: "var(--neon-purple)" },
+                { text: "alumnos", color: "var(--fg)" },
                 { text: ", tus " },
                 { text: "trabajadores", color: "var(--neon-orange)" },
                 { text: ", tu " },
@@ -237,26 +237,26 @@ export default function HomePage() {
 
           {/* PHASE TRANSITION */}
           <div className={s.phaseTransition} aria-hidden>
-            <span className={s.phaseComplete}>FASE_01 · COMPLETA</span>
+            <span className={s.phaseComplete}>MISIÓN 01 · COMPLETA</span>
             <div className={s.phaseBar}><div className={s.phaseBarFill} /></div>
-            <span className={s.phaseNext}>▶ INICIANDO · SIMULACIÓN</span>
+            <span className={s.phaseNext}>▶ SIGUIENTE · LA DECISIÓN</span>
           </div>
 
-          {/* MODULE 02 — CHARACTER SELECT */}
+          {/* MISIÓN 02 — LA DECISIÓN (character select) */}
           <section className={s.select} aria-labelledby="m02">
             <Typewriter
               className={s.selectIntro}
               speed={12}
               segments={[
                 { text: "Ya con esto tienes " },
-                { text: "lo más importante", color: "var(--neon-cyan)" },
+                { text: "lo más importante", color: "var(--neon-orange)" },
                 { text: ", pero como no toda la educación es igual," },
-                { text: " vamos a jugar", color: "var(--neon-orange)" },
+                { text: " vamos a jugar", color: "var(--neon-cyan)" },
                 { text: " un poco: Selecciona el personaje que más se parece a ti." },
               ]}
             />
             <h2 id="m02" className={s.selectTitle}>
-              <small>[ iniciando simulación ]</small>
+              <small>[ misión 02 · la decisión ]</small>
               Selecciona tu personaje
             </h2>
 
@@ -270,12 +270,12 @@ export default function HomePage() {
             </nav>
           </section>
 
-          {/* MODULE 03 — REVIEW */}
+          {/* MISIÓN 03 — RESOLUCIÓN */}
           <section className={s.review} aria-labelledby="m03">
             <div className={s.moduleHeader}>
-              <span className={s.moduleNum}>MOD_03</span>
+              <span className={s.moduleNum}>MISIÓN 03</span>
               <span id="m03" className={s.moduleTitle}>
-                lección · <strong>prueba social</strong>
+                resolución · <strong>prueba social</strong>
               </span>
               <span className={s.moduleLine} />
             </div>
@@ -306,7 +306,7 @@ export default function HomePage() {
               </div>
 
               <a href="/portafolio" className={s.cta}>
-                Ejecutar protocolo · ver portafolio
+                Iniciar misión · ver portafolio
               </a>
             </div>
           </section>
@@ -337,7 +337,7 @@ export default function HomePage() {
 
           <footer className={s.footer}>
             © {new Date().getFullYear()} Oliver Barona ·{" "}
-            <span>hecho con código</span> · LMS_OS v2.5
+            <span>hecho con código</span> · sistema narrativo v1.0
           </footer>
         </div>
       </main>
