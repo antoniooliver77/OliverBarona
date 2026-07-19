@@ -2,33 +2,14 @@ import type { Metadata } from "next";
 import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { PageShell } from "../components/PageShell";
-import { MapaRuta } from "../components/MapaRuta";
+import { JuegoCapacitacion } from "../components/JuegoCapacitacion";
 
 export const metadata: Metadata = {
   title: "Capacitación Online para empresas",
   description:
-    "Capacitación empresarial con diseño instruccional: cursos que tu equipo sí termina y conocimiento que sí se aplica. Diagnóstico, diseño, producción y medición.",
+    "Capacitación empresarial con diseño instruccional: diagnóstico, pensamiento crítico, storytelling, pedagogía avanzada y neuroeducación. Descúbrelo jugando.",
   alternates: { canonical: "/capacitacion-empresarial" },
 };
-
-const pasos = [
-  {
-    titulo: "Diagnóstico",
-    desc: "Qué necesita aprender tu equipo — de verdad, no lo que dice el catálogo de cursos genéricos.",
-  },
-  {
-    titulo: "Diseño instruccional",
-    desc: "Guion, storytelling y gamificación al servicio de un objetivo: que lo aprendido se use el lunes.",
-  },
-  {
-    titulo: "Producción",
-    desc: "Cursos en línea que no parecen castigo: interactivos, claros y al grano.",
-  },
-  {
-    titulo: "Medición",
-    desc: "Evidencia de que aprendieron. Datos, no aplausos de cortesía.",
-  },
-];
 
 export default function CapacitacionEmpresarialPage() {
   return (
@@ -46,20 +27,21 @@ export default function CapacitacionEmpresarialPage() {
         </p>
       </header>
 
-      <section className={sv.section} aria-labelledby="metodo">
+      <section className={sv.section} aria-labelledby="arsenal">
         <div className={home.moduleHeader}>
           <span className={home.moduleNum}>MOD_01</span>
-          <span id="metodo" className={home.moduleTitle}>
-            lección · <strong>el método</strong>
+          <span id="arsenal" className={home.moduleTitle}>
+            lección jugable · <strong>el arsenal</strong>
           </span>
           <span className={home.moduleLine} />
         </div>
         <p className={sv.prose}>
-          Mi trabajo es que la capacitación deje de ser un trámite y se convierta
-          en <em>productividad medible</em>. Para eso sigo una ruta de cuatro
-          pasos — la misma con la que gané el concurso internacional iSpring 2025:
+          Podría explicarte mi método con un diagrama de flujo y viñetas. Pero
+          soy diseñador instruccional: <em>sé que aprendes más jugando</em>. Así
+          que mejor te lo demuestro. Derrota las 5 amenazas que hoy atacan la
+          capacitación de tu empresa:
         </p>
-        <MapaRuta pasos={pasos} />
+        <JuegoCapacitacion />
       </section>
 
       <section className={sv.section} aria-labelledby="entregables">
@@ -73,26 +55,27 @@ export default function CapacitacionEmpresarialPage() {
         <ul className={sv.list}>
           <li>
             <span>
-              <strong>Cursos e-learning a la medida</strong> de tu operación, tu
-              gente y tu vocabulario — nada de plantillas recicladas.
+              <strong>Diagnóstico real</strong>: qué necesita aprender tu equipo —
+              de verdad, no lo que dice el catálogo de cursos genéricos.
             </span>
           </li>
           <li>
             <span>
-              <strong>Academias internas</strong>: tu conocimiento organizado en
-              rutas de aprendizaje que crecen con tu empresa.
+              <strong>Cursos y academias a la medida</strong>, construidos con
+              pensamiento crítico, storytelling, pedagogía avanzada y
+              neuroeducación.
             </span>
           </li>
           <li>
             <span>
-              <strong>Onboarding que no espanta</strong>: los nuevos entienden su
-              puesto antes de que el café se enfríe.
+              <strong>Experiencias que la gente termina</strong> — como el juego
+              que acabas de jugar, pero sobre lo que tu operación necesita.
             </span>
           </li>
           <li>
             <span>
-              <strong>Indicadores claros</strong>: quién aprendió qué, y qué cambió
-              en la operación gracias a eso.
+              <strong>Evidencia de aprendizaje</strong>: quién aprendió qué, y qué
+              cambió en el desempeño gracias a eso.
             </span>
           </li>
         </ul>
