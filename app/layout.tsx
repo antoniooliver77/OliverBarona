@@ -62,6 +62,7 @@ export const metadata: Metadata = {
     canonical: "/",
     languages: { "es-MX": "/", "x-default": "/" },
   },
+  // Las imágenes OG/Twitter las genera app/opengraph-image.tsx automáticamente
   openGraph: {
     type: "website",
     locale: "es_MX",
@@ -69,20 +70,11 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: TITLE,
     description: DESCRIPTION,
-    images: [
-      {
-        url: "/og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Oliver Barona — Diseñador Instruccional Sr.",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
-    images: ["/og.jpg"],
     creator: "@oliverbarona",
   },
   robots: {
@@ -151,7 +143,6 @@ export default function RootLayout({
       className={`${sans.variable} ${display.variable} ${mono.variable}`}
     >
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import s from "./ContactForm.module.css";
+import { CONTACTO } from "../lib/contacto";
 
 type Field = {
   id: string;
@@ -61,8 +62,8 @@ export function ContactForm() {
     e.preventDefault();
     setStatus("sending");
     try {
-      // Cambia esta URL por tu endpoint real (Formspree, Resend, etc.)
-      const res = await fetch("https://formspree.io/f/TU_FORM_ID", {
+      // El ID se configura en app/lib/contacto.ts (Formspree)
+      const res = await fetch(`https://formspree.io/f/${CONTACTO.formspreeId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(values),
