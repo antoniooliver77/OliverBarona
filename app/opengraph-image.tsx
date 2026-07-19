@@ -99,7 +99,7 @@ export default function OgImage() {
             }}
           />
           <div style={{ display: "flex", color: "#ff6a00", fontWeight: 700 }}>
-            ★ GANADOR iSPRING 2025
+            GANADOR iSPRING 2025
           </div>
           <div style={{ display: "flex" }}>oliverbarona.com</div>
         </div>
