@@ -12,6 +12,33 @@ export const metadata: Metadata = {
   alternates: { canonical: "/innovacion-academica" },
 };
 
+const dolores = [
+  {
+    dolor: "«Nadie termina los cursos en línea»",
+    sol: "La deserción no es pereza: es diseño sin narrativa ni razón para volver. Construyo cursos con estructura de historia — misiones, avance visible, retos — donde terminar se siente como ganar. La tasa de finalización es un resultado de diseño, no de suerte.",
+  },
+  {
+    dolor: "«Compramos un LMS carísimo y nadie lo usa»",
+    sol: "El problema casi nunca es la plataforma: es lo que hay adentro. Audito lo que ya tienes, rescato la inversión y rediseño contenidos y modelo de uso. Un LMS con buenos cursos se usa solo; uno con PDFs es un archivero caro.",
+  },
+  {
+    dolor: "«Los estudiantes aprueban, pero no aprenden»",
+    sol: "Exámenes de opción múltiple miden memoria de corto plazo, no aprendizaje. Diseño evaluaciones auténticas: proyectos, casos y evidencias de desempeño que no se pueden copiar — porque hay que saber hacer, no solo recordar.",
+  },
+  {
+    dolor: "«Los docentes se resisten al cambio»",
+    sol: "Lógico: nadie defiende un modelo que le impusieron. Por eso el modelo se construye CON tus docentes, con formación y acompañamiento hasta que lo dominan y lo hacen suyo. El cambio que se queda es el que los maestros adoptan, no el que soportan.",
+  },
+  {
+    dolor: "«Nuestra oferta se ve igual a la de todos»",
+    sol: "Una academia digital con sello propio es diferenciación que no se copia con un folleto: cursos con tu identidad pedagógica, experiencias que tus competidores no tienen y una razón concreta para elegirte. Vanguardia que puedes presumir porque funciona.",
+  },
+  {
+    dolor: "«La distracción nos está ganando»",
+    sol: "Y va a seguir ganando mientras la clase compita contra el celular con las mismas armas de 1995. Diseño experiencias que valen la atención: ritmo, interacción, historia y retos. Ya jugaste la simulación de arriba: prohibir no funciona — diseñar, sí.",
+  },
+];
+
 const faqs = [
   {
     q: "¿Innovar en educación significa comprar más tecnología?",
@@ -28,6 +55,18 @@ const faqs = [
   {
     q: "¿Trabajas con colegios, universidades y formación continua?",
     a: "Sí. Quince años colaborando con instituciones y editoriales — UNAM, Santillana, SM Ediciones, Pearson — me enseñaron a adaptar el diseño instruccional a cada nivel: desde educación básica hasta posgrado y programas de formación continua. El método se ajusta al proyecto educativo, nunca al revés.",
+  },
+  {
+    q: "¿Cómo reducimos la deserción en los cursos en línea?",
+    a: "Con diseño, no con recordatorios automáticos. La gente abandona cursos que no le dan una razón para volver: sin narrativa, sin avance visible, sin retos que importen. Cuando el curso tiene estructura de historia y el estudiante ve su progreso, terminar se vuelve el camino natural. La deserción es un síntoma; el diagnóstico casi siempre apunta al diseño.",
+  },
+  {
+    q: "Ya invertimos en tecnología, ¿tenemos que empezar de cero?",
+    a: "Casi nunca. La primera fase es una auditoría de lo que ya tienes — plataforma, contenidos, modelo — para rescatar cada peso invertido. Lo habitual es que la tecnología sobre y el diseño falte: se rediseña lo que vive adentro del sistema, no el sistema entero.",
+  },
+  {
+    q: "¿Cuánto cuesta un proyecto de academia digital?",
+    a: "Depende del punto de partida y la ambición: no cuesta lo mismo rediseñar un diplomado que construir la academia completa con formación docente. La auditoría inicial define alcance y presupuesto, y te entrego una propuesta clara, por fases y sin letra chica. Si tu proyecto no justifica la inversión, también te lo digo de frente.",
   },
 ];
 
@@ -112,10 +151,38 @@ export default function InnovacionAcademicaPage() {
         </ul>
       </section>
 
+      {/* ============ DOLORES Y SOLUCIONES ============ */}
+      <section className={sv.section} aria-labelledby="dolores">
+        <div className={home.moduleHeader}>
+          <span className={home.moduleNum}>MOD_02</span>
+          <span className={home.moduleTitle}>
+            lección · <strong>los dolores</strong>
+          </span>
+          <span className={home.moduleLine} />
+        </div>
+        <h2 id="dolores" className={sv.h2}>
+          Los 6 dolores de toda institución — <span>y su solución</span>
+        </h2>
+        <p className={sv.prose}>
+          Quince años escuchando a rectores, directores académicos y
+          coordinadores dejan un patrón clarísimo. Si diriges una institución
+          educativa, apuesto a que al menos tres de estas frases se han dicho
+          en tu sala de juntas:
+        </p>
+        <div className={sv.dolores}>
+          {dolores.map((d) => (
+            <div key={d.dolor} className={sv.dolor}>
+              <h3 className={sv.dolorTitulo}>{d.dolor}</h3>
+              <p className={sv.dolorSol}>{d.sol}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* ============ LA SIMULACIÓN ============ */}
       <section className={sv.section} aria-labelledby="batalla">
         <div className={home.moduleHeader}>
-          <span className={home.moduleNum}>MOD_02</span>
+          <span className={home.moduleNum}>MOD_03</span>
           <span className={home.moduleTitle}>
             simulación · <strong>defiende tu salón</strong>
           </span>
@@ -137,7 +204,7 @@ export default function InnovacionAcademicaPage() {
       {/* ============ FAQ ============ */}
       <section className={sv.section} aria-labelledby="preguntas">
         <div className={home.moduleHeader}>
-          <span className={home.moduleNum}>MOD_03</span>
+          <span className={home.moduleNum}>MOD_04</span>
           <span className={home.moduleTitle}>
             lección · <strong>las dudas</strong>
           </span>

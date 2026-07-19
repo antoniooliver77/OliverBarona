@@ -2,9 +2,11 @@ import type { CSSProperties, ReactNode } from "react";
 import home from "../page.module.css";
 import sv from "../servicio.module.css";
 import { CustomCursor, ScrollProgress } from "./effects";
+import { Nav } from "./Nav";
+import { SiteFooter } from "./SiteFooter";
 
 /**
- * Marco común de las páginas interiores: HUD, cursor, back-link y footer.
+ * Marco común de las páginas interiores: HUD, nav, cursor y footer.
  * `accent` define el color de acento de la página (naranja/cian/niebla).
  */
 export function PageShell({
@@ -40,9 +42,7 @@ export function PageShell({
             </div>
           </div>
 
-          <a href="/" className={sv.backlink}>
-            ← volver al inicio
-          </a>
+          <Nav />
 
           <div
             className={sv.page}
@@ -51,10 +51,7 @@ export function PageShell({
             {children}
           </div>
 
-          <footer className={home.footer}>
-            © {new Date().getFullYear()} Oliver Barona ·{" "}
-            <span>hecho con código</span> · LMS_OS v2.5
-          </footer>
+          <SiteFooter />
         </div>
       </main>
     </>

@@ -29,6 +29,22 @@ const faqs = [
     q: "¿Cuánto cuesta un curso a la medida para mi empresa?",
     a: "Depende de lo que tu equipo necesita aprender — y eso se descubre con el diagnóstico, no con un catálogo de precios. Cuéntame tu necesidad y te respondo con una propuesta concreta y honesta: alcance, tiempos y costo sin letra chica. Y si no te conviene contratarme, también te lo digo.",
   },
+  {
+    q: "¿Qué es el diseño instruccional y por qué debería importarte?",
+    a: "Es la disciplina que convierte información en aprendizaje real: une pedagogía, tecnología, storytelling y evaluación para que la gente entienda, recuerde y aplique. La diferencia entre un curso con diseño instruccional y uno sin él es la misma que entre una película y una carpeta de escenas sueltas: el material puede ser el mismo, el resultado no se parece en nada.",
+  },
+  {
+    q: "¿Qué es una academia interna o universidad corporativa?",
+    a: "Es el conocimiento de tu empresa — procesos, productos, cultura, mejores prácticas — organizado en rutas de aprendizaje permanentes, en lugar de cursos sueltos que se pierden. Sirve para entrenar nuevos, certificar equipos y dejar de depender de que 'el que sabe' tenga tiempo de explicar. Crece con tu operación y se queda aunque la gente rote.",
+  },
+  {
+    q: "¿La capacitación es en línea o presencial?",
+    a: "Mi especialidad es el e-learning a la medida: cursos en línea que tu equipo toma a su ritmo, con evidencia de avance. Y cuando el proyecto lo pide, diseño experiencias mixtas — la parte conceptual en línea y la práctica en vivo. Lo que nunca hago es llenar horas de sala con diapositivas: eso no es capacitación, es secuestro con café.",
+  },
+  {
+    q: "¿Pueden rediseñar los cursos que ya tenemos?",
+    a: "Sí, y suele ser una gran inversión: muchas empresas ya tienen el contenido correcto atrapado en un formato que aburre. Hago un diagnóstico de tus cursos actuales, rescato lo que sirve y rediseño lo que espanta — con storytelling, interacción y evaluación auténtica. Tu curso aburre; se puede arreglar.",
+  },
 ];
 
 const faqJsonLd = {

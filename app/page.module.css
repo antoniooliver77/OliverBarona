@@ -86,6 +86,73 @@
   color: rgba(255, 255, 255, 0.15);
 }
 
+/* ============ NAV PRINCIPAL ============ */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.75rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.navLink {
+  color: var(--fg-dim);
+  padding: 0.35rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.25s, border-color 0.25s;
+}
+.navLink:hover { color: var(--fg); }
+.navActive {
+  color: var(--fg);
+  border-bottom-color: var(--neon-orange); /* subrayado pantalla */
+}
+.navContacto {
+  margin-left: auto;
+  color: var(--neon-cyan);
+  border: 1px solid rgba(67, 198, 212, 0.5);
+  border-radius: var(--di-radius-sm);
+  padding: 0.45rem 1rem;
+  transition: all 0.25s;
+}
+.navContacto:hover {
+  background: var(--neon-cyan);
+  color: var(--bg);
+}
+
+/* ============ SECCIÓN BIO (SEO) ============ */
+.seoH2 {
+  font-family: var(--font-display), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 3.8vw, 2.5rem);
+  line-height: 1.12;
+  color: var(--fg);
+  margin: 0 0 1.5rem;
+  max-width: 30ch;
+}
+.seoH2 span {
+  border-bottom: 0.08em solid var(--neon-orange);
+  padding-bottom: 0.03em;
+}
+.bioText {
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+  line-height: 1.7;
+  color: var(--fg-mid, #c4cfda);
+  max-width: 68ch;
+  margin: 0 0 1.25rem;
+}
+.bioText strong { color: var(--fg); }
+.bioText a {
+  color: var(--neon-cyan);
+  font-weight: 600;
+  border-bottom: 1px solid rgba(67, 198, 212, 0.4);
+}
+.bioText a:hover { border-bottom-color: var(--neon-cyan); }
+
 /* ============ HERO ============ */
 .hero {
   position: relative;
@@ -559,6 +626,15 @@
   border-top: 1px solid var(--rule);
 }
 
+.reviews {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 980px) {
+  .reviews { grid-template-columns: 1.25fr 1fr; align-items: start; }
+}
+
 .reviewBox {
   position: relative;
   background:
@@ -566,8 +642,8 @@
     var(--bg-elev);
   border: 1px solid var(--rule);
   border-radius: var(--di-radius);
-  padding: clamp(2rem, 5vw, 4rem);
-  overflow: hidden;
+  padding: clamp(2rem, 5vw, 3.25rem);
+  /* sin overflow:hidden — decapitaba la etiqueta superior */
 }
 .reviewBox::before {
   content: "TRANSMISIÓN VERIFICADA · CH_03";
@@ -590,6 +666,7 @@
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: inherit;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
@@ -599,6 +676,14 @@
     rgba(237, 242, 247, 0.02) 5px
   );
   mix-blend-mode: overlay;
+}
+
+/* segundo testimonio: misma caja, etiqueta propia */
+.reviewBoxAlt::before {
+  content: "TRANSMISIÓN VERIFICADA · CH_01" !important;
+}
+.reviewCtaWrap {
+  text-align: center;
 }
 
 .stars {
@@ -776,3 +861,10 @@
 .footer span {
   color: var(--neon-cyan);
 }
+.footer p { margin: 0 0 0.7rem; }
+.footerLegal a {
+  color: var(--fg-dim);
+  border-bottom: 1px solid var(--rule);
+  transition: color 0.25s;
+}
+.footerLegal a:hover { color: var(--neon-cyan); }

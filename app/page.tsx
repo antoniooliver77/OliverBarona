@@ -12,6 +12,8 @@ import {
   Particles,
 } from "./components/effects";
 import { CharacterCard, type Character } from "./components/CharacterCard";
+import { Nav } from "./components/Nav";
+import { SiteFooter } from "./components/SiteFooter";
 
 // Lazy load Terminal: está debajo del fold, no afecta LCP/FCP
 const Terminal = dynamic(
@@ -100,6 +102,8 @@ export default function HomePage() {
               <span>status: online</span>
             </div>
           </div>
+
+          <Nav />
 
           {/* HERO */}
           <header className={s.hero}>
@@ -280,31 +284,54 @@ export default function HomePage() {
               <span className={s.moduleLine} />
             </div>
 
-            <div className={s.reviewBox}>
-              <div className={s.stars} aria-label="5 estrellas">
-                ★ ★ ★ ★ ★
-              </div>
-              <blockquote className={s.quote}>
-                "Oliver logró encontrar mi esencia y ponerla en una plataforma
-                educativa. Es como si me hubieran clonado digitalmente y ahora
-                pudiera compartir mis conocimientos, pero con muchísima
-                tecnología detrás respaldando a mi comunidad."
-              </blockquote>
-              <div className={s.reviewMeta}>
-                <div className={s.author}>
-                  <span className={s.authorName}>El Profe Luis</span>
-                  <span className={s.authorRole}>
-                    Divulgador · Cliente verificado
-                  </span>
+            <div className={s.reviews}>
+              <div className={s.reviewBox}>
+                <div className={s.stars} aria-label="5 estrellas">
+                  ★ ★ ★ ★ ★
                 </div>
-                <div className={s.reviewStat}>
-                  <div className={s.reviewStatNum}>
-                    <Counter to={3000000} duration={2400} />+
+                <blockquote className={s.quote}>
+                  "Oliver logró encontrar mi esencia y ponerla en una plataforma
+                  educativa. Es como si me hubieran clonado digitalmente y ahora
+                  pudiera compartir mis conocimientos, pero con muchísima
+                  tecnología detrás respaldando a mi comunidad."
+                </blockquote>
+                <div className={s.reviewMeta}>
+                  <div className={s.author}>
+                    <span className={s.authorName}>El Profe Luis</span>
+                    <span className={s.authorRole}>
+                      Divulgador · Cliente verificado
+                    </span>
                   </div>
-                  <div className={s.reviewStatLabel}>seguidores</div>
+                  <div className={s.reviewStat}>
+                    <div className={s.reviewStatNum}>
+                      <Counter to={3000000} duration={2400} />+
+                    </div>
+                    <div className={s.reviewStatLabel}>seguidores</div>
+                  </div>
                 </div>
               </div>
 
+              <div className={`${s.reviewBox} ${s.reviewBoxAlt}`}>
+                <div className={s.stars} aria-label="5 estrellas">
+                  ★ ★ ★ ★ ★
+                </div>
+                <blockquote className={s.quote}>
+                  "Oliver excedió por mucho nuestras expectativas. Nuestra
+                  academia ha sido un éxito tanto económico como educativo,
+                  gracias a su gran labor pedagógica."
+                </blockquote>
+                <div className={s.reviewMeta}>
+                  <div className={s.author}>
+                    <span className={s.authorName}>Nova Academy</span>
+                    <span className={s.authorRole}>
+                      Academia corporativa · Cliente verificado
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className={s.reviewCtaWrap}>
               <a href="/portafolio" className={s.cta}>
                 Ejecutar protocolo · ver portafolio
               </a>
@@ -325,6 +352,48 @@ export default function HomePage() {
             </div>
           </div>
 
+          {/* MODULE 04 — QUIÉN ES OLIVER BARONA (SEO) */}
+          <section className={s.module} aria-labelledby="quien">
+            <div className={s.moduleHeader}>
+              <span className={s.moduleNum}>MOD_04</span>
+              <span className={s.moduleTitle}>
+                lección · <strong>el instructor</strong>
+              </span>
+              <span className={s.moduleLine} />
+            </div>
+            <h2 id="quien" className={s.seoH2}>
+              ¿Quién es <span>Oliver Barona</span>?
+            </h2>
+            <p className={s.bioText}>
+              <strong>Oliver Barona</strong> es un diseñador instruccional
+              senior mexicano con más de <strong>15 años de experiencia</strong>{" "}
+              creando cursos en línea, academias digitales y programas de
+              capacitación que la gente sí termina — y sí aplica. En 2025 ganó
+              el <strong>Concurso Internacional de Creación de Cursos
+              iSpring</strong>, compitiendo contra diseñadores de todo el mundo.
+            </p>
+            <p className={s.bioText}>
+              A lo largo de su carrera ha colaborado con instituciones y
+              editoriales como <strong>UNAM, Santillana, SM Ediciones,
+              Pearson y Editores Mexicanos Unidos</strong>, y con divulgadores
+              como El Profe Luis y su comunidad de más de 3 millones de
+              seguidores. Su método une pedagogía avanzada, pensamiento
+              crítico, storytelling, gamificación y neuroeducación — con dos
+              kilos de sentido común encima.
+            </p>
+            <p className={s.bioText}>
+              Hoy trabaja en tres frentes:{" "}
+              <a href="/capacitacion-empresarial">capacitación empresarial</a>{" "}
+              para equipos que necesitan aprender de verdad,{" "}
+              <a href="/innovacion-academica">innovación académica</a> para
+              instituciones educativas que quieren vanguardia con pedagogía, y{" "}
+              <a href="/consejeria-creadores">cursos en línea para creadores</a>{" "}
+              que ya construyeron una comunidad y merecen monetizarla. ¿Buscabas
+              a Oliver Barona? Ya lo encontraste:{" "}
+              <a href="/contacto">escríbele</a>.
+            </p>
+          </section>
+
           {/* CONSOLE FOOTER */}
           <section className={s.console} aria-label="Consola interactiva">
             <p className={s.consoleTitle}>
@@ -335,10 +404,7 @@ export default function HomePage() {
             <Terminal />
           </section>
 
-          <footer className={s.footer}>
-            © {new Date().getFullYear()} Oliver Barona ·{" "}
-            <span>hecho con código</span> · LMS_OS v2.5
-          </footer>
+          <SiteFooter />
         </div>
       </main>
     </>
