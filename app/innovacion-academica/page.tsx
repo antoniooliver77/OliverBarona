@@ -32,15 +32,16 @@ export default function InnovacionAcademicaPage() {
         <div className={home.moduleHeader}>
           <span className={home.moduleNum}>MOD_01</span>
           <span id="batalla" className={home.moduleTitle}>
-            lección jugable · <strong>la batalla por la atención</strong>
+            simulación · <strong>defiende tu salón</strong>
           </span>
           <span className={home.moduleLine} />
         </div>
         <p className={sv.prose}>
-          Podría darte un discurso sobre innovación educativa. Prefiero que la
-          vivas: defiende un salón real del scroll infinito y mira cómo{" "}
-          <em>cada solución transforma el aula en vivo</em>. Spoiler: prohibir
-          celulares no va a funcionar.
+          Dicen que los estudiantes ya no ponen atención. Falso:{" "}
+          <em>la ponen — 15 segundos a la vez, y en otra pantalla</em>. Aquí
+          tienes un salón con 8 estudiantes y al enemigo en plena cacería. Tu
+          misión: que la lección llegue al final. Vas a descubrir, en carne
+          propia, por qué prohibir el celular nunca ha salvado una clase.
         </p>
         <BatallaAtencion />
       </section>

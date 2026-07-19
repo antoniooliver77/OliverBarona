@@ -12,7 +12,7 @@ import home from "../page.module.css";
    ============================================================ */
 
 const W = 760;
-const H = 470;
+const H = 372;
 const LECCION_MS = 68000; // duración de la lección (barra de victoria)
 
 type Solucion = {
@@ -103,15 +103,15 @@ type G = {
 /* filas 4x2 (antes de metodología) */
 const posFilas = (i: number) => ({
   x: 130 + (i % 4) * 140,
-  y: 236 + Math.floor(i / 4) * 96,
+  y: 196 + Math.floor(i / 4) * 86,
 });
 /* círculos de equipo (después de metodología) */
 const posCirculos = (i: number) => {
   const grupo = i < 4 ? 0 : 1;
   const ang = ((i % 4) / 4) * Math.PI * 2 + Math.PI / 4;
   return {
-    x: (grupo === 0 ? 230 : 530) + Math.cos(ang) * 62,
-    y: 288 + Math.sin(ang) * 52,
+    x: (grupo === 0 ? 230 : 530) + Math.cos(ang) * 60,
+    y: 238 + Math.sin(ang) * 44,
   };
 };
 
@@ -268,6 +268,12 @@ export function BatallaAtencion() {
         if (!v.dead && !v.huyendo && Math.hypot(v.x - mx, v.y - my) < 30) {
           v.huyendo = true;
           v.pegado = false;
+          /* le quitaste el celular de la cara: el alumno despierta */
+          const est = g.ests[v.objetivo];
+          if (est && est.hipno) {
+            est.hipno = false;
+            est.hipnoT = 0;
+          }
           g.manotazos += 1;
           /* prohibir no funciona: cada manotazo acelera el regreso */
           g.spawnBase = Math.max(1150, g.spawnBase * 0.95);
@@ -347,7 +353,7 @@ export function BatallaAtencion() {
         }
         if (!v.pegado) {
           /* con academia completa: rebotan antes de llegar */
-          if (conAcad && v.y > 140) {
+          if (conAcad && v.y > 108) {
             v.huyendo = true;
             g.parts.push({ x: v.x, y: v.y, vx: 0, vy: -2, life: 1, color: "#43c6d4" });
             continue;
@@ -387,8 +393,8 @@ export function BatallaAtencion() {
           e.hipnoT += dt;
           const drena = (conMeto ? 2.8 : 5.2) / 1000;
           e.atencion -= drena * dt;
-          /* auto-despertar: hasta el scroll aburre tarde o temprano */
-          const limite = conEval ? 3000 : conMeto ? 5500 : 9500;
+          /* sin soluciones, nadie despierta solo: o espantas el video o lo pierdes */
+          const limite = conEval ? 3000 : conMeto ? 5500 : Infinity;
           if (e.hipnoT > limite) {
             e.hipno = false;
             e.hipnoT = 0;
@@ -453,7 +459,7 @@ export function BatallaAtencion() {
       /* piso */
       ctx.strokeStyle = `rgba(28, 42, 56, ${0.8 + nivel * 0.05})`;
       ctx.lineWidth = 1;
-      for (let y = 200; y < H; y += 46) {
+      for (let y = 150; y < H; y += 40) {
         ctx.beginPath();
         ctx.moveTo(0, y);
         ctx.lineTo(W, y);
@@ -467,7 +473,7 @@ export function BatallaAtencion() {
 
       /* ---- pizarra ---- */
       const px = W / 2 - 120;
-      const py = 58;
+      const py = 42;
       ctx.fillStyle = conCurso ? "#0a1119" : "#0d1218";
       ctx.strokeStyle = conCurso ? "#43c6d4" : "#3b4a5c";
       ctx.lineWidth = 2;
