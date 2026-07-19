@@ -68,6 +68,20 @@
   padding: clamp(3rem, 7vw, 5.5rem) 0;
   border-bottom: 1px solid var(--rule);
 }
+
+/* H2 real de sección (SEO): grande, después del header decorativo */
+.h2 {
+  font-size: clamp(1.7rem, 3.8vw, 2.5rem);
+  line-height: 1.12;
+  color: var(--fg);
+  margin: 0 0 1.5rem;
+  max-width: 30ch;
+  text-wrap: balance;
+}
+.h2 span {
+  border-bottom: 0.08em solid var(--neon-orange);
+  padding-bottom: 0.03em;
+}
 .prose {
   font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   line-height: 1.7;
@@ -175,6 +189,50 @@
   line-height: 1.4;
 }
 .list li strong { color: var(--fg); }
+
+/* ---- FAQ ---- */
+.faq {
+  display: grid;
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+.faq details {
+  border: 1px solid var(--rule);
+  border-radius: var(--di-radius);
+  background: linear-gradient(180deg, var(--bg-elev), var(--bg));
+  overflow: hidden;
+}
+.faq summary {
+  cursor: pointer;
+  padding: 1.1rem 1.35rem;
+  font-family: var(--font-display), sans-serif;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--fg);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  color: var(--neon-cyan);
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+.faq details[open] summary::after { content: "−"; }
+.faqBody {
+  padding: 0 1.35rem 1.25rem;
+  color: var(--fg-mid);
+  font-size: 0.98rem;
+  line-height: 1.68;
+  margin: 0;
+  max-width: 68ch;
+}
+.faqBody strong { color: var(--fg); }
 
 /* ---- Panel CTA final ---- */
 .ctaPanel {
