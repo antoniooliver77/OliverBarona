@@ -5,8 +5,8 @@ export const CONTACTO = {
   whatsapp: "525578621537",
   whatsappMensaje:
     "Hola Oliver, vengo de tu página y quiero hablar sobre un proyecto de capacitación.",
-  /** ID del formulario en Formspree (https://formspree.io) — pendiente de crear. */
-  formspreeId: "TU_FORM_ID",
+  /** ID del formulario en Formspree (https://formspree.io). */
+  formspreeId: "xrenodlk",
 };
 
 /** Link de WhatsApp con mensaje contextual (cada pantalla manda el suyo). */
