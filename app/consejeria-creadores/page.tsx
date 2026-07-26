@@ -9,7 +9,7 @@ import { waLink } from "../lib/contacto";
 export const metadata: Metadata = {
   title: "Crea y vende tu curso en línea con plataforma propia",
   description:
-    "Construyo tu plataforma de cursos en línea completa: diseño instruccional profesional, tu marca, tus alumnos y tus datos. Con 100,000+ seguidores, tu comunidad paga parte del proyecto — hasta gratis con reparto 50/50.",
+    "Construyo tu plataforma de cursos en línea completa: diseño instruccional profesional, tu marca, tus alumnos y tus datos. Con 100,000+ seguidores tu comunidad paga parte del proyecto, y desde 250,000 puede salir sin costo con reparto 50/50.",
   alternates: { canonical: "/consejeria-creadores" },
 };
 
@@ -38,8 +38,12 @@ const faqs = [
     a: "Porque ahí eres un producto de catálogo: la plataforma se queda una comisión, decide los descuentos, y lo más grave — los alumnos son suyos, no tuyos. Con plataforma propia tú pones el precio, la marca es tuya y cada correo de cada alumno se queda contigo. Tu comunidad te siguió a ti, no a un marketplace.",
   },
   {
-    q: "¿Qué incluye exactamente el proyecto de $25,000 USD?",
+    q: "¿Qué incluye exactamente el proyecto de $13,000 USD?",
     a: "Todo lo necesario para vender: el diseño instruccional de tu curso (estructura, guion, actividades y evaluaciones hechas por un profesional premiado), tu plataforma web propia con tu marca y dominio, el curso montado y funcionando, y el sistema de cobro conectado. Entras con conocimiento; sales con un negocio.",
+  },
+  {
+    q: "¿El trato del simulador es una oferta en firme?",
+    a: "No: es una guía honesta de cómo pienso los números, pero todo queda sujeto a mi aceptación previa. Antes de comprometerme reviso tu proyecto — qué enseñas, a quién y si de verdad puedo hacerlo bien. Si acepto, firmamos por escrito con los términos claros; si no, te lo digo de frente y no perdimos el tiempo de nadie.",
   },
   {
     q: "¿Qué pasa si todavía no tengo 100,000 seguidores?",
@@ -148,16 +152,15 @@ export default function ConsejeriaCreadoresPage() {
           Cuánto cuesta: <span>tu comunidad decide el precio</span>
         </h2>
         <p className={sv.prose}>
-          El proyecto completo vale <em>$25,000 USD</em>. Puedes pagarlo y es
+          El proyecto completo vale <em>$13,000 USD</em>. Puedes pagarlo y es
           100% tuyo, sin compartirme nada. Pero aquí viene lo que no te ofrece
           nadie más: <strong>si tu comunidad es grande, no necesitas pagarlo
-          todo</strong>. A partir de 100,000 seguidores, yo pongo parte del
+          todo</strong>. A partir de 100,000 seguidores yo pongo parte del
           proyecto de mi bolsa — apostándole a tu audiencia — a cambio de un
-          porcentaje de las ventas. Mientras más grande tu comunidad, menos
-          efectivo pones hoy: con más de un millón de seguidores puedo
-          construirte todo <em>gratis</em> e ir a mitades, exactamente como hice
-          con El Profe Luis y sus millones de seguidores. Tu comunidad es tu
-          moneda. Muéstramela:
+          porcentaje de las ventas. Y desde <strong>250,000 seguidores puedo
+          construirte todo sin que pongas un peso</strong>, yendo a mitades,
+          como hice con El Profe Luis y sus millones de seguidores. Tu comunidad
+          es tu moneda. Muéstramela:
         </p>
         <TratoCreadores />
       </section>

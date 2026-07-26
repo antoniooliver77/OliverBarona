@@ -8,24 +8,27 @@ import { waLink } from "../lib/contacto";
 /* ============================================================
    EL AUDITORIO — tu comunidad decide el trato
    Reglas:
-   · El proyecto completo vale $25,000 USD (fijo).
+   · El proyecto completo vale $13,000 USD (fijo).
    · Piso: 100,000 seguidores para hacer trato.
-   · Pago mínimo: $10,000 en 100k, baja $1,000 por cada 100k
-     extra, hasta $0 en 1,100,000+.
+   · Pago mínimo: $10,000 en 100k y baja de forma lineal hasta
+     $0 a partir de 250,000 seguidores.
    · Pagando el mínimo siempre es 50/50. Pagando más, mi %
-     baja lineal hasta 0% en $25,000.
+     baja lineal hasta 0% en $13,000.
+   · Todo trato queda sujeto a aceptación previa.
    ============================================================ */
 
-const PRECIO = 25000;
+const PRECIO = 13000;
 const PISO_SEGUIDORES = 100000;
-const TOPE_SEGUIDORES = 1100000;
+const TOPE_SEGUIDORES = 250000; // aquí el pago mínimo llega a $0
 const PAGO_MIN_BASE = 10000;
 const SHARE_MAX = 50;
 
 /* pago mínimo según comunidad */
 const pagoMinimo = (f: number) => {
   if (f < PISO_SEGUIDORES) return PRECIO;
-  return Math.max(0, PAGO_MIN_BASE - (f - PISO_SEGUIDORES) / 100);
+  if (f >= TOPE_SEGUIDORES) return 0;
+  const avance = (f - PISO_SEGUIDORES) / (TOPE_SEGUIDORES - PISO_SEGUIDORES);
+  return Math.max(0, PAGO_MIN_BASE * (1 - avance));
 };
 
 /* % mío: 50% pagando el mínimo → 0% pagando completo */
@@ -40,8 +43,8 @@ const num = (n: number) => n.toLocaleString("es-MX");
 
 /* paradas del slider de seguidores (escala tipo log, valores bonitos) */
 const PARADAS = [
-  10000, 25000, 50000, 75000, 100000, 150000, 200000, 250000, 300000, 400000,
-  500000, 600000, 700000, 800000, 900000, 1000000, 1100000, 1500000, 2000000, 3000000,
+  10000, 25000, 50000, 75000, 100000, 125000, 150000, 175000, 200000, 225000,
+  250000, 300000, 400000, 500000, 750000, 1000000, 1500000, 2000000, 3000000,
 ];
 
 export function TratoCreadores() {
@@ -183,8 +186,8 @@ export function TratoCreadores() {
         />
         <div className={s.marks}>
           <span>10k</span>
-          <span>100k · aquí abre la mesa</span>
-          <span>1.1M · apuesta total</span>
+          <span>100k · abre la mesa</span>
+          <span>250k · sin pagar nada</span>
           <span>3M</span>
         </div>
 
@@ -273,6 +276,11 @@ export function TratoCreadores() {
                 <div className={s.repartoMio} style={{ flex: Math.max(mio, 0.5) }} />
               </div>
               <p className={s.ajuste}>
+                Este simulador es una guía, no una oferta cerrada:{" "}
+                <strong>todo trato está sujeto a mi aceptación previa</strong> —
+                reviso cada proyecto antes de comprometerme.
+              </p>
+              <p className={s.ajuste}>
                 ¿Quieres mover estos porcentajes?{" "}
                 <a
                   href={waLink(
@@ -314,6 +322,9 @@ export function TratoCreadores() {
                 <br />
                 · Letra chica sin trampas: los números finos se cierran en una
                 llamada.
+                <br />
+                · <em>Sujeto a aceptación previa</em>: primero platicamos tu
+                proyecto y, si lo tomo, firmamos.
                 <br />
                 <span className={s.firma}>
                   FIRMA: <em>el tipo que le apuesta a tu comunidad</em> ✍

@@ -264,6 +264,7 @@
   line-height: 1.6;
   color: var(--fg-dim);
 }
+.ajuste strong { color: var(--fg); }
 .ajuste a {
   color: var(--neon-cyan);
   font-weight: 600;
