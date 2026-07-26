@@ -30,7 +30,7 @@ const FIELDS: Field[] = [
   },
   {
     id: "perfil",
-    label: "03 · PERFIL",
+    label: "03 · PERFIL (opcional)",
     type: "select",
     placeholder: "Selecciona tu perfil",
     options: [
@@ -39,7 +39,7 @@ const FIELDS: Field[] = [
       "Creador — quiero lanzar un curso en línea",
       "Otro",
     ],
-    required: true,
+    required: false,
   },
   {
     id: "mensaje",
@@ -54,6 +54,7 @@ export function ContactForm() {
   const [values, setValues] = useState<Record<string, string>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "err">("idle");
   const [focused, setFocused] = useState<string | null>(null);
+  const [errores, setErrores] = useState<Record<string, string>>({});
 
   // Si vienen del Auditorio de creadores (?trato=...), precarga el mensaje
   useEffect(() => {
@@ -67,11 +68,47 @@ export function ContactForm() {
     }
   }, []);
 
-  const set = (id: string, v: string) =>
+  const set = (id: string, v: string) => {
     setValues((prev) => ({ ...prev, [id]: v }));
+    setErrores((prev) => {
+      if (!prev[id]) return prev;
+      const next = { ...prev };
+      delete next[id]; // el error se limpia en cuanto corrigen
+      return next;
+    });
+  };
+
+  /** Valida los campos obligatorios: nombre, correo y mensaje. */
+  const validar = () => {
+    const e: Record<string, string> = {};
+    const nombre = (values.nombre ?? "").trim();
+    const correo = (values.correo ?? "").trim();
+    const mensaje = (values.mensaje ?? "").trim();
+
+    if (nombre.length < 2) e.nombre = "Escribe tu nombre.";
+    if (!correo) e.correo = "Necesito tu correo para responderte.";
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo))
+      e.correo = "Ese correo no se ve válido. Revísalo, por favor.";
+    if (mensaje.length < 10)
+      e.mensaje = "Cuéntame un poco más — al menos una frase.";
+
+    return e;
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const fallos = validar();
+    if (Object.keys(fallos).length > 0) {
+      setErrores(fallos);
+      setStatus("idle");
+      // enfoca el primer campo con problema
+      const primero = FIELDS.find((f) => fallos[f.id]);
+      if (primero) document.getElementById(primero.id)?.focus();
+      return;
+    }
+
+    setErrores({});
     setStatus("sending");
     try {
       // El ID se configura en app/lib/contacto.ts (Formspree)
@@ -99,6 +136,9 @@ export function ContactForm() {
   }
 
   return (
+    // noValidate: la validación la hacemos nosotros para que los mensajes
+    // salgan en español y con el estilo del sitio (los nativos cambian con
+    // el idioma del navegador).
     <form className={s.form} onSubmit={handleSubmit} noValidate>
       <div className={s.grid}>
         {FIELDS.map((f) => (
@@ -106,7 +146,7 @@ export function ContactForm() {
             key={f.id}
             className={`${s.field} ${f.type === "textarea" ? s.full : ""} ${
               focused === f.id ? s.active : ""
-            }`}
+            } ${errores[f.id] ? s.invalid : ""}`}
           >
             <label className={s.label} htmlFor={f.id}>
               {f.label}
@@ -119,6 +159,8 @@ export function ContactForm() {
                 placeholder={f.placeholder}
                 required={f.required}
                 rows={4}
+                aria-invalid={errores[f.id] ? true : undefined}
+                aria-describedby={errores[f.id] ? `${f.id}-error` : undefined}
                 value={values[f.id] ?? ""}
                 onChange={(e) => set(f.id, e.target.value)}
                 onFocus={() => setFocused(f.id)}
@@ -150,11 +192,19 @@ export function ContactForm() {
                 type={f.type}
                 placeholder={f.placeholder}
                 required={f.required}
+                aria-invalid={errores[f.id] ? true : undefined}
+                aria-describedby={errores[f.id] ? `${f.id}-error` : undefined}
                 value={values[f.id] ?? ""}
                 onChange={(e) => set(f.id, e.target.value)}
                 onFocus={() => setFocused(f.id)}
                 onBlur={() => setFocused(null)}
               />
+            )}
+
+            {errores[f.id] && (
+              <p className={s.fieldError} id={`${f.id}-error`} role="alert">
+                {errores[f.id]}
+              </p>
             )}
           </div>
         ))}

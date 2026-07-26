@@ -138,6 +138,27 @@ select.input option {
   color: #ff4444;
 }
 
+/* ---- validación por campo ---- */
+.fieldError {
+  margin: 0;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #ff8c5a;
+}
+.invalid .label { color: #ff8c5a; }
+.invalid .input {
+  border-color: rgba(255, 106, 0, 0.7);
+  background: rgba(255, 106, 0, 0.05);
+}
+.invalid .input:focus {
+  border-color: var(--neon-orange);
+  box-shadow: 0 0 0 1px rgba(255, 106, 0, 0.35),
+    0 0 20px -6px rgba(255, 106, 0, 0.4);
+}
+.invalid::after { background: var(--neon-orange); box-shadow: 0 0 8px var(--neon-orange); }
+
 /* SUCCESS STATE */
 .success {
   display: flex;
