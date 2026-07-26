@@ -216,7 +216,8 @@ export function ContactForm() {
           type="submit"
           disabled={status === "sending"}
         >
-          {status === "sending" ? "ENVIANDO_" : "INICIAR CONTACTO →"}
+          {/* span necesario: el relleno naranja (::before) taparía el texto suelto */}
+          <span>{status === "sending" ? "ENVIANDO_" : "INICIAR CONTACTO →"}</span>
         </button>
         {status === "err" && (
           <span className={s.errMsg}>

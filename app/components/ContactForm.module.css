@@ -121,10 +121,14 @@ select.input option {
   transform: translateX(0);
 }
 .submit:hover {
-  color: #000;
+  color: var(--bg);
   box-shadow: 0 0 30px -5px var(--neon-orange);
 }
-.submit > * { position: relative; }
+/* el texto va por encima del relleno naranja */
+.submit > * {
+  position: relative;
+  z-index: 1;
+}
 .submit:disabled {
   opacity: 0.5;
   cursor: not-allowed;
