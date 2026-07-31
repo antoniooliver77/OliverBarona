@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>EL VISTO BUENO — juego de liderazgo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --pared:#33352c; --paredLuz:#4a4c3f; --madera:#5d3f26; --maderaLuz:#7a5433;
+    --papel:#f1e8d0; --papelLinea:#d8cba9; --tintaDoc:#2b2c26;
+    --rojo:#a32020; --verde:#1e6e3c; --azul:#274a73; --ambar:#ffb84d;
+    --rosa:#e8b4b8; --metal:#b8a56e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--pared)}
+  body{
+    min-height:100vh; color:var(--papel); font-family:Georgia,"Times New Roman",serif;
+    background:
+      radial-gradient(ellipse 46% 34% at 18% 0%, rgba(255,184,77,.32), transparent 70%),
+      repeating-linear-gradient(180deg, transparent 0 26px, rgba(0,0,0,.05) 26px 28px),
+      linear-gradient(180deg,#2b2d25 0%, var(--pared) 55%, #26271f 100%);
+    display:flex; flex-direction:column; align-items:center; padding:24px 12px 44px;
+  }
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+  .maquina{font-family:"Special Elite","IBM Plex Mono",monospace}
+
+  /* Placa de la oficina */
+  .placaPuerta{
+    background:linear-gradient(180deg,#d8c58a,var(--metal)); color:#2e2510;
+    font-family:"Special Elite",monospace; font-size:clamp(17px,2.6vw,24px); letter-spacing:.08em;
+    padding:8px 30px; border-radius:4px; border:2px solid #8a7a4a;
+    box-shadow:0 8px 20px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5);
+    margin-bottom:22px; text-align:center;
+  }
+  .placaPuerta small{display:block; font-size:11px; letter-spacing:.2em; opacity:.75}
+
+  /* El escritorio: marco del juego */
+  .despacho{
+    width:min(1100px,100%);
+    background:
+      radial-gradient(ellipse 70% 40% at 30% 0%, rgba(255,190,90,.12), transparent 60%),
+      repeating-linear-gradient(95deg, var(--madera) 0 34px, var(--maderaLuz) 34px 36px, var(--madera) 36px 70px),
+      var(--madera);
+    border-radius:14px; border:10px solid #3d2a18;
+    box-shadow:0 36px 80px rgba(0,0,0,.6), inset 0 0 60px rgba(0,0,0,.35);
+    padding:clamp(14px,2.6vw,28px);
+  }
+
+  .screen{display:none}
+  .screen.on{display:block; animation:ap .25s ease-out}
+  @keyframes ap{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* Memo de bienvenida (intro) como hoja escrita a máquina */
+  .memoIntro{
+    background:var(--papel); color:var(--tintaDoc); max-width:760px; margin:0 auto;
+    padding:clamp(20px,4vw,38px); transform:rotate(-.4deg);
+    box-shadow:0 18px 40px rgba(0,0,0,.5); border-radius:2px; position:relative;
+  }
+  .memoIntro::before{
+    content:""; position:absolute; top:-9px; left:44%; width:80px; height:22px;
+    background:rgba(210,190,140,.7); transform:rotate(-2deg); box-shadow:0 2px 4px rgba(0,0,0,.2);
+  }
+  .memoIntro h1{font-family:"Special Elite",monospace; font-size:clamp(21px,3.4vw,30px); line-height:1.25; margin:10px 0 16px}
+  .memoIntro .de{font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.06em; border-bottom:2px solid var(--tintaDoc); padding-bottom:8px; opacity:.8}
+  .memoIntro p{font-size:16.5px; line-height:1.65; margin-bottom:12px}
+  .memoIntro .clave{background:#e8dcb8; padding:10px 14px; border-left:4px solid var(--rojo); margin:10px 0; font-size:15.5px; line-height:1.55}
+  .firma{font-family:"Special Elite",monospace; margin-top:6px; opacity:.85}
+  .acciones{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; justify-content:center}
+  .btnPapel{
+    font-family:"Special Elite",monospace; font-size:16px; cursor:pointer;
+    border:2px solid var(--tintaDoc); background:var(--tintaDoc); color:var(--papel);
+    padding:12px 24px; min-height:50px; border-radius:3px;
+    box-shadow:0 5px 0 #14150f; transition:transform .06s, box-shadow .06s;
+  }
+  .btnPapel:active{transform:translateY(4px); box-shadow:0 1px 0 #14150f}
+  .btnPapel.claro{background:transparent; color:var(--tintaDoc)}
+  .btnPapel:focus-visible{outline:3px solid var(--ambar); outline-offset:2px}
+  .memoIntro .btnPapel.claro:hover{background:rgba(43,44,38,.08)}
+
+  /* HUD: tablero de pared */
+  .hud{display:flex; justify-content:space-between; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:10px}
+  .hud .ficha{
+    background:#241f16; border:1px solid #4a4030; color:#e8dcb8; border-radius:3px;
+    font-family:"IBM Plex Mono",monospace; font-size:12px; padding:6px 10px; letter-spacing:.05em;
+  }
+  .hud .ficha b{color:var(--ambar); font-weight:600}
+  .hud .reloj{font-size:17px; color:#ff9d4d}
+  .medidores{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:14px}
+  .med{flex:1; min-width:180px; background:#241f16; border:1px solid #4a4030; border-radius:3px; padding:7px 10px}
+  .med .et{font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:#cbb98a; display:flex; justify-content:space-between}
+  .med .track{height:7px; background:#141109; margin-top:5px; border-radius:99px; overflow:hidden}
+  .med .track i{display:block; height:100%; background:#7fb069; transition:width .4s ease}
+  .med.dir .track i{background:var(--ambar)}
+
+  /* Escritorio de trabajo */
+  .escritorio{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(250px,.85fr); gap:18px; align-items:start}
+  @media(max-width:860px){.escritorio{grid-template-columns:1fr}}
+
+  .papelZona{position:relative; min-height:400px}
+  .papel{
+    background:
+      repeating-linear-gradient(180deg, transparent 0 27px, rgba(90,70,30,.08) 27px 28px),
+      var(--papel);
+    color:var(--tintaDoc); padding:18px 22px; position:relative;
+    box-shadow:0 16px 34px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.15) inset;
+    transform:rotate(-.5deg); border-radius:2px;
+    font-family:"Special Elite","IBM Plex Mono",monospace;
+    animation:llega .3s ease-out;
+  }
+  @keyframes llega{from{transform:translateX(90px) rotate(2deg);opacity:0}to{transform:rotate(-.5deg);opacity:1}}
+  .papel.saliendo{animation:sale .25s ease-in forwards}
+  @keyframes sale{to{transform:translateX(-110px) rotate(-5deg);opacity:0}}
+  .papel .tipo{font-size:14px; letter-spacing:.1em; border-bottom:3px double var(--tintaDoc); padding-bottom:6px; margin-bottom:12px; display:flex; justify-content:space-between; gap:8px}
+  .papel .folio{opacity:.6; font-size:12px}
+  .campos{display:grid; grid-template-columns:1fr 1fr; gap:7px 18px; font-size:14.5px}
+  @media(max-width:480px){.campos{grid-template-columns:1fr}}
+  .campo{padding:3px 0; border-bottom:1px dotted rgba(43,44,38,.4)}
+  .campo .et{font-size:10px; letter-spacing:.12em; text-transform:uppercase; opacity:.55; display:block; font-family:"IBM Plex Mono",monospace}
+  .campo .va{font-size:15px}
+  .nota{
+    margin:14px 0 0 auto; max-width:78%; font-family:Georgia,serif; font-style:italic; font-size:14.5px;
+    background:#fff3a6; color:#4a3d10; padding:10px 14px; transform:rotate(1.4deg);
+    box-shadow:0 6px 14px rgba(0,0,0,.3);
+  }
+  .habla{margin-top:12px; font-size:14.5px; background:#241f16; color:#e8dcb8; padding:10px 12px; border-radius:3px; font-family:Georgia,serif; line-height:1.55}
+  .habla b{color:var(--ambar)}
+
+  .selloStamp{
+    position:absolute; top:34%; left:50%; pointer-events:none;
+    font-family:"Special Elite",monospace; font-weight:400; font-size:42px;
+    padding:6px 18px; border:5px double; transform:translate(-50%,-50%) rotate(-14deg) scale(2.2);
+    opacity:0; letter-spacing:.05em; border-radius:4px; mix-blend-mode:multiply;
+  }
+  .selloStamp.pum{animation:pum .2s ease-out forwards}
+  @keyframes pum{to{opacity:.85;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
+  .selloStamp.ok{color:var(--verde);border-color:var(--verde)}
+  .selloStamp.no{color:var(--rojo);border-color:var(--rojo)}
+
+  /* Charola de sellos */
+  .sellos{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin-top:16px}
+  @media(max-width:480px){.sellos{grid-template-columns:1fr}}
+  .sello{
+    cursor:pointer; border:none; border-radius:8px; padding:10px 8px 12px; min-height:74px;
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-family:"Special Elite",monospace; font-size:14px; letter-spacing:.04em;
+    color:#f5eeda; box-shadow:0 7px 0 rgba(0,0,0,.4), 0 12px 18px rgba(0,0,0,.35);
+    transition:transform .07s ease, box-shadow .07s ease; position:relative;
+  }
+  .sello::before{ /* mango del sello */
+    content:""; width:26px; height:26px; border-radius:50% 50% 6px 6px;
+    background:linear-gradient(180deg,#8a6a45,#5d4227); box-shadow:inset 0 2px 3px rgba(255,255,255,.35);
+    margin-bottom:3px;
+  }
+  .sello:active{transform:translateY(6px); box-shadow:0 1px 0 rgba(0,0,0,.4)}
+  .sello:focus-visible{outline:3px solid var(--ambar); outline-offset:2px}
+  .sello.aprobar{background:linear-gradient(180deg,#2c8a50,var(--verde))}
+  .sello.rechazar{background:linear-gradient(180deg,#c23a2c,var(--rojo))}
+  .sello.hablar{background:linear-gradient(180deg,#35597f,var(--azul))}
+  .sello small{font-size:10px; opacity:.75; font-family:"IBM Plex Mono",monospace; letter-spacing:.08em}
+  .sello:disabled{opacity:.4; cursor:not-allowed}
+
+  .veredicto{min-height:56px; margin-top:12px; font-size:14.5px; line-height:1.5}
+  .veredicto .citacion{
+    background:var(--rosa); color:#5c1a1a; padding:10px 14px; display:block; border-radius:2px;
+    box-shadow:0 8px 18px rgba(0,0,0,.4); transform:rotate(.6deg); animation:llega .25s ease-out;
+    font-family:Georgia,serif;
+  }
+  .veredicto .citacion b{display:block; font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; margin-bottom:3px}
+  .veredicto .bien{color:#cfe3b8; font-family:"IBM Plex Mono",monospace; font-size:13px}
+  .veredicto .charla{background:#241f16; color:#e8dcb8; padding:10px 14px; display:block; border-radius:3px; animation:llega .25s ease-out; font-family:Georgia,serif; line-height:1.55}
+  .veredicto .charla b{color:var(--ambar)}
+
+  /* Reglamento en tablilla */
+  .tablilla{position:sticky; top:12px; background:linear-gradient(180deg,#8a6a45,#6e4f2f); border-radius:10px; padding:34px 12px 12px; box-shadow:0 14px 30px rgba(0,0,0,.5); position:relative}
+  .tablilla::before{ /* clip metálico */
+    content:""; position:absolute; top:10px; left:50%; transform:translateX(-50%);
+    width:90px; height:18px; border-radius:9px; background:linear-gradient(180deg,#d8c58a,#9a8a5a);
+    box-shadow:0 3px 6px rgba(0,0,0,.4);
+  }
+  .tablilla .hoja{background:var(--papel); color:var(--tintaDoc); padding:14px; border-radius:2px; box-shadow:0 4px 10px rgba(0,0,0,.3)}
+  .tablilla h3{font-family:"Special Elite",monospace; font-size:14px; letter-spacing:.06em; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center}
+  .tablilla h3 .memo{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--rojo)}
+  .reglas{list-style:none; display:flex; flex-direction:column; gap:8px}
+  .reglas li{font-size:13.5px; line-height:1.45; padding-left:24px; position:relative; font-family:Georgia,serif}
+  .reglas li .num{position:absolute; left:0; top:0; font-family:"IBM Plex Mono",monospace; font-size:11.5px; color:var(--azul); font-weight:600}
+  .reglas li.nueva{background:#ffe9a8; padding:6px 6px 6px 24px; border-radius:2px}
+  .reglas li.nueva .num{top:6px; left:4px; color:var(--rojo)}
+  .reglas li.nueva::after{content:"NUEVA"; font-family:"IBM Plex Mono",monospace; font-size:8.5px; color:var(--rojo); margin-left:6px; letter-spacing:.12em}
+
+  /* Cortes y final: expediente en fólder */
+  .folder{
+    background:linear-gradient(180deg,#e8d9a8,#d9c98f); color:#3a301f; max-width:820px; margin:0 auto;
+    border-radius:6px 16px 6px 6px; padding:clamp(18px,3.4vw,32px);
+    box-shadow:0 18px 40px rgba(0,0,0,.5); position:relative;
+  }
+  .folder::before{content:""; position:absolute; top:-12px; left:26px; width:130px; height:14px; background:inherit; border-radius:8px 8px 0 0}
+  .folder .etiqueta{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.16em; color:#7a6a3a; text-transform:uppercase}
+  .folder h2{font-family:"Special Elite",monospace; font-size:clamp(21px,3.4vw,30px); margin:8px 0 12px; line-height:1.25}
+  .folder .historia{font-family:Georgia,serif; font-size:16px; line-height:1.65; background:var(--papel); padding:14px 16px; border-left:4px solid var(--rojo); margin:12px 0; box-shadow:0 4px 10px rgba(0,0,0,.15)}
+  .metricas{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin:12px 0}
+  .metrica{background:var(--papel); border-radius:3px; padding:10px 12px; box-shadow:0 3px 8px rgba(0,0,0,.15)}
+  .metrica .et{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:#8a7a4a; display:block}
+  .metrica .va{font-family:"Special Elite",monospace; font-size:24px; color:#2b2c26}
+  .tarjetas{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:14px 0}
+  .tarjeta{background:var(--papel); border-radius:2px; padding:14px; box-shadow:0 6px 14px rgba(0,0,0,.2); transform:rotate(-.3deg)}
+  .tarjeta:nth-child(2n){transform:rotate(.4deg)}
+  .tarjeta .estilo{font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--azul); display:block; margin-bottom:6px; font-weight:600}
+  .tarjeta p{font-family:Georgia,serif; font-size:14px; line-height:1.55; color:#33301f}
+  .tarjeta p b{color:var(--rojo)}
+  .posdata{font-family:Georgia,serif; font-style:italic; font-size:14.5px; line-height:1.6; margin:14px 0 4px; color:#5a4d28}
+</style>
+</head>
+<body>
+
+<div class="placaPuerta">COORDINACIÓN DE OPERACIÓN<small>OFICINA 12 · EL VISTO BUENO</small></div>
+
+<div class="despacho">
+
+  <!-- INTRO: memo de bienvenida -->
+  <section class="screen on" id="sIntro">
+    <div class="memoIntro">
+      <div class="de">DE: DIRECCIÓN GENERAL &nbsp;·&nbsp; PARA: TI &nbsp;·&nbsp; ASUNTO: Tu nuevo puesto</div>
+      <h1>Te dieron el sello. Nadie te dijo cuánto pesa</h1>
+      <p>Desde hoy eres la coordinación de operación, lo cual significa — aunque en la junta lo hayan dicho más bonito — que todo lo que ocurre en este piso pasa por tu firma: las vacaciones, los vales de gastos, las horas extra, las excepciones. El reglamento que te dejaron sobre el escritorio parece clarísimo, y lo es, hasta que la persona que espera tu sello tiene nombre, hijos y un motivo que el formato no contempla.</p>
+      <div class="clave">📄 Revisa cada solicitud <b>contra el reglamento del día</b>, que cambia diario y sin avisar demasiado. Lo que está en regla se <b style="color:#1e6e3c">APRUEBA</b>; lo que la viola se <b style="color:#a32020">RECHAZA</b>. Cada error te cuesta una <b>citación de auditoría</b> — y a la tercera, el puesto.</div>
+      <div class="clave">🗣️ Tienes además <b>2 charlas por día</b>, que son para los casos donde el reglamento dice una cosa y la persona necesita otra: un sello resuelve papeles, pero solo una charla resuelve personas. Aprender a distinguir cuándo usar cada cual es, en el fondo, todo el trabajo.</div>
+      <p class="firma">— Suerte. La vas a necesitar.<br/>Ing. Salcedo, Dirección</p>
+      <div class="acciones"><button class="btnPapel" id="bEmpezar">Tomar el sello →</button></div>
+      <p class="mono" style="font-size:11px;opacity:.55;margin-top:12px;text-align:center">3 turnos · el reloj corre · atajos: A aprobar · R rechazar · H hablar</p>
+    </div>
+  </section>
+
+  <!-- JUEGO -->
+  <section class="screen" id="sJuego">
+    <div class="hud">
+      <span class="ficha">TURNO <b id="hDia">1</b>/3</span>
+      <span class="ficha reloj" id="hReloj">02:00</span>
+      <span class="ficha">RESUELTAS <b id="hOk">0</b></span>
+      <span class="ficha" id="hCitas">CITACIONES: —</span>
+      <span class="ficha">CHARLAS <b id="hCharlas">2</b></span>
+    </div>
+    <div class="medidores">
+      <div class="med"><span class="et"><span>Confianza del equipo</span><span id="vEq">50</span></span><span class="track"><i id="bEq" style="width:50%"></i></span></div>
+      <div class="med dir"><span class="et"><span>Imagen con dirección</span><span id="vDir">50</span></span><span class="track"><i id="bDir" style="width:50%"></i></span></div>
+    </div>
+    <div class="escritorio">
+      <div>
+        <div class="papelZona" id="zonaPapel"></div>
+        <div class="sellos">
+          <button class="sello aprobar" id="bAprobar">APROBAR<small>[A]</small></button>
+          <button class="sello rechazar" id="bRechazar">RECHAZAR<small>[R]</small></button>
+          <button class="sello hablar" id="bHablar">HABLAR<small>[H]</small></button>
+        </div>
+        <div class="veredicto" id="veredicto"></div>
+      </div>
+      <aside class="tablilla">
+        <div class="hoja">
+          <h3>REGLAMENTO <span class="memo" id="memoDia"></span></h3>
+          <ul class="reglas" id="listaReglas"></ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- CORTE DE DÍA -->
+  <section class="screen" id="sCorteDia">
+    <div class="folder">
+      <span class="etiqueta" id="cdKicker">FIN DEL TURNO</span>
+      <h2 id="cdTitulo">—</h2>
+      <div class="metricas">
+        <div class="metrica"><span class="et">Bien selladas</span><span class="va" id="cdOk">0</span></div>
+        <div class="metrica"><span class="et">Citaciones hoy</span><span class="va" id="cdMal">0</span></div>
+        <div class="metrica"><span class="et">Charlas usadas</span><span class="va" id="cdCharlas">0</span></div>
+      </div>
+      <p class="historia" id="cdHistoria"></p>
+      <div class="acciones"><button class="btnPapel" id="bSigDia">—</button></div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="screen" id="sFinal">
+    <div class="folder">
+      <span class="etiqueta">EXPEDIENTE DE CIERRE · VIERNES</span>
+      <h2 id="fTitulo">—</h2>
+      <p class="historia" id="fResumen"></p>
+      <div class="metricas">
+        <div class="metrica"><span class="et">Bien resueltas</span><span class="va" id="fOk">0</span></div>
+        <div class="metrica"><span class="et">Citaciones</span><span class="va" id="fCitas">0</span></div>
+        <div class="metrica"><span class="et">Confianza equipo</span><span class="va" id="fEq">0</span></div>
+        <div class="metrica"><span class="et">Imagen dirección</span><span class="va" id="fDir">0</span></div>
+      </div>
+      <h2 style="font-size:19px;margin-top:16px">Lo que el sello te enseñó</h2>
+      <div class="tarjetas" id="fTarjetas"></div>
+      <p class="posdata">P.D. Nadie te aplicó aquí un examen y, sin embargo, este expediente sabe cómo decides bajo presión, cuándo cedes ante el poder y a quién le diste la cara. Así evalúa un juego bien diseñado: jugando. (Y si eres gamer, sí — la mecánica es un homenaje a Papers, Please, el clásico de sellar documentos en una aduana.)</p>
+      <div class="acciones">
+        <button class="btnPapel" id="bOtra">Jugar otra vez</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const clamp=v=>Math.max(0,Math.min(100,v));
+const azar=a=>a[Math.floor(Math.random()*a.length)];
+const entre=(a,b)=>a+Math.floor(Math.random()*(b-a+1));
+
+/* ── Audio ── */
+let AC=null;
+function tono(f,d,t){try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain();o.type=t||"square";o.frequency.value=f;g.gain.setValueAtTime(.07,AC.currentTime);g.gain.exponentialRampToValueAtTime(.001,AC.currentTime+d);o.connect(g);g.connect(AC.destination);o.start();o.stop(AC.currentTime+d)}catch(e){}}
+const sndStamp=()=>{tono(90,.12,"sine");setTimeout(()=>tono(60,.1,"sine"),40)};
+const sndOk=()=>tono(1100,.08);
+const sndMal=()=>tono(150,.3,"sawtooth");
+const sndTic=()=>tono(1500,.03,"sine");
+
+/* ── Reglas por día ── */
+const REGLAS=[
+  [ {id:"factura", t:"Gastos mayores a $2,000 requieren factura adjunta."},
+    {id:"vac5",    t:"Vacaciones: máximo 5 días seguidos por solicitud."},
+    {id:"he3",     t:"Horas extra: máximo 3 por día por persona."} ],
+  [ {id:"cierre",  t:"Semana de cierre (26 al 30): no se aprueban vacaciones que la toquen.", nueva:true},
+    {id:"repre",   t:"Gastos de «representación»: suspendidos hasta nuevo aviso.", nueva:true} ],
+  [ {id:"waiver",  t:"Excepciones de calidad: NINGUNA se aprueba (memo post-devolución).", nueva:true},
+    {id:"heprev",  t:"Horas extra requieren autorización previa por escrito adjunta.", nueva:true} ],
+];
+function reglasActivas(dia){ return REGLAS.slice(0,dia+1).flat(); }
+
+/* ── Generador de solicitudes ── */
+const GENTE=["Tavo Ruiz","Rebe Ortega","Milo Cházarez","Ceci Landa","Poncho Vega","Maga Solís","Beto Quintero","Irma Cadena"];
+const CONCEPTOS=["Refacciones de banda","Viáticos a planta Norte","Material de empaque","Mantenimiento de montacargas","Papelería de auditoría"];
+let folio=1000;
+
+function docVacaciones(dia, sucio){
+  const dias = sucio==="vac5" ? entre(6,9) : entre(2,5);
+  let ini = entre(2,20);
+  if(sucio==="cierre") ini = entre(24,28);
+  else if(dia>=1) ini = Math.min(ini, 19);
+  const persona=azar(GENTE);
+  return {tipo:"SOLICITUD DE VACACIONES", persona, viola: sucio ? [sucio] : [],
+    campos:[["Colaborador",persona],["Área","Operación"],["Del",`agosto ${ini}`],["Al",`agosto ${ini+dias-1}`],["Días solicitados",dias+" días"],["Saldo disponible","12 días"]]};
+}
+function docGasto(dia, sucio){
+  const monto = sucio==="factura" ? entre(21,68)*100 : entre(4,19)*100;
+  const conRepre = sucio==="repre";
+  const persona=azar(GENTE);
+  return {tipo:"VALE DE GASTOS", persona, viola: sucio ? [sucio] : [],
+    campos:[["Solicita",persona],["Concepto", conRepre?"Comida de representación":azar(CONCEPTOS)],["Monto","$"+monto.toLocaleString("es-MX")+".00"],["Factura adjunta", sucio==="factura"?"NO":"Sí"],["Proyecto","OP-2026-14"]]};
+}
+function docHoras(dia, sucio){
+  const hrs = sucio==="he3" ? entre(4,6) : entre(1,3);
+  const persona=azar(GENTE);
+  return {tipo:"HORAS EXTRA", persona, viola: sucio ? [sucio] : [],
+    campos:[["Colaborador",persona],["Fecha","mañana"],["Horas",hrs+" hrs"],["Motivo","Cierre de pedido"],["Autorización previa", sucio==="heprev"?"No adjunta":"Adjunta ✓"]]};
+}
+function generaDoc(dia){
+  const posibles=[];
+  posibles.push(()=>docVacaciones(dia, null), ()=>docGasto(dia,null), ()=>docHoras(dia,null));
+  const sucios=[()=>docVacaciones(dia,"vac5"), ()=>docGasto(dia,"factura"), ()=>docHoras(dia,"he3")];
+  if(dia>=1){ sucios.push(()=>docVacaciones(dia,"cierre"), ()=>docGasto(dia,"repre")); }
+  if(dia>=2){ sucios.push(()=>docHoras(dia,"heprev")); }
+  const usaSucio=Math.random()<.52;
+  const d=(usaSucio?azar(sucios):azar(posibles))();
+  d.folio="F-"+(++folio);
+  return d;
+}
+
+/* ── Documentos de historia (los dilemas) ── */
+function docsHistoria(dia){
+  if(dia===0) return [{
+    tipo:"HORAS EXTRA", persona:"Tavo Ruiz", historia:"tavo", viola:["he3"],
+    campos:[["Colaborador","Tavo Ruiz"],["Fecha","mañana"],["Horas","5 hrs"],["Motivo","Reponer el error de captura del pedido"],["Autorización previa","Adjunta ✓"]],
+    nota:"«Jefe: el error fue mío y quiero repararlo yo, aunque sea en mi tiempo. Ni siquiera se las voy a cobrar. — T.»",
+    charla:"Te sientas con Tavo, que llega con cara de sentenciado, y le explicas lo que el formato no dice: que su error ya está corregido, que cinco horas violan el tope del reglamento y que no piensas dejarlo castigarse a escondidas como si la culpa fuera un plan de trabajo. «Mañana te quedas <b>dos horas conmigo</b> revisando el proceso, que eso sí repara algo.» <b>Tavo entiende, quizá por primera vez, que responsabilizarse no es autoflagelarse.</b>",
+    efectos:{aprobar:{eq:4,dir:-2,cita:true, txt:"Aprobaste cinco horas que el reglamento prohíbe, y aunque Tavo te lo agradeció con el alma, la auditoría no entiende de gratitudes: citación. Lo más caro, sin embargo, no fue el papel — fue la lección que Tavo se llevó: que las reglas se doblan cuando la culpa se cuenta bonito."},
+             rechazar:{eq:-6,dir:2, txt:"Rechazo impecable según el reglamento, y sin embargo Tavo se fue de tu oficina con la culpa intacta y sin ningún plan para repararla. Técnicamente hiciste lo correcto; humanamente, cerraste una puerta que él había tocado con trabajo."},
+             hablar:{eq:8,dir:2, txt:""}}
+  }];
+  if(dia===1) return [{
+    tipo:"VALE DE GASTOS", persona:"Ing. Salcedo (tu director)", historia:"director", viola:["factura","repre"],
+    campos:[["Solicita","Ing. Salcedo"],["Concepto","Comida de representación"],["Monto","$4,800.00"],["Factura adjunta","NO"],["Proyecto","—"]],
+    nota:"Post-it amarillo, letra apurada: «Apruébalo sin hacer ruido. Yo respondo. — S.»",
+    charla:"Subes a su oficina con el vale en la mano, y aunque el corazón te late en las orejas, se lo dices completo: que ese papel viola dos reglas que él mismo firmó, que si tú lo apruebas hoy mañana no podrás rechazarle nada a nadie, y que con factura y por la vía normal tú mismo se lo procesas primero que ninguno. El silencio dura tres segundos que se sienten como un trimestre. «...Está bien, coordinación.» <b>Le dijiste que no al poder — de frente, y con una salida en la mano.</b>",
+    efectos:{aprobar:{eq:-8,dir:6,flag:"tapadera", txt:"Pusiste el sello, y el vale pasó sin factura delante del mismo equipo al que tú le rebotas vales de trescientos pesos. Nadie dijo nada, porque nadie necesita decir nada: la palabra «parejo», que tanto usaste en tu primera junta, acaba de perder su significado en este piso."},
+             rechazar:{eq:8,dir:-9,flag:"valiente", txt:"RECHAZADO, por escrito, al director. En el chat del equipo alguien puso un aplauso que se borró a los dos segundos — el tiempo exacto que tarda el valor ajeno en acordarse de la nómina. Dirección, por su parte, tomó nota. De las dos cosas."},
+             hablar:{eq:6,dir:3,flag:"valiente", txt:""}}
+  }];
+  return [{
+    tipo:"EXCEPCIÓN DE CALIDAD", persona:"Ing. Salcedo (tu director)", historia:"waiver", viola:["waiver"],
+    campos:[["Solicita","Ing. Salcedo"],["Lote","L-2287 (pedido grande)"],["Motivo","Llegar a la fecha de entrega"],["Inspección","Se omitiría"],["Memo vigente","Ninguna excepción"]],
+    nota:"«El cliente no espera. Es un lote, no el fin del mundo. — S.»",
+    charla:"«Ingeniero: el memo de cero excepciones existe por la devolución del mes pasado, y lo firmó usted. Si el lote sale sin inspección y truena, tronamos los dos — así que déjeme proponerle otra cosa: yo hablo con el cliente, entregamos el noventa por ciento mañana y el resto, ya revisado, el lunes.» Acepta de mala gana, que es la manera en que los directores aceptan las buenas ideas que no fueron suyas. El cliente, para sorpresa de nadie más que Salcedo, también. <b>Diste la cara hacia arriba y hacia afuera el mismo día.</b>",
+    efectos:{aprobar:{eq:-6,dir:5,flag:"ruleta", txt:"Aprobaste la excepción contra el memo, y el lote salió sin que nadie lo inspeccionara. Ahora mismo es una moneda girando en el aire — y las monedas de calidad, por alguna razón que todos los jefes aprenden tarde, caen del lado malo más seguido de lo que las probabilidades prometen."},
+             rechazar:{eq:6,dir:-7, txt:"RECHAZADO. El director colgó el teléfono con una fuerza que se oyó hasta acá, y el equipo de calidad, en cambio, respiró completo por primera vez en la semana. Alguien tiene que ser el freno de esta máquina; hoy, aunque cueste, te tocó a ti."},
+             hablar:{eq:8,dir:4,flag:"accountability", txt:""}}
+  }];
+}
+
+/* ── Estado ── */
+let G=null, cronometro=null;
+
+function empieza(){
+  G={dia:0, eq:50, dir:50, citas:0, ok:0, flags:new Set(), historia:[]};
+  iniciaDia();
+}
+function iniciaDia(){
+  const especiales=docsHistoria(G.dia);
+  const normales=Array.from({length:9},()=>generaDoc(G.dia));
+  const pila=[...normales.slice(0,3), especiales[0], ...normales.slice(3)];
+  Object.assign(G,{pila, idx:0, charlas:2, okDia:0, citasDia:0, charlasDia:0, tiempo:120, resuelto:false});
+  pintaReglas(); pintaHud();
+  pantalla("sJuego");
+  muestraDoc();
+  clearInterval(cronometro);
+  cronometro=setInterval(()=>{
+    G.tiempo--;
+    if(G.tiempo<=10 && G.tiempo>0) sndTic();
+    pintaHud();
+    if(G.tiempo<=0) finDia();
+  },1000);
+}
+function pantalla(id){document.querySelectorAll(".screen").forEach(s=>s.classList.remove("on"));$(id).classList.add("on")}
+function pintaReglas(){
+  $("memoDia").textContent="· TURNO "+(G.dia+1);
+  $("listaReglas").innerHTML=reglasActivas(G.dia).map((r,i)=>
+    `<li class="${r.nueva && REGLAS[G.dia].includes(r) ? "nueva":""}"><span class="num">${i+1}.</span>${r.t}</li>`).join("");
+}
+function pintaHud(){
+  $("hDia").textContent=G.dia+1;
+  const m=String(Math.floor(G.tiempo/60)).padStart(1,"0"), s=String(G.tiempo%60).padStart(2,"0");
+  $("hReloj").textContent=`0${m}:${s}`;
+  $("hOk").textContent=G.ok;
+  $("hCitas").textContent="CITACIONES: "+("■".repeat(G.citas)||"—")+"□".repeat(Math.max(0,3-G.citas));
+  $("hCharlas").textContent=G.charlas;
+  $("vEq").textContent=Math.round(G.eq); $("vDir").textContent=Math.round(G.dir);
+  $("bEq").style.width=G.eq+"%"; $("bDir").style.width=G.dir+"%";
+  $("bHablar").disabled = G.charlas<=0 || !docActual();
+}
+function docActual(){return G.pila[G.idx]}
+function muestraDoc(){
+  const d=docActual();
+  $("veredicto").innerHTML="";
+  if(!d){ finDia(); return; }
+  const z=$("zonaPapel");
+  z.innerHTML=`<div class="papel" id="papel">
+    <div class="tipo"><span>${d.tipo}</span><span class="folio mono">${d.folio||"F-"+(folio+G.idx)}</span></div>
+    <div class="campos">${d.campos.map(c=>`<div class="campo"><span class="et">${c[0]}</span><span class="va">${c[1]}</span></div>`).join("")}</div>
+    ${d.nota?`<div class="nota">${d.nota}</div>`:""}
+    <div class="selloStamp" id="stamp"></div>
+  </div>`;
+  pintaHud();
+}
+function reglaTexto(id){ return reglasActivas(2).find(r=>r.id===id)?.t || ""; }
+
+function estampa(tipo){
+  const st=$("stamp");
+  st.textContent = tipo==="ok"?"APROBADO":"RECHAZADO";
+  st.className="selloStamp pum "+tipo;
+  sndStamp();
+}
+function resuelve(accion){
+  const d=docActual(); if(!d) return;
+  const esSucio=d.viola.length>0;
+
+  if(accion==="hablar"){
+    if(G.charlas<=0) return;
+    G.charlas--; G.charlasDia++;
+    if(d.historia){
+      const e=d.efectos.hablar;
+      G.eq=clamp(G.eq+e.eq); G.dir=clamp(G.dir+e.dir);
+      if(e.flag) G.flags.add(e.flag);
+      G.ok++; G.okDia++;
+      G.historia.push({dia:G.dia, quien:d.persona, como:"charla"});
+      sndOk();
+      $("veredicto").innerHTML=`<span class="charla">🗣 ${d.charla}</span>`;
+      d.resueltaConCharla=true;
+      pintaHud();
+      setTimeout(pasaPapel, 3600);
+    }else{
+      G.eq=clamp(G.eq+1);
+      $("veredicto").innerHTML=`<span class="charla">🗣 Invertiste media hora de escucha activa en un trámite que el reglamento resolvía en diez segundos, y aunque ${d.persona} salió encantado de la vida, la fila de tu escritorio opina distinto. <b>(charla gastada)</b></span>`;
+      G.tiempo=Math.max(5,G.tiempo-12);
+      pintaHud();
+    }
+    return;
+  }
+
+  const correcto = (accion==="aprobar" && !esSucio) || (accion==="rechazar" && esSucio);
+  estampa(accion==="aprobar"?"ok":"no");
+
+  if(d.historia){
+    const e=d.efectos[accion];
+    G.eq=clamp(G.eq+e.eq); G.dir=clamp(G.dir+e.dir);
+    if(e.flag) G.flags.add(e.flag);
+    if(e.cita){ G.citas++; G.citasDia++; sndMal();
+      $("veredicto").innerHTML=`<span class="citacion"><b>CITACIÓN · Auditoría interna</b>${e.txt}</span>`;
+      document.body.classList.add("tiembla"); setTimeout(()=>document.body.classList.remove("tiembla"),350);
+    } else {
+      G.ok++; G.okDia++;
+      $("veredicto").innerHTML=`<span class="charla">${e.txt}</span>`;
+    }
+    G.historia.push({dia:G.dia, quien:d.persona, como:accion});
+    setTimeout(pasaPapel, 3100);
+  } else if(correcto){
+    G.ok++; G.okDia++; sndOk();
+    $("veredicto").innerHTML=`<span class="bien">✓ Sello correcto${esSucio?` — violaba: «${reglaTexto(d.viola[0])}»`:""}</span>`;
+    setTimeout(pasaPapel, 650);
+  } else {
+    G.citas++; G.citasDia++; sndMal();
+    const motivo = esSucio
+      ? `Aprobaste un documento que viola la regla «${reglaTexto(d.viola[0])}», y aunque hoy nadie lo notó, la auditoría vive de notar lo que nadie nota.`
+      : `Rechazaste un documento que estaba perfectamente en regla, así que ${d.persona} — que hizo todo bien y aun así se llevó tu sello rojo — lo va a recordar más tiempo del que crees.`;
+    if(!esSucio) G.eq=clamp(G.eq-4);
+    $("veredicto").innerHTML=`<span class="citacion"><b>CITACIÓN · Auditoría interna</b>${motivo}</span>`;
+    document.body.classList.add("tiembla"); setTimeout(()=>document.body.classList.remove("tiembla"),350);
+    setTimeout(pasaPapel, 1900);
+  }
+  pintaHud();
+  if(G.citas>=3){ clearInterval(cronometro); setTimeout(finalDespido, 1900); }
+}
+function pasaPapel(){
+  if(G.citas>=3) return;
+  const p=$("papel"); if(p) p.classList.add("saliendo");
+  setTimeout(()=>{ G.idx++; muestraDoc(); },230);
+}
+function finDia(){
+  clearInterval(cronometro);
+  if(G.dia>=2){ finalJuego(); return; }
+  const historias=[
+    "Esa noche, en el chat del equipo, alguien escribió que «el nuevo coordinador sí lee lo que firma», y todavía no sabes si eso fue un elogio o una advertencia. Lo que sí sabes es que mañana llegan reglas nuevas — y con ellas, según el rumor del pasillo, un vale que preferirías no ver nunca sobre tu escritorio.",
+    "El Ing. Salcedo pasó junto a tu escritorio sin saludar, lo cual, tratándose de él, significa que te está midiendo o que ya te midió. Mañana cierra el pedido grande, calidad anda nerviosa por un memo nuevo que nadie ha leído completo, y tú ya aprendiste que los días tranquilos, en este puesto, son los que están tomando vuelo.",
+  ];
+  $("cdKicker").textContent="FIN DEL TURNO "+(G.dia+1);
+  $("cdTitulo").textContent = G.citasDia===0 ? "Turno limpio: hoy el sello pesó un poco menos" : "Turno cerrado, aunque con tinta roja en el expediente";
+  $("cdOk").textContent=G.okDia; $("cdMal").textContent=G.citasDia; $("cdCharlas").textContent=G.charlasDia;
+  $("cdHistoria").textContent=historias[G.dia];
+  $("bSigDia").textContent="Turno "+(G.dia+2)+" →";
+  pantalla("sCorteDia");
+}
+$("bSigDia") && ($("bSigDia").onclick=()=>{G.dia++;iniciaDia()});
+
+/* ── Finales ── */
+function finalDespido(){
+  pantalla("sFinal");
+  $("fTitulo").textContent="Tres citaciones: te quitaron el sello";
+  $("fResumen").innerHTML="Cuando recursos humanos te mandó llamar — con ese tono amable que reservan para las malas noticias —, ya sabías a qué ibas: tres citaciones en una misma semana son más de las que ha sobrevivido ningún coordinador, por nuevo que sea. Mientras acomodabas tus cosas en la caja de cartón que alguien tenía misteriosamente lista, te cayó encima la lección más vieja del puesto: <b>firmar sin leer cuesta exactamente lo mismo que leer sin atreverse a firmar.</b> La silla sigue ahí. ¿Otra vuelta?";
+  llenaFinal();
+}
+function finalJuego(){
+  let extra="";
+  if(G.flags.has("ruleta")){
+    if(Math.random()<.6){ G.dir=clamp(G.dir-25); extra="<b>Epílogo:</b> el lote L-2287, ese que salió sin inspección porque el cliente no podía esperar, regresó completo el lunes con una queja formal — y en la excepción que lo dejó salir está tu sello, mientras que el post-it del director, curiosamente, ya no aparece por ningún lado. "; }
+    else extra="<b>Epílogo:</b> el lote pasó, de puro milagro y de panzazo. La moneda sigue en el aire para la próxima vez — porque en calidad siempre hay una próxima vez. ";
+  }
+  if(G.flags.has("tapadera")){
+    if(Math.random()<.5){ G.dir=clamp(G.dir-15); G.eq=clamp(G.eq-5); extra+="<b>Auditoría sorpresa:</b> el vale de $4,800 sin factura apareció en la revisión trimestral con tu sello encima, y el «yo respondo» del director resultó tener las letras más chiquitas que has leído en tu vida. "; }
+  }
+  pantalla("sFinal");
+  let titulo,resumen;
+  const eq=G.eq, dir=G.dir;
+  if(G.flags.has("accountability") && eq>=60 && G.citas<=1){
+    titulo="El sello más respetado del pasillo";
+    resumen="Sellaste parejo toda la semana, le dijiste que no al poder cuando tocó — pero con una salida en la mano, que es lo que distingue un límite de un pleito — y cuando la calidad estuvo en juego diste la cara con el cliente en lugar de esconderte detrás del reglamento. Eso tiene un nombre que está de moda en los cursos y escasea en los pasillos: <b>accountability</b>. Tu equipo lo vio todo, y esa reputación, que ningún diplomado regala, ya trabaja para ti.";
+  } else if(eq>=60 && dir<40){
+    titulo="El héroe del equipo (y el problema de dirección)";
+    resumen="Tu gente te haría un monumento en el estacionamiento si la dejaran, pero tu director, cada vez que escucha tu nombre, marca a recursos humanos. Proteger al equipo estuvo bien; hacerlo sin construir un solo puente hacia arriba, en cambio, te dejó sin techo — porque <b>el liderazgo del puesto de en medio se juega en las dos direcciones a la vez</b>, y la que descuidaste es justamente la que firma tu permanencia.";
+  } else if(dir>=60 && eq<40){
+    titulo="El sello de hule";
+    resumen="Dirección te adora, y con razón: nunca un problema, nunca una objeción, nunca un no. Tu equipo, mientras tanto, aprendió una lección más silenciosa y más cara — que tu firma se consigue con jerarquía y no con razones. <b>Un jefe que no puede decirle que no a los de arriba tampoco puede proteger a los de abajo</b>, y en este piso, aunque nadie te lo diga de frente, ya lo saben todos.";
+  } else if(G.citas===0 && eq>=45){
+    titulo="Un sello confiable, que ya pesa menos";
+    resumen="Cerraste la semana sin una sola citación y con un equipo que confía razonablemente en tu firma, lo cual suena modesto hasta que recuerdas cuántos coordinadores no pueden decir ninguna de las dos cosas. <b>La consistencia es la forma más aburrida del liderazgo — y la única que aguanta un trimestre completo.</b> Los dilemas no se acabaron, por supuesto: solo cambiarán de folio.";
+  } else {
+    titulo="Sobreviviste al sello";
+    resumen="Tu semana dejó decisiones buenas revueltas con sellos que quisieras despegar, que es exactamente como se ven casi todas las jefaturas reales vistas de cerca. El puesto de en medio es esto: <b>el reglamento en una mano, la persona en la otra y el reloj encima</b> — y la diferencia entre un turno sobrevivido y una carrera construida está en aprender, vuelta tras vuelta, cuál de las dos manos abrir primero.";
+  }
+  $("fTitulo").textContent=titulo;
+  $("fResumen").innerHTML=extra+resumen;
+  llenaFinal();
+}
+function llenaFinal(){
+  $("fOk").textContent=G.ok; $("fCitas").textContent=G.citas;
+  $("fEq").textContent=Math.round(G.eq); $("fDir").textContent=Math.round(G.dir);
+  const t=[];
+  const h=(q)=>G.historia.find(x=>x.quien.includes(q));
+  const tv=h("Tavo");
+  t.push({estilo:"EL DILEMA DE TAVO · REPARAR SIN CASTIGAR",p:
+    tv?.como==="charla" ? "Cuando Tavo quiso castigarse con horas extra que ni pensaba cobrar, no le firmaste la penitencia ni lo rebotaste con el artículo en la mano: hablaste con él, y esa charla convirtió una culpa en un plan. <b>La charla es el sello que no viene en el escritorio</b> — y es el que la gente recuerda.":
+    tv?.como==="aprobar" ? "Le aprobaste su autocastigo de cinco horas, gesto generoso que costó una citación y algo peor: Tavo aprendió que <b>las reglas ceden cuando la culpa se cuenta bien</b>, y esa lección, aunque hoy parezca inofensiva, se cobra después.":
+    tv ? "Lo rechazaste conforme al reglamento, con toda la razón y con ningún resultado: Tavo se llevó su culpa intacta a casa porque nadie le ofreció una forma mejor de repararla. <b>Tener la razón y resolver a la persona son dos oficios distintos.</b>":
+    "El dilema de Tavo no alcanzó a llegar a tu escritorio en esta vuelta."});
+  const dr=h("Salcedo");
+  t.push({estilo:"EL VALE DEL DIRECTOR · LÍMITES HACIA ARRIBA",p:
+    G.flags.has("tapadera") ? "Le pusiste el sello al vale del jefe, sin factura y sin preguntas, y desde ese momento tu «no» dejó de existir en el edificio — porque un no que se rinde ante la jerarquía no es un criterio, es una tarifa. <b>Lo que apruebas en silencio lo apruebas para siempre.</b>":
+    dr?.como==="charla" ? "Le dijiste que no al director mirándolo a los ojos, pero le dejaste una salida digna sobre la mesa, y esa combinación — firmeza en el fondo, puente en la forma — es la única manera conocida de ponerle límites al poder sin declararle la guerra. <b>Un límite con puente es liderazgo; sin puente, es un pleito.</b>":
+    dr?.como==="rechazar" ? "Rechazaste el vale del director por escrito y sin anestesia: valiente, sin duda, aunque la cicatriz que dejó en tu imagen con dirección habría costado la mitad si el mismo «no» hubiera llegado de frente y con una alternativa. <b>La forma del no importa casi tanto como el no.</b>":
+    "El vale del director no llegó en esta vuelta — pero llegará, porque siempre llega."});
+  const w=G.historia.filter(x=>x.dia===2 && x.quien.includes("Salcedo"))[0];
+  t.push({estilo:"LA EXCEPCIÓN DE CALIDAD · ACCOUNTABILITY",p:
+    G.flags.has("accountability") ? "Cuando el director quiso saltarse la inspección para llegar a la fecha, no aprobaste ni rebotaste: renegociaste con el cliente y diste la cara en las dos direcciones el mismo día. <b>Hacerse cargo del resultado — no del trámite — es la definición operativa de accountability</b>, y la practicaste en vivo.":
+    G.flags.has("ruleta") ? "Firmaste la excepción para llegar a la fecha, convencido de que era solo un lote, y convertiste la calidad en un volado cuyo boleto lleva tu sello. <b>Los atajos de calidad nunca son un lote: son una costumbre celebrando su primer día.</b>":
+    w?.como==="rechazar" ? "Sostuviste el memo de cero excepciones contra la presión directa de tu director, lo cual te costó caro arriba y te compró algo difícil de comprar abajo: la certeza de que el freno de esta máquina existe. <b>El que firma es el que frena — y alguien tiene que serlo.</b>":
+    "La excepción de calidad no alcanzó tu turno en esta vuelta."});
+  t.push({estilo:"EL RELOJ Y LA PILA",p:`Resolviste ${G.ok} solicitudes, acumulaste ${G.citas} citación(es) e invertiste bien ${G.historia.filter(x=>x.como==="charla").length} charla(s), y de todo eso queda una sola conclusión que vale la pena llevarse: <b>el puesto de en medio no se gana sellando más rápido, sino sabiendo cuál papel merece que el reloj espere.</b>`});
+  if(G.flags.has("tapadera")) t.push({estilo:"PENDIENTE · LA CULTURA QUE FIRMASTE",p:"El vale se tapó y el cliente nunca supo, así que técnicamente funcionó — solo que ahora tu equipo sabe que aquí los errores y los favores se esconden, y <b>una cultura donde las cosas se esconden es una cultura donde te enteras de los incendios cuando ya alcanzaron tu oficina.</b>"});
+  $("fTarjetas").innerHTML=t.map(x=>`<div class="tarjeta"><span class="estilo">${x.estilo}</span><p>${x.p}</p></div>`).join("");
+}
+
+$("bEmpezar").onclick=empieza;
+$("bAprobar").onclick=()=>resuelve("aprobar");
+$("bRechazar").onclick=()=>resuelve("rechazar");
+$("bHablar").onclick=()=>resuelve("hablar");
+$("bOtra").onclick=()=>location.reload();
+document.addEventListener("keydown",e=>{
+  if(!$("sJuego").classList.contains("on"))return;
+  if(e.key==="a"||e.key==="A")resuelve("aprobar");
+  if(e.key==="r"||e.key==="R")resuelve("rechazar");
+  if(e.key==="h"||e.key==="H")resuelve("hablar");
+});
+</script>
+<style>.tiembla{animation:tiembla .3s}@keyframes tiembla{0%,100%{transform:none}25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}</style>
+</body>
+</html>

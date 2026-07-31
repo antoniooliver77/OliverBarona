@@ -8,6 +8,7 @@ const LINKS = [
   { href: "/capacitacion-empresarial", label: "Empresas" },
   { href: "/innovacion-academica", label: "Instituciones" },
   { href: "/consejeria-creadores", label: "Creadores" },
+  { href: "/portafolio", label: "Portafolio" },
 ];
 
 /** Navegación principal — presente en todas las páginas. */

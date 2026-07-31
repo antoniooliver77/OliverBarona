@@ -1,0 +1,264 @@
+/* Piezas del portafolio adaptadas a la identidad de oliverbarona.com:
+   paleta neón sobre carbón, esquinas DI (recta → curva). */
+
+.ficha {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--rule);
+  border-top: 2px solid var(--neon-orange);
+  border-radius: var(--di-radius-sm);
+  overflow: hidden;
+  margin: 22px 0;
+}
+
+.fichaDato {
+  background: var(--bg-elev);
+  padding: 16px;
+}
+
+.fichaEtiqueta {
+  display: block;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+  margin-bottom: 6px;
+}
+
+.fichaValor {
+  font-size: 15.5px;
+  line-height: 1.4;
+  color: var(--fg-mid);
+}
+
+.demoCards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 14px;
+  margin: 18px 0 6px;
+}
+
+.demoCard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  background: var(--bg-elev);
+  border: 1px solid var(--rule);
+  border-radius: var(--di-radius-sm);
+  color: var(--fg);
+  text-decoration: none;
+  transition: border-color 150ms ease, transform 150ms ease;
+}
+
+.demoCard:hover {
+  border-color: var(--neon-cyan);
+  transform: translateY(-2px);
+}
+
+.demoCard b {
+  font-size: 16.5px;
+  line-height: 1.3;
+}
+
+.demoCard b::after {
+  content: " ↗";
+  color: var(--neon-cyan);
+}
+
+.demoCard span {
+  font-size: 13.5px;
+  color: var(--fg-dim);
+  line-height: 1.45;
+}
+
+.demoCard .demoTag {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+}
+
+.notaDemo {
+  font-size: 14.5px;
+  color: var(--fg-dim);
+  max-width: 64ch;
+  line-height: 1.55;
+}
+
+/* Laboratorio: tarjetas de juego */
+.lab {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  margin: 22px 0;
+}
+
+.labCard {
+  background: var(--bg-elev);
+  border: 1px solid var(--rule);
+  border-bottom: 3px solid var(--neon-orange);
+  border-radius: var(--di-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.labArte {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 58px;
+  line-height: 1;
+  padding: 26px 18px;
+  background: var(--navy);
+  letter-spacing: 6px;
+}
+
+.labCuerpo {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.labMeta {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--neon-cyan);
+}
+
+.labCard h3 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.labCard p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--fg-mid);
+  margin: 0;
+}
+
+.labMecanicas {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.labMecanicas li {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--fg-dim);
+  padding-left: 18px;
+  position: relative;
+}
+
+.labMecanicas li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 10px;
+  height: 2px;
+  background: var(--neon-orange);
+}
+
+.labJugar {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 50px;
+  background: var(--neon-orange);
+  color: var(--bg);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: var(--di-radius-sm);
+  margin-left: 18px;
+  margin-right: 18px;
+  margin-bottom: 18px;
+  transition: filter 150ms ease;
+}
+
+.labJugar:hover {
+  filter: brightness(1.15);
+}
+
+.capturas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin: 18px 0;
+}
+
+.captura {
+  margin: 0;
+  background: var(--bg-elev);
+  border: 1px solid var(--rule);
+  border-bottom: 3px solid var(--neon-orange);
+  border-radius: var(--di-radius-sm);
+  overflow: hidden;
+}
+
+.captura img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-bottom: 1px solid var(--rule);
+}
+
+.captura figcaption {
+  padding: 12px 14px;
+  font-size: 13.5px;
+  color: var(--fg-dim);
+  line-height: 1.45;
+}
+
+.cita {
+  border-left: 3px solid var(--neon-cyan);
+  padding: 4px 0 4px 18px;
+  margin: 20px 0;
+  max-width: 62ch;
+}
+
+.cita blockquote {
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--fg);
+  margin: 0 0 6px;
+}
+
+.cita figcaption {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--fg-dim);
+}
+
+@media (max-width: 860px) {
+  .ficha {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .capturas {
+    grid-template-columns: 1fr;
+  }
+}
