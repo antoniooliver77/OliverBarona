@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Lección 1.3 · Tipos de pólizas de vivienda</title>
+
+  <style>
+    :root{
+      --navy:#07192f;
+      --navy-2:#020817;
+      --navy-3:#020817;
+      --blue:#0f65ff;
+      --sky:#66c9ff;
+      --gold:#d5a74a;
+      --white:#f7fbff;
+      --ink:#d8f4ff;
+      --muted:#aebbc9;
+      --soft:#d8f4ff;
+      --card:#0a2447;
+      --card-2:#0a2447;
+      --line:rgba(255,255,255,.13);
+      --risk:#E86F52;
+      --success:#34A853;
+      --shadow:0 24px 70px rgba(0,0,0,.34);
+      --radius:24px;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+      margin:0;
+      padding:0;
+      overflow-x:hidden;
+      background:#020817;
+    }
+
+    body{
+      margin:0;
+      padding:0;
+      background:#020817;
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--ink);
+      overflow-x:hidden;
+    }
+
+    img{
+      max-width:100%;
+    }
+
+    .lesson{
+      width:100%;
+      overflow:hidden;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(102,201,255,.16), transparent 30%),
+        radial-gradient(circle at 90% 4%, rgba(213,167,74,.13), transparent 28%),
+        radial-gradient(circle at 50% 48%, rgba(15,101,255,.12), transparent 36%),
+        linear-gradient(180deg, #020817 0%, #07192f 42%, #020817 100%);
+    }
+
+    .wrap{
+      width:min(1120px, calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .hero{
+      padding:54px 0 34px;
+      color:var(--white);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      padding:8px 12px;
+      border:1px solid rgba(213,167,74,.45);
+      border-radius:999px;
+      background:rgba(255,255,255,.06);
+      color:#f3d88d;
+      font-size:.86rem;
+      letter-spacing:.02em;
+      margin-bottom:18px;
+    }
+
+    .eyebrow span{
+      width:8px;
+      height:8px;
+      border-radius:50%;
+      background:var(--gold);
+      box-shadow:0 0 16px rgba(213,167,74,.7);
+    }
+
+    h1{
+      font-size:clamp(2rem, 5vw, 4.3rem);
+      line-height:1;
+      margin:0 0 16px;
+      letter-spacing:-.055em;
+      max-width:980px;
+      color:#f7fbff;
+    }
+
+    .hero-lead{
+      font-size:clamp(1.05rem, 2vw, 1.32rem);
+      color:#d8f4ff;
+      max-width:870px;
+      line-height:1.65;
+      margin:0 0 28px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:24px;
+      align-items:stretch;
+      margin-top:30px;
+    }
+
+    .image-card{
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      margin:0;
+    }
+
+    .image-card img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .caption{
+      padding:12px 16px 15px;
+      color:#aebbc9;
+      font-size:.92rem;
+      line-height:1.45;
+      background:linear-gradient(90deg, rgba(7,25,47,.94), rgba(2,8,23,.94));
+      border-top:1px solid rgba(255,255,255,.12);
+    }
+
+    .route{
+      display:grid;
+      gap:14px;
+    }
+
+    .route-card{
+      padding:18px;
+      border-radius:22px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.13);
+      color:var(--white);
+    }
+
+    .route-card strong{
+      display:block;
+      color:#f3d88d;
+      margin-bottom:6px;
+      font-size:1rem;
+    }
+
+    .route-card p{
+      margin:0;
+      color:#d8f4ff;
+      line-height:1.5;
+      font-size:.95rem;
+    }
+
+    section{
+      padding:36px 0;
+      background:transparent;
+    }
+
+    .section-title{
+      margin:0 0 12px;
+      font-size:clamp(1.7rem, 3vw, 2.55rem);
+      letter-spacing:-.035em;
+      color:#f7fbff;
+      line-height:1.08;
+    }
+
+    .section-lead{
+      margin:0 0 22px;
+      max-width:900px;
+      color:#aebbc9;
+      font-size:1.08rem;
+      line-height:1.7;
+    }
+
+    .story{
+      margin-top:26px;
+      padding:30px;
+      border-radius:30px;
+      background:
+        radial-gradient(circle at top right, rgba(213,167,74,.18), transparent 36%),
+        linear-gradient(135deg, rgba(2,8,23,.97), rgba(7,25,47,.96));
+      color:#f7fbff;
+      border:1px solid rgba(213,167,74,.44);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .story:before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(90deg, rgba(213,167,74,.13), transparent 28%);
+      pointer-events:none;
+    }
+
+    .story-inner{
+      position:relative;
+      display:grid;
+      grid-template-columns:1fr .86fr;
+      gap:24px;
+      align-items:center;
+    }
+
+    .story h2{
+      font-family:Georgia, "Times New Roman", serif;
+      color:#f3d88d;
+      font-size:clamp(1.8rem, 3vw, 3rem);
+      line-height:1.05;
+      margin:0 0 14px;
+    }
+
+    .story p{
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:1.22rem;
+      line-height:1.65;
+      color:#d8f4ff;
+      margin:0 0 14px;
+    }
+
+    .story .quote{
+      border-left:4px solid var(--gold);
+      padding-left:16px;
+      color:#f3d88d;
+      font-style:italic;
+    }
+
+    .story img{
+      width:100%;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 18px 46px rgba(0,0,0,.38);
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(19,47,70,.96), rgba(13,31,48,.96));
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      box-shadow:0 16px 45px rgba(0,0,0,.18);
+    }
+
+    .card h3{
+      margin:0 0 10px;
+      color:#f7fbff;
+      font-size:1.24rem;
+      letter-spacing:-.02em;
+    }
+
+    .card p{
+      margin:0;
+      color:#aebbc9;
+      line-height:1.65;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(102,201,255,.15);
+      color:#8FD2FF;
+      font-weight:700;
+      font-size:.82rem;
+      margin-bottom:12px;
+    }
+
+    .tag.gold{
+      background:rgba(213,167,74,.16);
+      color:#f3d88d;
+    }
+
+    .tag.risk{
+      background:rgba(232,111,82,.15);
+      color:#FFB29F;
+    }
+
+    .tag.green{
+      background:rgba(52,168,83,.15);
+      color:#B7F3C8;
+    }
+
+    .callout{
+      padding:24px;
+      border-radius:26px;
+      background:
+        linear-gradient(135deg, rgba(7,25,47,.96), rgba(15,101,255,.92));
+      color:var(--white);
+      box-shadow:var(--shadow);
+      margin:22px 0;
+      border:1px solid rgba(255,255,255,.12);
+    }
+
+    .callout h3{
+      margin:0 0 10px;
+      color:#f3d88d;
+      font-size:1.5rem;
+    }
+
+    .callout p{
+      margin:0;
+      color:#E7EDF3;
+      line-height:1.65;
+      font-size:1.05rem;
+    }
+
+    .matrix-wrap{
+      overflow-x:auto;
+      border-radius:24px;
+      box-shadow:0 18px 54px rgba(0,0,0,.22);
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      min-width:850px;
+      background:rgba(2,8,23,.86);
+    }
+
+    th{
+      background:#0A1B2A;
+      color:#f7fbff;
+      text-align:left;
+      padding:17px;
+      font-size:.95rem;
+      border-bottom:1px solid rgba(213,167,74,.25);
+    }
+
+    td{
+      padding:17px;
+      border-bottom:1px solid rgba(255,255,255,.09);
+      color:#d8f4ff;
+      line-height:1.55;
+      vertical-align:top;
+    }
+
+    tr:last-child td{
+      border-bottom:none;
+    }
+
+    td strong{
+      color:#f3d88d;
+    }
+
+    .infographic{
+      margin:26px 0;
+      background:rgba(2,8,23,.9);
+      border-radius:28px;
+      overflow:hidden;
+      box-shadow:0 22px 62px rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.14);
+    }
+
+    .infographic img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+
+    .infographic figcaption{
+      padding:14px 18px 17px;
+      color:#aebbc9;
+      line-height:1.5;
+      background:rgba(2,8,23,.94);
+      font-size:.96rem;
+      border-top:1px solid rgba(255,255,255,.1);
+    }
+
+    .checklist{
+      display:grid;
+      gap:12px;
+      margin:18px 0 0;
+    }
+
+    .check{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:16px;
+      border-radius:18px;
+      background:rgba(102,201,255,.09);
+      border:1px solid rgba(102,201,255,.18);
+    }
+
+    .check .icon{
+      flex:0 0 auto;
+      width:26px;
+      height:26px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:var(--blue);
+      color:white;
+      font-weight:900;
+      font-size:.85rem;
+    }
+
+    .check p{
+      margin:0;
+      line-height:1.55;
+      color:#d8f4ff;
+    }
+
+    .check strong{
+      color:#f7fbff;
+    }
+
+    .accordion{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .acc-item{
+      background:linear-gradient(180deg, rgba(19,47,70,.96), rgba(13,31,48,.96));
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:0 10px 28px rgba(0,0,0,.16);
+    }
+
+    .acc-btn{
+      width:100%;
+      border:none;
+      background:transparent;
+      padding:18px 20px;
+      text-align:left;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      cursor:pointer;
+      color:#f7fbff;
+      font-weight:800;
+      font-size:1rem;
+      font-family:inherit;
+    }
+
+    .acc-btn span{
+      width:30px;
+      height:30px;
+      border-radius:50%;
+      background:rgba(213,167,74,.16);
+      color:#f3d88d;
+      display:grid;
+      place-items:center;
+      flex:0 0 auto;
+    }
+
+    .acc-panel{
+      display:none;
+      padding:0 20px 20px;
+      color:#aebbc9;
+      line-height:1.65;
+    }
+
+    .acc-item.open .acc-panel{
+      display:block;
+    }
+
+    .practice{
+      background:linear-gradient(180deg, rgba(19,47,70,.96), rgba(13,31,48,.96));
+      border-radius:26px;
+      border:1px solid var(--line);
+      padding:24px;
+      box-shadow:0 16px 44px rgba(0,0,0,.18);
+      margin-top:18px;
+    }
+
+    .practice h3{
+      margin:0 0 10px;
+      color:#f7fbff;
+      font-size:1.35rem;
+    }
+
+    .practice p{
+      line-height:1.65;
+      color:#aebbc9;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+      margin:18px 0;
+    }
+
+    .option{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.15);
+      background:rgba(255,255,255,.06);
+      color:#d8f4ff;
+      cursor:pointer;
+      transition:.2s ease;
+      line-height:1.5;
+    }
+
+    .option:hover{
+      border-color:rgba(102,201,255,.55);
+      transform:translateY(-1px);
+      background:rgba(102,201,255,.09);
+    }
+
+    .option input{
+      margin-top:4px;
+      accent-color:var(--sky);
+    }
+
+    .btn{
+      border:none;
+      border-radius:999px;
+      padding:12px 18px;
+      background:linear-gradient(135deg, var(--blue), var(--sky));
+      color:white;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 12px 28px rgba(15,101,255,.28);
+      font-family:inherit;
+    }
+
+    .feedback{
+      display:none;
+      margin-top:16px;
+      padding:16px;
+      border-radius:18px;
+      line-height:1.6;
+      border:1px solid transparent;
+    }
+
+    .feedback.good{
+      display:block;
+      background:rgba(52,168,83,.15);
+      border-color:rgba(52,168,83,.34);
+      color:#DDF8E6;
+    }
+
+    .feedback.bad{
+      display:block;
+      background:rgba(232,111,82,.15);
+      border-color:rgba(232,111,82,.34);
+      color:#FFE0D8;
+    }
+
+    .mini-sim{
+      background:linear-gradient(180deg, rgba(19,47,70,.96), rgba(13,31,48,.96));
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:26px;
+      box-shadow:0 18px 48px rgba(0,0,0,.2);
+    }
+
+    .sim-options{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin:18px 0;
+    }
+
+    .sim-option{
+      padding:18px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.06);
+      cursor:pointer;
+      transition:.2s ease;
+    }
+
+    .sim-option:hover,
+    .sim-option.selected{
+      border-color:var(--gold);
+      box-shadow:0 12px 28px rgba(213,167,74,.18);
+      transform:translateY(-2px);
+      background:rgba(213,167,74,.08);
+    }
+
+    .sim-option strong{
+      display:block;
+      color:#f7fbff;
+      margin-bottom:8px;
+    }
+
+    .sim-option p{
+      margin:0;
+      color:#aebbc9;
+      line-height:1.5;
+      font-size:.94rem;
+    }
+
+    .summary{
+      background:
+        radial-gradient(circle at top right, rgba(213,167,74,.22), transparent 26%),
+        linear-gradient(135deg, #020817, #07192f);
+      color:white;
+      border-radius:30px;
+      padding:30px;
+      box-shadow:var(--shadow);
+      border:1px solid rgba(213,167,74,.24);
+    }
+
+    .summary h2{
+      margin:0 0 18px;
+      color:#f3d88d;
+      font-size:2rem;
+    }
+
+    .summary-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+
+    .summary-card{
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.07);
+      border-radius:22px;
+      padding:18px;
+    }
+
+    .summary-card strong{
+      display:block;
+      margin-bottom:8px;
+      color:#f3d88d;
+    }
+
+    .summary-card p{
+      margin:0;
+      color:#aebbc9;
+      line-height:1.55;
+    }
+
+    @media (max-width:900px){
+      .hero-grid,
+      .story-inner,
+      .grid-3,
+      .grid-2,
+      .summary-grid,
+      .sim-options{
+        grid-template-columns:1fr;
+      }
+
+      .hero{
+        padding-top:36px;
+      }
+
+      .story{
+        padding:22px;
+      }
+
+      section{
+        padding:28px 0;
+      }
+    }
+
+    @media (max-width:560px){
+      .wrap{
+        width:min(100% - 20px, 1120px);
+      }
+
+      .card,
+      .practice,
+      .mini-sim,
+      .summary{
+        padding:18px;
+        border-radius:22px;
+      }
+
+      .story p{
+        font-size:1.08rem;
+      }
+
+      .caption,
+      .infographic figcaption{
+        font-size:.9rem;
+      }
+
+      table{
+        min-width:760px;
+      }
+    }
+  
+    /* NOVA VF: dashboard premium azul profundo */
+    :root{
+      --navy:#07192f; --navy-2:#020817; --navy-3:#051122; --blue:#0f65ff; --sky:#66c9ff; --gold:#d5a74a; --white:#f7fbff; --ink:#d8f4ff; --muted:#aebbc9; --soft:#d8f4ff; --card:#0a2447; --card-2:#07192f; --line:rgba(102,201,255,.18); --success:#2385ff; --shadow:0 28px 76px rgba(0,0,0,.46);
+    }
+    html, body, .lesson{background:#020817;color:#d8f4ff;}
+    .lesson{position:relative;overflow:hidden;background:linear-gradient(115deg, rgba(102,201,255,.05) 0 1px, transparent 1px 92px),linear-gradient(180deg, #020817 0%, #051122 42%, #020817 100%) !important;}
+    .lesson::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg, rgba(102,201,255,.052) 1px, transparent 1px),linear-gradient(180deg, rgba(102,201,255,.04) 1px, transparent 1px),radial-gradient(circle at 88% 8%, rgba(15,101,255,.18), transparent 22%),radial-gradient(circle at 14% 20%, rgba(213,167,74,.07), transparent 18%);background-size:74px 74px, 74px 74px, auto, auto;opacity:.64;}
+    .wrap,.container,.content,.module,.lesson-content{position:relative;z-index:1;}
+    .hero, header.hero, .summary, .story, .section, section > .wrap > article, .panel, .card, .mini-card, .practice, .simulation, .accordion, .acc-item, .question, .route-card, .image-card, .nova-media-card{border-color:rgba(102,201,255,.18) !important;box-shadow:0 20px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(216,244,255,.055) !important;}
+    .hero, header.hero{background:linear-gradient(135deg, rgba(2,8,23,.94), rgba(5,17,34,.88)),linear-gradient(115deg, rgba(102,201,255,.10), transparent 36%) !important;border-bottom:1px solid rgba(102,201,255,.16) !important;}
+    .section, .card, .mini-card, .practice, .simulation, .accordion, .acc-item, .question, .route-card, .panel, section > .wrap > article{background:linear-gradient(180deg, rgba(10,36,71,.88), rgba(5,17,34,.94)) !important;}
+    .story, .summary{background:linear-gradient(135deg, rgba(2,8,23,.96), rgba(7,25,47,.92)),linear-gradient(115deg, rgba(15,101,255,.12), transparent 40%) !important;border-color:rgba(102,201,255,.22) !important;}
+    h1,h2,h3,.card strong,.mini-card strong,.route-card strong,.feedback strong{color:#f7fbff !important;}
+    p,li,td,.hero-lead,.subtitle,.section-lead,.caption,.acc-panel,.sim-option,.option,.pill{color:#d8f4ff;}
+    .caption{background:linear-gradient(90deg, rgba(5,17,34,.96), rgba(2,8,23,.94)) !important;border-top-color:rgba(102,201,255,.16) !important;color:#aebbc9 !important;}
+    img{filter:saturate(1.06) contrast(1.04) brightness(.98);}
+    .image-card img, figure img{box-shadow:0 0 0 1px rgba(102,201,255,.14);}
+    .eyebrow,.kicker,.tag,.number,.decision-step .dot,.acc-btn span{background:rgba(213,167,74,.08) !important;color:#f3d88d !important;border-color:rgba(213,167,74,.24) !important;}
+    table{background:rgba(5,17,34,.7) !important;border-color:rgba(102,201,255,.16) !important;}
+    th{background:rgba(15,101,255,.18) !important;color:#f7fbff !important;} td{color:#d8f4ff !important;}
+    .option,.pill,.sim-option{background:rgba(10,36,71,.82) !important;color:#f7fbff !important;border-color:rgba(102,201,255,.22) !important;box-shadow:inset 0 1px 0 rgba(216,244,255,.05);}
+    .option:hover,.sim-option.selected{background:linear-gradient(135deg, rgba(15,101,255,.24), rgba(35,133,255,.14)) !important;border-color:rgba(102,201,255,.42) !important;}
+    .btn,button.verify,.button,.cta{background:linear-gradient(135deg, #0f65ff, #2385ff 55%, #66c9ff) !important;color:#f7fbff !important;box-shadow:0 16px 34px rgba(15,101,255,.22), 0 10px 24px rgba(0,0,0,.30) !important;}
+    .feedback{background:rgba(2,8,23,.48) !important;border-color:rgba(102,201,255,.20) !important;color:#d8f4ff !important;}
+    .feedback.good,.correct{border-color:rgba(102,201,255,.48) !important;background:rgba(15,101,255,.14) !important;}
+    .feedback.bad,.incorrect{border-color:rgba(232,111,82,.44) !important;background:rgba(232,111,82,.12) !important;}
+    .callout{background:rgba(15,101,255,.10) !important;border-color:rgba(102,201,255,.28) !important;color:#d8f4ff !important;box-shadow:inset 0 0 24px rgba(15,101,255,.08);}
+    .nova-media-section{padding:34px 0;background:transparent;}
+    .nova-media-card{padding:clamp(22px, 4vw, 34px);border-radius:24px;background:linear-gradient(135deg, rgba(2,8,23,.96), rgba(7,25,47,.92)),linear-gradient(115deg, rgba(15,101,255,.12), transparent 40%) !important;border:1px solid rgba(102,201,255,.22);color:#d8f4ff;}
+    .nova-media-label{display:inline-flex;width:max-content;max-width:100%;padding:8px 12px;border-radius:999px;background:rgba(213,167,74,.08);border:1px solid rgba(213,167,74,.24);color:#f3d88d;font-size:.76rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
+    .nova-media-card h2{margin-bottom:10px;color:#f7fbff;} .nova-media-card p{color:#d8f4ff;max-width:880px;}
+    .nova-video-shell,.nova-podcast-shell{margin-top:18px;padding:clamp(8px, 2vw, 16px);border-radius:22px;background:rgba(2,8,23,.62);border:1px solid rgba(102,201,255,.24);box-shadow:0 22px 54px rgba(0,0,0,.44), 0 0 0 1px rgba(102,201,255,.08);}
+    .nova-video-frame{position:relative;width:100%;aspect-ratio:16 / 9;overflow:hidden;border-radius:18px;background:#000;}
+    .nova-video-frame iframe,.nova-podcast-frame{display:block;width:100%;border:0;background:#000;border-radius:18px;}
+    .nova-video-frame iframe{position:absolute;inset:0;height:100%;} .nova-podcast-frame{height:180px;}
+    @media (max-width:900px){.nova-media-card{padding:20px;}.nova-video-shell,.nova-podcast-shell{border-radius:18px;}.nova-video-frame,.nova-video-frame iframe,.nova-podcast-frame{border-radius:14px;}}
+  </style>
+<style id="lms-shell">
+:root{--sbA:#0d4a86;--sbB:#082a4e;--sbTitulo:#eaf4ff;--sbAcento:#37c4ff;--sbCard:#ffffff;--sbCardTxt:#173352;--sbNum:#0f3c6b;--sbNumTxt:#fff;--sbActiva:#ffffff;--sbActivaTxt:#0b2d55;--cajaBg:#fff}
+  html{background:#e9edf3}
+  body{background:#e9edf3 !important;margin:0 !important;padding:0 !important}
+  .lmsTop{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:#0f1729;color:#f5f7fb;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 2px 12px rgba(2,8,20,.3)}
+  .lmsTop .lmsMarca{font-weight:800;font-size:15px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lmsTop .lmsMarca span{opacity:.6;font-weight:500}
+  .lmsTop a.lmsDemo{font-size:11px;letter-spacing:.1em;background:#FF5C1F;color:#0f1729;padding:5px 10px;font-weight:800;text-decoration:none;white-space:nowrap;border-radius:6px}
+  .lmsGrid{display:grid;grid-template-columns:296px minmax(0,1fr);gap:24px;max-width:1240px;margin:0 auto;padding:24px 16px 64px;align-items:start}
+  .lmsSide{position:sticky;top:64px;background:linear-gradient(170deg,var(--sbA),var(--sbB));border-radius:20px;padding:16px 14px;font-family:system-ui,-apple-system,sans-serif;font-size:14px;box-shadow:0 14px 34px rgba(10,20,40,.22)}
+  .lmsSide h4{margin:2px 4px 14px;font-size:14px;letter-spacing:.02em;color:var(--sbTitulo);border-left:4px solid var(--sbAcento);padding-left:10px;font-weight:800}
+  .lmsSide .lmsItem{display:flex;gap:11px;align-items:center;background:var(--sbCard);color:var(--sbCardTxt);border-radius:12px;padding:11px 12px;margin-bottom:9px;line-height:1.3;box-shadow:0 3px 10px rgba(8,16,32,.14);font-weight:600}
+  .lmsSide .lmsNum{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--sbNum);color:var(--sbNumTxt);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+  .lmsSide .lmsAhora{background:var(--sbActiva);color:var(--sbActivaTxt);box-shadow:0 6px 16px rgba(8,16,32,.22);outline:2px solid var(--sbAcento)}
+  .lmsSide .lmsAhora .lmsNum{background:var(--sbAcento);color:var(--sbActiva)}
+  .lmsSide .lmsLock{opacity:.62;font-weight:500}
+  .lmsSide .lmsProg{margin:12px 4px 2px;font-size:12px;color:var(--sbTitulo);opacity:.9}
+  .lmsSide .lmsBarra{height:7px;background:rgba(127,127,127,.25);margin-top:7px;border-radius:99px;overflow:hidden}
+  .lmsSide .lmsBarra i{display:block;height:100%;background:var(--sbAcento)}
+  .lmsCaja{background:var(--cajaBg,#fff);border:1px solid #d9e0ea;border-radius:18px;box-shadow:0 14px 34px rgba(15,23,41,.09);overflow:hidden;min-width:0}
+  @media(max-width:920px){.lmsGrid{grid-template-columns:1fr}.lmsSide{position:static}}
+</style></style>
+</head>
+
+<body>
+<div class="lmsTop"><span class="lmsMarca">NOVA INSURANCE ACADEMY <span>· campus virtual</span></span><a class="lmsDemo" href="https://oliverbarona.com/portafolio" target="_blank" rel="noopener">DEMO · PORTAFOLIO</a></div>
+<div class="lmsGrid">
+<aside class="lmsSide"><h4>Licencia P&amp;C · Módulo 1</h4>
+<div class="lmsItem"><span class="lmsNum">✓</span><span>Conceptos de riesgo</span></div>
+<div class="lmsItem"><span class="lmsNum">✓</span><span>Quién es quién en la póliza</span></div>
+<div class="lmsItem lmsAhora"><span class="lmsNum">3</span><span>Tipos de pólizas de vivienda</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">4</span><span>Formas DP-1 a DP-3</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">5</span><span>Examen del módulo 1</span></div>
+<div class="lmsProg">Tu avance del módulo<span class="lmsBarra"><i style="width:48%"></i></span></div></aside></aside>
+<div class="lmsCaja">
+
+  <main class="lesson" id="lesson-root">
+    <header class="hero">
+      <div class="wrap">
+        <div class="eyebrow"><span></span> Lección 1.3 · Tipos de pólizas de vivienda</div>
+
+        <h1>Dwelling Policies: primero identifica quién tiene el riesgo</h1>
+
+        <p class="hero-lead">
+          Una vivienda puede parecer la misma desde afuera, pero no representa el mismo riesgo para un propietario que vive allí,
+          un inquilino, un arrendador o una persona que conserva una casa desocupada. En esta lección vas a aprender cuándo
+          pensar en DP-1, DP-2 y DP-3.
+        </p>
+
+        <div class="hero-grid">
+          <figure class="image-card">
+            <img
+              src="assets/novainsurance-01.jpg"
+              alt="Alex y Luna revisan expedientes de inquilino, arrendador y vivienda desocupada">
+            <figcaption class="caption">
+              El primer paso no es escoger la póliza más barata. Es identificar quién necesita protección y qué relación tiene con el inmueble.
+            </figcaption>
+          </figure>
+
+          <div class="route" aria-label="Ruta de aprendizaje">
+            <div class="route-card">
+              <strong>1. Relación con el inmueble</strong>
+              <p>Propietario ocupante, inquilino y dueño que no habita enfrentan riesgos distintos.</p>
+            </div>
+
+            <div class="route-card">
+              <strong>2. Dwelling Policies</strong>
+              <p>DP-1, DP-2 y DP-3 protegen viviendas que no encajan en una Homeowners estándar.</p>
+            </div>
+
+            <div class="route-card">
+              <strong>3. Costo vs. brecha</strong>
+              <p>Ahorrar prima puede ser peligroso si se elimina una cobertura que el cliente sí necesitaba.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="nova-media-section" aria-label="Video de la lección">
+      <div class="wrap">
+        <article class="nova-media-card">
+          <span class="nova-media-label">VIDEO DE LA LECCIÓN</span>
+          <h2>Tipos de pólizas de vivienda</h2>
+          <p>Reproduce el video cuando estés listo para comenzar la ruta de estudio.</p>
+          <div class="nova-video-shell">
+            <div class="nova-video-frame">
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#0b1220,#1c2a47);color:#eaf2ff;text-align:center;padding:26px;font-family:system-ui,sans-serif"><div style="font-size:48px">🎬</div><strong style="font-size:17px">Aquí se reproduce el video de la lección</strong><span style="font-size:14px;opacity:.85;max-width:48ch;line-height:1.5">El video existe y acompaña esta lección en la academia real — pero es propiedad del cliente y sus derechos se respetan. El video de tu academia va a quedar igual de bien, y ese sí será tuyo.</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <article class="story">
+          <div class="story-inner">
+            <div>
+              <h2>El segundo expediente</h2>
+
+              <p>
+                La Ajustadora dejó sobre la mesa dos carpetas nuevas. En la primera, una persona rentaba una vivienda
+                y quería proteger “lo suyo”. En la segunda, una dueña conservaba una casa que no habitaba.
+              </p>
+
+              <p>
+                Alex estuvo a punto de responder con una póliza conocida, pero Luna lo detuvo antes de que hablara.
+                No era el mismo riesgo. No era la misma necesidad. Y una recomendación rápida podía dejar desprotegido
+                a alguien que solo quería ahorrar unos dólares al mes.
+              </p>
+
+              <p class="quote">
+                “No preguntes solo qué propiedad es. Pregunta quién la usa, quién la posee y quién perdería si algo ocurre.”
+              </p>
+            </div>
+
+            <figure class="image-card">
+              <img
+                src="assets/novainsurance-02.jpg"
+                alt="Luna muestra a Alex que ahorrar unos dólares puede crear una brecha de cobertura"
+                loading="lazy">
+              <figcaption class="caption">
+                Luna le muestra a Alex que el precio bajo no protege si el formulario no corresponde al riesgo.
+              </figcaption>
+            </figure>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">Antes de hablar de DP-1, DP-2 o DP-3, separa a las personas</h2>
+
+        <p class="section-lead">
+          El error común es decir “es una casa, entonces necesita una póliza de casa”. En seguros, eso no basta.
+          Debes identificar si la persona vive allí, renta la vivienda, la alquila a otros o mantiene una propiedad
+          vacante, estacional o en remodelación.
+        </p>
+
+        <figure class="infographic">
+          <img
+            src="assets/novainsurance-03.jpg"
+            alt="Infografía sobre propietario, inquilino y dueño que no habita"
+            loading="lazy">
+          <figcaption>
+            La relación con el inmueble cambia la póliza adecuada: no es lo mismo habitar, rentar o poseer sin vivir allí.
+          </figcaption>
+        </figure>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="tag gold">Propietario que habita</div>
+            <h3>Vive en la vivienda</h3>
+            <p>
+              Normalmente se analiza una póliza Homeowners, porque el asegurado ocupa la vivienda como residencia
+              y necesita estructura, contenido, responsabilidad y pérdida de uso en un paquete.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag">Inquilino</div>
+            <h3>No asegura el edificio</h3>
+            <p>
+              El inquilino necesita proteger sus pertenencias y su responsabilidad civil. La estructura pertenece al dueño,
+              por lo que una póliza de propietario no cubre automáticamente las cosas del inquilino.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag risk">Dueño que no habita</div>
+            <h3>Puede necesitar Dwelling</h3>
+            <p>
+              Si el dueño no vive en la propiedad, puede necesitar una Dwelling Policy, especialmente si la alquila,
+              la mantiene vacante, la usa por temporada o está en renovación.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <h3>Idea profesional</h3>
+          <p>
+            Las Dwelling Policies no son simplemente “Homeowners baratas”. Son instrumentos de propiedad para situaciones
+            donde la ocupación y el uso del inmueble cambian el riesgo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">Qué es una Dwelling Policy</h2>
+
+        <p class="section-lead">
+          Una Dwelling Policy está diseñada para cubrir estructuras residenciales que no califican bien para una póliza
+          estándar de propietarios. Puede usarse para viviendas alquiladas, vacantes, estacionales, de bajo valor o en
+          construcción o rehabilitación.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="tag gold">Lo que sí resuelve</div>
+            <h3>Protege la estructura residencial</h3>
+            <p>
+              Su centro es la propiedad: la vivienda, otras estructuras, algunos bienes del asegurado, renta perdida
+              y gastos adicionales según el formulario y las coberturas elegidas.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag risk">Lo que no debes asumir</div>
+            <h3>No siempre viene en paquete</h3>
+            <p>
+              A diferencia de muchas Homeowners, una Dwelling Policy no incluye automáticamente robo de pertenencias
+              ni responsabilidad civil personal. Esas protecciones pueden requerir endosos o pólizas separadas.
+            </p>
+          </article>
+        </div>
+
+        <div class="checklist">
+          <div class="check">
+            <div class="icon">✓</div>
+            <p><strong>Pregunta clave:</strong> ¿el dueño vive en la vivienda o la propiedad se usa para alquiler, temporada, vacancia o inversión?</p>
+          </div>
+
+          <div class="check">
+            <div class="icon">✓</div>
+            <p><strong>Riesgo comercial:</strong> una póliza más barata puede dejar brechas importantes si el cliente necesita responsabilidad civil o robo.</p>
+          </div>
+
+          <div class="check">
+            <div class="icon">✓</div>
+            <p><strong>Riesgo de examen:</strong> no confundas una Dwelling Policy con una Homeowners completa.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">La arquitectura de una Dwelling Policy</h2>
+
+        <p class="section-lead">
+          Antes de comparar DP-1, DP-2 y DP-3, necesitas entender sus coberturas principales. No todas funcionan igual
+          en todos los formularios, pero estas letras te ayudan a leer la estructura de la póliza.
+        </p>
+
+        <figure class="infographic">
+          <img
+            src="assets/novainsurance-05.jpg"
+            alt="Infografía de Coberturas A B C D y E en Dwelling Policies"
+            loading="lazy">
+          <figcaption>
+            Las coberturas A, B, C, D y E explican qué parte del riesgo se está protegiendo.
+          </figcaption>
+        </figure>
+
+        <div class="matrix-wrap">
+          <table aria-label="Coberturas principales en Dwelling Policies">
+            <thead>
+              <tr>
+                <th>Cobertura</th>
+                <th>Nombre</th>
+                <th>Qué protege</th>
+                <th>Ejemplo práctico</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td><strong>Coverage A</strong></td>
+                <td>Dwelling</td>
+                <td>La vivienda principal y estructuras adjuntas.</td>
+                <td>La casa de alquiler sufre daños por incendio.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Coverage B</strong></td>
+                <td>Other Structures</td>
+                <td>Estructuras separadas, como garaje independiente, cobertizo o cerca.</td>
+                <td>Un árbol cae sobre un garaje separado.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Coverage C</strong></td>
+                <td>Personal Property</td>
+                <td>Bienes del asegurado, no del inquilino.</td>
+                <td>Refrigerador del dueño dentro de la propiedad rentada.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Coverage D</strong></td>
+                <td>Fair Rental Value</td>
+                <td>Renta que el dueño deja de cobrar si el inmueble queda inhabitable por una pérdida cubierta.</td>
+                <td>El incendio cubierto obliga al inquilino a mudarse temporalmente.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Coverage E</strong></td>
+                <td>Additional Living Expense</td>
+                <td>Gastos adicionales si el asegurado reside allí y debe vivir temporalmente en otro lugar.</td>
+                <td>Una casa estacional ocupada por el asegurado queda inhabitable por una pérdida cubierta.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">DP-1, DP-2 y DP-3: tres niveles de protección</h2>
+
+        <p class="section-lead">
+          Ahora sí podemos comparar. DP-1, DP-2 y DP-3 no se diferencian solo por precio. Cambian por los riesgos
+          cubiertos, la forma de valorar pérdidas y el nivel de protección para estructura y contenido.
+        </p>
+
+        <figure class="infographic">
+          <img
+            src="assets/novainsurance-04.jpg"
+            alt="Infografía comparativa de DP-1 DP-2 y DP-3"
+            loading="lazy">
+          <figcaption>
+            DP-1 es básico, DP-2 amplía riesgos nombrados y DP-3 ofrece riesgos abiertos para la estructura.
+          </figcaption>
+        </figure>
+
+        <div class="matrix-wrap">
+          <table aria-label="Comparación DP-1 DP-2 DP-3">
+            <thead>
+              <tr>
+                <th>Característica</th>
+                <th>DP-1 Basic</th>
+                <th>DP-2 Broad</th>
+                <th>DP-3 Special</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td><strong>Uso típico</strong></td>
+                <td>Vacantes, bajo valor o necesidad de costo mínimo.</td>
+                <td>Alquileres de nivel medio o propiedades que requieren mejor protección.</td>
+                <td>Propiedades de alquiler de mayor valor o mejor condición.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Riesgos en estructura</strong></td>
+                <td>Riesgos nombrados básicos.</td>
+                <td>Riesgos nombrados amplios.</td>
+                <td>Open perils, salvo exclusiones.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Valoración estructura</strong></td>
+                <td>Normalmente Actual Cash Value.</td>
+                <td>Replacement Cost si cumple requisitos, como el 80% de valor asegurable.</td>
+                <td>Replacement Cost si cumple requisitos aplicables.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Contenido</strong></td>
+                <td>Limitado y usualmente ACV.</td>
+                <td>Riesgos nombrados amplios, usualmente ACV.</td>
+                <td>Contenido en riesgos nombrados, no open perils.</td>
+              </tr>
+
+              <tr>
+                <td><strong>Error común</strong></td>
+                <td>Olvidar que viento, vandalismo u otros riesgos pueden requerir endoso.</td>
+                <td>Creer que “burglary damage” cubre el objeto robado.</td>
+                <td>Creer que DP-3 cubre todo, incluida inundación o contenido en open perils.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">DP-1 Basic Form: barato, pero muy limitado</h2>
+
+        <p class="section-lead">
+          El DP-1 es la forma más básica. Puede servir para propiedades vacantes, de bajo valor o situaciones donde el costo
+          mínimo sea una prioridad, pero sus brechas pueden ser grandes.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="tag risk">Riesgos básicos</div>
+            <h3>Fire, Lightning, Internal Explosion</h3>
+            <p>
+              De forma básica, el DP-1 cubre incendio, rayo y explosión interna. Otros riesgos pueden requerir Extended Coverage.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag gold">ACV</div>
+            <h3>Depreciación incluida</h3>
+            <p>
+              El DP-1 suele pagar en Actual Cash Value: costo de reemplazo menos depreciación por edad y desgaste.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag">Endosos</div>
+            <h3>EC y VMM</h3>
+            <p>
+              Extended Coverage puede añadir riesgos como viento, granizo y humo. Vandalism or Malicious Mischief suele requerir EC primero.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <h3>Ejemplo rápido</h3>
+          <p>
+            Una casa vacante con DP-1 básico sufre daño por viento. Si no se compró Extended Coverage, el reclamo puede ser denegado
+            porque viento no pertenece a los tres riesgos básicos.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">DP-2 Broad Form: más riesgos nombrados y mejor valoración</h2>
+
+        <p class="section-lead">
+          El DP-2 sigue siendo una póliza de riesgos nombrados, pero su lista es mucho más amplia. Además, puede pagar la estructura
+          a Replacement Cost si se cumple el requisito de asegurar al menos el 80% del valor de reemplazo.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="tag gold">BIG AFFECT</div>
+            <h3>Riesgos adicionales</h3>
+            <p>
+              DP-2 añade riesgos como daño por ladrones a la estructura, peso de hielo o nieve, rotura de vidrios,
+              descarga accidental de agua, objetos que caen, congelación de tuberías, daño eléctrico, colapso y tearing asunder.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag">80%</div>
+            <h3>Insurance-to-value</h3>
+            <p>
+              Para recibir Replacement Cost en la estructura, el asegurado debe cumplir el requisito de valor asegurable.
+              Si asegura por debajo del umbral, una pérdida parcial puede pagarse de forma reducida.
+            </p>
+          </article>
+        </div>
+
+        <div class="checklist">
+          <div class="check">
+            <div class="icon">✓</div>
+            <p><strong>Para examen:</strong> DP-2 es Broad Form, riesgos nombrados amplios y estructura a Replacement Cost si cumple condiciones.</p>
+          </div>
+
+          <div class="check">
+            <div class="icon">✓</div>
+            <p><strong>Trampa:</strong> Burglary damage cubre daños causados por ladrones a la estructura, no necesariamente los bienes robados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">DP-3 Special Form: estructura en open perils</h2>
+
+        <p class="section-lead">
+          El DP-3 es el formulario más amplio dentro de las Dwelling Policies. Su rasgo principal es que cubre la estructura
+          bajo open perils, pero eso no significa que todo esté cubierto.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="tag gold">Coverage A y B</div>
+            <h3>Open perils</h3>
+            <p>
+              La vivienda y otras estructuras se cubren contra pérdidas físicas directas salvo que la causa esté excluida.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag">Coverage C</div>
+            <h3>Contenido sigue limitado</h3>
+            <p>
+              La propiedad personal en DP-3 normalmente sigue en riesgos nombrados, similares a DP-2, y suele pagarse a ACV.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="tag risk">Exclusiones</div>
+            <h3>No cubre todo</h3>
+            <p>
+              Inundación, movimiento de tierra, negligencia, guerra, peligro nuclear y daño intencional siguen siendo exclusiones críticas.
+            </p>
+          </article>
+        </div>
+
+        <div class="callout">
+          <h3>Ejemplo rápido</h3>
+          <p>
+            Si una tormenta de granizo daña el techo de una propiedad alquilada con DP-3, la estructura puede estar cubierta por open perils.
+            Pero si una inundación del río causa el daño, la exclusión de agua puede impedir la cobertura.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">La trampa del ahorro rápido</h2>
+
+        <p class="section-lead">
+          Luna no le dice a Alex que el cliente deba comprar siempre la opción más cara. Le muestra algo más importante:
+          el ahorro solo sirve si no destruye la protección que el cliente realmente necesita.
+        </p>
+
+        <figure class="infographic">
+          <img
+            src="assets/novainsurance-06.jpg"
+            alt="Infografía sobre errores comunes al recomendar Dwelling Policies"
+            loading="lazy">
+          <figcaption>
+            Las brechas más peligrosas aparecen cuando el agente vende por precio antes de diagnosticar ocupación, uso y cobertura necesaria.
+          </figcaption>
+        </figure>
+
+        <div class="accordion">
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              ¿Por qué Dwelling no es una Homeowners barata?
+              <span>+</span>
+            </button>
+            <div class="acc-panel">
+              Porque una Homeowners suele integrar responsabilidad civil, pagos médicos y robo de propiedad personal.
+              Una Dwelling Policy puede requerir endosos o pólizas separadas para esas protecciones.
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              ¿Qué pasa con las pertenencias del inquilino?
+              <span>+</span>
+            </button>
+            <div class="acc-panel">
+              La póliza del dueño no cubre automáticamente las pertenencias del inquilino. El inquilino necesita su propia protección,
+              normalmente una póliza de inquilinos.
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              ¿Por qué DP-1 puede salir caro aunque cueste menos?
+              <span>+</span>
+            </button>
+            <div class="acc-panel">
+              Porque cubre pocos riesgos y suele pagar con depreciación. Si ocurre un daño fuera de la lista cubierta,
+              o si el pago ACV es bajo, el cliente puede asumir una pérdida grande.
+            </div>
+          </div>
+
+          <div class="acc-item">
+            <button class="acc-btn" type="button">
+              ¿Por qué DP-3 tampoco significa “todo cubierto”?
+              <span>+</span>
+            </button>
+            <div class="acc-panel">
+              DP-3 es amplio para la estructura, pero mantiene exclusiones importantes y el contenido no necesariamente se cubre
+              bajo open perils.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="mini-sim">
+          <h2 class="section-title" style="font-size:2rem;margin-bottom:10px;">Simulación profesional</h2>
+
+          <p class="section-lead" style="margin-bottom:0;">
+            Una clienta conserva una casa que no habita. La alquila a una familia y quiere pagar lo menos posible.
+            Te pregunta si puede comprar “la póliza más barata” porque el inquilino cuida bien la casa.
+            ¿Cuál es la mejor primera reacción profesional?
+          </p>
+
+          <div class="sim-options" id="simOptions">
+            <div class="sim-option" data-value="wrong1">
+              <strong>Ofrecer DP-1 de inmediato</strong>
+              <p>Puede ser barato, pero quizá deje sin cubrir riesgos importantes para una propiedad alquilada.</p>
+            </div>
+
+            <div class="sim-option" data-value="correct">
+              <strong>Diagnosticar uso, ocupación y coberturas</strong>
+              <p>Primero hay que revisar si necesita DP-1, DP-2 o DP-3, renta perdida, responsabilidad y endosos.</p>
+            </div>
+
+            <div class="sim-option" data-value="wrong2">
+              <strong>Decir que necesita Homeowners</strong>
+              <p>Si ella no vive en la propiedad, una Homeowners estándar puede no ser el formulario adecuado.</p>
+            </div>
+          </div>
+
+          <button class="btn" type="button" id="checkSim">Verificar simulación</button>
+          <div class="feedback" id="simFeedback"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <h2 class="section-title">Preguntas de práctica</h2>
+
+        <p class="section-lead">
+          Responde con mentalidad de examen, pero lee la explicación como agente. En Dwelling Policies, una palabra como
+          “vacante”, “alquilada”, “ACV”, “Broad” u “Open Perils” puede cambiar la respuesta.
+        </p>
+
+        <article class="practice" data-correct="c">
+          <h3>1. ¿Cuál es el método de liquidación típico para Coverage A en un DP-1?</h3>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q1" value="a"> Replacement Cost.</label>
+            <label class="option"><input type="radio" name="q1" value="b"> Market Value.</label>
+            <label class="option"><input type="radio" name="q1" value="c"> Actual Cash Value.</label>
+            <label class="option"><input type="radio" name="q1" value="d"> Valor acordado.</label>
+          </div>
+
+          <button class="btn verify" type="button">Verificar pregunta</button>
+          <div class="feedback"></div>
+        </article>
+
+        <article class="practice" data-correct="b">
+          <h3>2. ¿Qué cobertura compensa al arrendador por la renta que deja de recibir si la propiedad queda inhabitable por una pérdida cubierta?</h3>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q2" value="a"> Coverage A.</label>
+            <label class="option"><input type="radio" name="q2" value="b"> Coverage D.</label>
+            <label class="option"><input type="radio" name="q2" value="c"> Coverage E.</label>
+            <label class="option"><input type="radio" name="q2" value="d"> Coverage F.</label>
+          </div>
+
+          <button class="btn verify" type="button">Verificar pregunta</button>
+          <div class="feedback"></div>
+        </article>
+
+        <article class="practice" data-correct="a">
+          <h3>3. En un DP-3, los open perils aplican principalmente a:</h3>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q3" value="a"> La estructura.</label>
+            <label class="option"><input type="radio" name="q3" value="b"> La propiedad personal del inquilino.</label>
+            <label class="option"><input type="radio" name="q3" value="c"> Todo el contenido sin exclusiones.</label>
+            <label class="option"><input type="radio" name="q3" value="d"> Responsabilidad civil automática.</label>
+          </div>
+
+          <button class="btn verify" type="button">Verificar pregunta</button>
+          <div class="feedback"></div>
+        </article>
+
+        <article class="practice" data-correct="d">
+          <h3>4. ¿Cuál es una trampa común al vender una Dwelling Policy?</h3>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q4" value="a"> Pensar que DP-2 nunca cubre daños por agua.</label>
+            <label class="option"><input type="radio" name="q4" value="b"> Pensar que DP-3 no cubre ninguna estructura.</label>
+            <label class="option"><input type="radio" name="q4" value="c"> Pensar que DP-1 siempre paga Replacement Cost.</label>
+            <label class="option"><input type="radio" name="q4" value="d"> Pensar que incluye automáticamente robo y responsabilidad como una Homeowners.</label>
+          </div>
+
+          <button class="btn verify" type="button">Verificar pregunta</button>
+          <div class="feedback"></div>
+        </article>
+
+        <article class="practice" data-correct="b">
+          <h3>5. ¿Qué debe recordar el agente sobre las pertenencias del inquilino en una propiedad alquilada?</h3>
+
+          <div class="options">
+            <label class="option"><input type="radio" name="q5" value="a"> Siempre están cubiertas por Coverage A del dueño.</label>
+            <label class="option"><input type="radio" name="q5" value="b"> El inquilino necesita su propia protección para sus bienes.</label>
+            <label class="option"><input type="radio" name="q5" value="c"> Solo se cubren si la propiedad está vacante.</label>
+            <label class="option"><input type="radio" name="q5" value="d"> Se cubren automáticamente bajo DP-3 open perils.</label>
+          </div>
+
+          <button class="btn verify" type="button">Verificar pregunta</button>
+          <div class="feedback"></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="summary">
+          <h2>Resumen de estudio</h2>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <strong>DP-1</strong>
+              <p>Basic Form. Riesgos nombrados básicos, normalmente ACV. Puede servir para vacantes o bajo valor, pero tiene muchas brechas.</p>
+            </div>
+
+            <div class="summary-card">
+              <strong>DP-2</strong>
+              <p>Broad Form. Riesgos nombrados más amplios y Replacement Cost en estructura si cumple requisitos como el 80%.</p>
+            </div>
+
+            <div class="summary-card">
+              <strong>DP-3</strong>
+              <p>Special Form. Open perils para estructura, pero contenido sigue limitado y las exclusiones importan.</p>
+            </div>
+          </div>
+
+          <div class="callout" style="margin-bottom:0;background:rgba(255,255,255,.08);box-shadow:none;">
+            <h3>Frase clave de Alex</h3>
+            <p>
+              “No aseguro una casa en abstracto. Primero identifico quién tiene el riesgo y qué relación tiene con el inmueble.”
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section class="nova-media-section" aria-label="Podcast de la lección">
+      <div class="wrap">
+        <article class="nova-media-card">
+          <span class="nova-media-label">PODCAST DE REPASO</span>
+          <h2>Escucha el cierre de la lección</h2>
+          <p>Usa este audio para reforzar los puntos clave antes de avanzar al siguiente tema.</p>
+          <div class="nova-podcast-shell">
+            <div style="width:100%;height:180px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;gap:14px;background:linear-gradient(135deg,#0b1220,#1c2a47);color:#eaf2ff;text-align:left;padding:16px 22px;font-family:system-ui,sans-serif"><div style="font-size:38px">🎧</div><div><strong style="font-size:15px;display:block">Aquí se escucha el podcast de repaso</strong><span style="font-size:13px;opacity:.85;line-height:1.45;display:block;max-width:52ch">Es del cliente y sus derechos se respetan — el de tu academia sonará igual de bien.</span></div></div>
+          </div>
+        </article>
+      </div>
+    </section>  </main>
+
+  <script>
+    (function () {
+      function getHeight() {
+        const body = document.body;
+        const html = document.documentElement;
+
+        return Math.max(
+          body ? body.scrollHeight : 0,
+          body ? body.offsetHeight : 0,
+          html ? html.clientHeight : 0,
+          html ? html.scrollHeight : 0,
+          html ? html.offsetHeight : 0
+        );
+      }
+
+      function sendSize() {
+        const height = getHeight();
+
+        window.parent.postMessage({
+          type: 'EPL_EMBED_SIZE',
+          height: height
+        }, '*');
+      }
+
+      window.EPL_SEND_SIZE = sendSize;
+
+      window.addEventListener('load', function () {
+        sendSize();
+        setTimeout(sendSize, 250);
+        setTimeout(sendSize, 750);
+        setTimeout(sendSize, 1500);
+        setTimeout(sendSize, 3000);
+      });
+
+      window.addEventListener('resize', sendSize);
+
+      document.addEventListener('DOMContentLoaded', function () {
+        sendSize();
+
+        if ('ResizeObserver' in window) {
+          const ro = new ResizeObserver(function () {
+            sendSize();
+          });
+
+          if (document.body) ro.observe(document.body);
+          if (document.documentElement) ro.observe(document.documentElement);
+        }
+
+        document.querySelectorAll('img').forEach(function (img) {
+          img.addEventListener('load', sendSize);
+          img.addEventListener('error', sendSize);
+        });
+
+        document.querySelectorAll('.acc-btn').forEach(function (button) {
+          button.addEventListener('click', function () {
+            const item = button.closest('.acc-item');
+            if (!item) return;
+
+            const isOpen = item.classList.contains('open');
+            item.classList.toggle('open');
+
+            const symbol = button.querySelector('span');
+            if (symbol) symbol.textContent = isOpen ? '+' : '−';
+
+            setTimeout(sendSize, 80);
+            setTimeout(sendSize, 300);
+          });
+        });
+
+        const explanations = {
+          q1: {
+            correct: "Correcto. El DP-1 normalmente liquida Coverage A en Actual Cash Value, restando depreciación.",
+            wrong: "No es correcto. La palabra clave es DP-1 Basic. Este formulario suele pagar en Actual Cash Value, no en Replacement Cost."
+          },
+          q2: {
+            correct: "Correcto. Coverage D compensa la renta perdida cuando una pérdida cubierta deja inhabitable la propiedad.",
+            wrong: "No es correcto. La cobertura que mira la renta que deja de recibir el arrendador es Coverage D."
+          },
+          q3: {
+            correct: "Correcto. En DP-3, open perils aplica principalmente a la estructura: Coverage A y Coverage B.",
+            wrong: "No es correcto. DP-3 es amplio para estructura, pero la propiedad personal normalmente sigue en riesgos nombrados."
+          },
+          q4: {
+            correct: "Correcto. Una Dwelling Policy no debe tratarse como una Homeowners completa. Robo y responsabilidad pueden requerir endosos o cobertura separada.",
+            wrong: "No es la mejor respuesta. La trampa profesional más grave es asumir que una Dwelling incluye automáticamente robo y responsabilidad como una Homeowners."
+          },
+          q5: {
+            correct: "Correcto. Las pertenencias del inquilino no están cubiertas automáticamente por la póliza del dueño. El inquilino necesita su propia protección.",
+            wrong: "No es correcto. La póliza del dueño protege el interés del dueño, no automáticamente los bienes del inquilino."
+          }
+        };
+
+        document.querySelectorAll('.practice').forEach(function (card, index) {
+          const button = card.querySelector('.verify');
+          const feedback = card.querySelector('.feedback');
+          const correct = card.dataset.correct;
+          const questionName = 'q' + (index + 1);
+
+          if (!button || !feedback) return;
+
+          button.addEventListener('click', function () {
+            const selected = card.querySelector("input[type='radio']:checked");
+
+            if (!selected) {
+              feedback.className = 'feedback bad';
+              feedback.innerHTML =
+                '<strong>Selecciona una opción.</strong><br>Primero marca una respuesta para poder revisar el criterio.';
+              sendSize();
+              return;
+            }
+
+            if (selected.value === correct) {
+              feedback.className = 'feedback good';
+              feedback.innerHTML =
+                '<strong>Respuesta correcta.</strong><br>' + explanations[questionName].correct;
+            } else {
+              feedback.className = 'feedback bad';
+              feedback.innerHTML =
+                '<strong>Respuesta incorrecta.</strong><br>' + explanations[questionName].wrong;
+            }
+
+            setTimeout(sendSize, 80);
+            setTimeout(sendSize, 300);
+          });
+        });
+
+        let selectedSim = null;
+
+        document.querySelectorAll('.sim-option').forEach(function (option) {
+          option.addEventListener('click', function () {
+            document.querySelectorAll('.sim-option').forEach(function (o) {
+              o.classList.remove('selected');
+            });
+
+            option.classList.add('selected');
+            selectedSim = option.dataset.value;
+
+            setTimeout(sendSize, 80);
+          });
+        });
+
+        const checkSim = document.getElementById('checkSim');
+        const simFeedback = document.getElementById('simFeedback');
+
+        if (checkSim && simFeedback) {
+          checkSim.addEventListener('click', function () {
+            if (!selectedSim) {
+              simFeedback.className = 'feedback bad';
+              simFeedback.innerHTML =
+                '<strong>Elige una reacción profesional.</strong><br>Antes de verificar, selecciona una de las tres opciones.';
+              sendSize();
+              return;
+            }
+
+            if (selectedSim === 'correct') {
+              simFeedback.className = 'feedback good';
+              simFeedback.innerHTML =
+                '<strong>Correcto.</strong><br>Antes de vender por precio, el agente debe diagnosticar uso, ocupación, coberturas necesarias y posibles endosos. Una propiedad alquilada no se trata igual que una vivienda ocupada por su dueño.';
+            } else {
+              simFeedback.className = 'feedback bad';
+              simFeedback.innerHTML =
+                '<strong>No es la mejor reacción.</strong><br>La pista central es que la dueña no habita la propiedad y la alquila. Eso exige analizar una Dwelling Policy y sus coberturas, no saltar a la opción barata ni asumir Homeowners.';
+            }
+
+            setTimeout(sendSize, 80);
+            setTimeout(sendSize, 300);
+          });
+        }
+
+        setTimeout(sendSize, 1200);
+      });
+    })();
+  </script>
+</div><!--lmsCaja--></div><!--lmsGrid-->
+</body>
+</html>

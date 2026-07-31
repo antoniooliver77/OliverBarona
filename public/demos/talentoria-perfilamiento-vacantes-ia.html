@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfilamiento de Vacantes con IA - Completo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --c-bg: #121212;
+            --c-surface: #1E1E1E;
+            --c-primary: #5EC3F4;
+            --c-accent: #FFB347;
+            --c-danger: #FF4C4C;
+            --c-success: #00E676;
+            --c-text: #E0E0E0;
+            --c-text-dim: #A0A0A0;
+            --s-radius: 8px;
+            --s-border: 1px solid rgba(94, 195, 244, 0.2);
+        }
+
+        body {
+            background-color: var(--c-bg);
+            color: var(--c-text);
+            font-family: 'Lexend', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #main-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Estilos de Contenido Original --- */
+        .hero-image {
+            width: 100%;
+            height: auto;
+            border-radius: var(--s-radius);
+            border: 1px solid var(--c-primary);
+            box-shadow: 0 0 15px rgba(94, 195, 244, 0.15);
+            margin-bottom: 30px;
+        }
+
+        .narrative-box {
+            background: linear-gradient(180deg, rgba(30,30,30,0) 0%, rgba(30,30,30,0.8) 100%);
+            border-left: 4px solid var(--c-accent);
+            padding: 20px;
+            margin-bottom: 40px;
+            font-style: italic;
+        }
+
+        h2 {
+            color: var(--c-primary);
+            font-size: 1.8rem;
+            margin-top: 50px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--c-surface);
+            padding-bottom: 10px;
+        }
+
+        h3 { color: var(--c-text); font-size: 1.3rem; margin-top: 30px; }
+        p { margin-bottom: 20px; font-size: 18px; color: var(--c-text-dim); }
+        strong { color: var(--c-text); font-weight: 600; }
+
+        .char-box {
+            background-color: var(--c-surface);
+            border: var(--s-border);
+            border-radius: var(--s-radius);
+            padding: 20px;
+            margin: 30px 0;
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        .char-box.kai { border-color: var(--c-primary); }
+        .char-box.null { border-color: var(--c-text-dim); background-color: #1a1a1a; }
+        .char-box.biased { border-color: var(--c-danger); background-color: rgba(255, 76, 76, 0.05); }
+
+        .char-avatar {
+            width: 50px; height: 50px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; flex-shrink: 0;
+        }
+
+        .kai .char-avatar { color: var(--c-primary); border: 1px solid var(--c-primary); }
+        .null .char-avatar { color: var(--c-text-dim); border: 1px solid var(--c-text-dim); }
+        .biased .char-avatar { color: var(--c-danger); border: 1px solid var(--c-danger); }
+
+        .concept-card { background: rgba(94, 195, 244, 0.05); padding: 20px; border-radius: var(--s-radius); margin-bottom: 20px; }
+        .infographic-container { margin: 40px 0; text-align: center; }
+        .infographic-img { width: 100%; max-width: 800px; border-radius: var(--s-radius); border: 1px solid var(--c-text-dim); }
+        .caption { font-size: 0.9rem; color: var(--c-primary); margin-top: 10px; display: block; }
+
+        .step-list { list-style: none; padding: 0; }
+        .step-list li {
+            background: var(--c-surface); margin-bottom: 15px; padding: 15px;
+            border-left: 3px solid var(--c-primary); border-radius: 0 var(--s-radius) var(--s-radius) 0;
+        }
+        .step-num { color: var(--c-primary); font-weight: bold; margin-right: 10px; }
+
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid var(--c-text-dim); }
+        th { color: var(--c-primary); text-transform: uppercase; font-size: 0.8rem; }
+
+        .quiz-section { border-top: 2px dashed var(--c-text-dim); margin-top: 60px; padding-top: 40px; }
+        .question-box { background: var(--c-surface); padding: 20px; margin-bottom: 20px; border-radius: var(--s-radius); }
+        .option {
+            display: block; padding: 10px; margin: 5px 0; background: rgba(255,255,255,0.05);
+            cursor: pointer; border-radius: 4px; transition: all 0.2s;
+        }
+        .option:hover { background: rgba(94, 195, 244, 0.1); }
+
+        .commitment-card {
+            border: 1px solid var(--c-success); padding: 15px; border-radius: var(--s-radius);
+            color: var(--c-success); background: rgba(0, 230, 118, 0.05); margin-bottom: 10px;
+        }
+
+        /* --- Estilos de Video Responsive --- */
+        .video-container {
+            position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+            border-radius: var(--s-radius); background: #000; margin: 40px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .video-container iframe, .video-container video {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+        .video-placeholder {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px dashed var(--c-accent); color: var(--c-accent); text-align: center; padding: 20px;
+        }
+
+        /* --- Cierre Estético --- */
+        .footer-closure {
+            text-align: center; padding: 40px 20px; background: var(--c-surface);
+            border-radius: var(--s-radius); margin-top: 50px; border: 1px solid var(--c-primary);
+        }
+        .btn-next {
+            display: inline-block; padding: 12px 30px; background: var(--c-primary);
+            color: #121212; text-decoration: none; font-weight: bold; border-radius: 5px; margin-top: 20px;
+        }
+
+        @media (max-width: 600px) {
+            h2 { font-size: 1.5rem; }
+            .char-box { flex-direction: column; }
+        }
+    </style>
+<style id="lms-shell">
+:root{--sbA:#141b31;--sbB:#0a0f1e;--sbTitulo:#eef2ff;--sbAcento:#39e0f2;--sbCard:#1d2745;--sbCardTxt:#e8ecf7;--sbNum:#f2a33c;--sbNumTxt:#131313;--sbActiva:#273459;--sbActivaTxt:#ffffff;--cajaBg:#121212}
+  html{background:#e9edf3}
+  body{background:#e9edf3 !important;margin:0 !important;padding:0 !important}
+  .lmsTop{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:#0f1729;color:#f5f7fb;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 2px 12px rgba(2,8,20,.3)}
+  .lmsTop .lmsMarca{font-weight:800;font-size:15px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lmsTop .lmsMarca span{opacity:.6;font-weight:500}
+  .lmsTop a.lmsDemo{font-size:11px;letter-spacing:.1em;background:#FF5C1F;color:#0f1729;padding:5px 10px;font-weight:800;text-decoration:none;white-space:nowrap;border-radius:6px}
+  .lmsGrid{display:grid;grid-template-columns:296px minmax(0,1fr);gap:24px;max-width:1240px;margin:0 auto;padding:24px 16px 64px;align-items:start}
+  .lmsSide{position:sticky;top:64px;background:linear-gradient(170deg,var(--sbA),var(--sbB));border-radius:20px;padding:16px 14px;font-family:system-ui,-apple-system,sans-serif;font-size:14px;box-shadow:0 14px 34px rgba(10,20,40,.22)}
+  .lmsSide h4{margin:2px 4px 14px;font-size:14px;letter-spacing:.02em;color:var(--sbTitulo);border-left:4px solid var(--sbAcento);padding-left:10px;font-weight:800}
+  .lmsSide .lmsItem{display:flex;gap:11px;align-items:center;background:var(--sbCard);color:var(--sbCardTxt);border-radius:12px;padding:11px 12px;margin-bottom:9px;line-height:1.3;box-shadow:0 3px 10px rgba(8,16,32,.14);font-weight:600}
+  .lmsSide .lmsNum{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--sbNum);color:var(--sbNumTxt);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+  .lmsSide .lmsAhora{background:var(--sbActiva);color:var(--sbActivaTxt);box-shadow:0 6px 16px rgba(8,16,32,.22);outline:2px solid var(--sbAcento)}
+  .lmsSide .lmsAhora .lmsNum{background:var(--sbAcento);color:var(--sbActiva)}
+  .lmsSide .lmsLock{opacity:.62;font-weight:500}
+  .lmsSide .lmsProg{margin:12px 4px 2px;font-size:12px;color:var(--sbTitulo);opacity:.9}
+  .lmsSide .lmsBarra{height:7px;background:rgba(127,127,127,.25);margin-top:7px;border-radius:99px;overflow:hidden}
+  .lmsSide .lmsBarra i{display:block;height:100%;background:var(--sbAcento)}
+  .lmsCaja{background:var(--cajaBg,#fff);border:1px solid #d9e0ea;border-radius:18px;box-shadow:0 14px 34px rgba(15,23,41,.09);overflow:hidden;min-width:0}
+  @media(max-width:920px){.lmsGrid{grid-template-columns:1fr}.lmsSide{position:static}}
+</style></style>
+</head>
+<body>
+<div class="lmsTop"><span class="lmsMarca">TALENTORÍA <span>· academia de reclutamiento</span></span><a class="lmsDemo" href="https://oliverbarona.com/portafolio" target="_blank" rel="noopener">DEMO · PORTAFOLIO</a></div>
+<div class="lmsGrid">
+<aside class="lmsSide"><h4>Reclutamiento y Selección con IA</h4>
+<div class="lmsItem"><span class="lmsNum">✓</span><span>M1 · Fundamentos de IA para RH</span></div>
+<div class="lmsItem lmsAhora"><span class="lmsNum">2</span><span>M2 · Perfilamiento de vacantes</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">3</span><span>M3 · Sourcing con IA</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">4</span><span>M4 · Entrevista y evaluación</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">5</span><span>M5 · Selección sin sesgos</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">6</span><span>M6 · KPIs y calidad de contratación</span></div>
+<div class="lmsProg">Una de los cientos de lecciones del curso completo<span class="lmsBarra"><i style="width:22%"></i></span></div></aside></aside>
+<div class="lmsCaja">
+
+
+<div id="main-wrapper">
+    <img src="assets/talentoriacursos-15.jpg" alt="Hero" class="hero-image">
+
+    <div class="narrative-box">
+        <p>Has pasado horas redactando el perfil. Pides "pasión", "proactividad" y "ADN innovador". El algoritmo te devuelve cientos de CVs que coinciden con las palabras, pero ninguno con la realidad. BIASED.exe sonríe: acabas de crear un filtro basado en fantasías, no en datos.</p>
+        <p><strong>Curador Null:</strong> "Detén la escritura. Estás describiendo un fantasma. El perfil no es un retrato artístico del candidato ideal; es el plano técnico del instrumento con el que vamos a medir. Si el plano está mal, la IA solo amplificará tu error a velocidad luz."</p>
+    </div>
+
+    <h2>1. De la Descripción Estática al Vector Matemático</h2>
+    <p>El primer error del Reclutador 4.0 es creer que la IA "lee" como nosotros. No lo hace. La IA transforma tus palabras en matemáticas. La transformación del perfilamiento de vacantes implica un alejamiento de las descripciones estáticas hacia modelos dinámicos .</p>
+
+    <div class="char-box kai">
+        <div class="char-avatar">K</div>
+        <div class="char-content">
+            <h4>Kai Prisma: Verificación de Realidad</h4>
+            <p>Si escribes "Experto en Python", ¿te refieres a la serpiente o al código? Para ti es obvio. Para una IA mal calibrada, es solo una cadena de texto. Necesitas entender cómo la máquina "vectoriza" tus deseos.</p>
+        </div>
+    </div>
+
+    <h3>La Traducción Semántica (NLP)</h3>
+    <p>Las técnicas de Procesamiento de Lenguaje Natural (NLP) actúan como el puente entre el lenguaje humano y la comprensión de las máquinas . A diferencia de la búsqueda antigua de palabras clave (Boolean), los modelos modernos como <strong>BERT</strong> analizan el contexto semántico y la intención .</p>
+
+    <ul>
+        <li><strong>Búsqueda Literal:</strong> Busca "Java" → Encuentra "Java".</li>
+        <li><strong>Análisis Contextual (BERT):</strong> Entiende que "Java" junto a "Spring Boot" es programación, pero "Java" junto a "Sumatra" es café o geografía .</li>
+    </ul>
+
+    <div class="infographic-container">
+        <img src="assets/talentoriacursos-17.jpg" alt="Vectorización" class="infographic-img">
+        <span class="caption">Fig 1. La IA convierte texto subjetivo (JD Texto) en comprensión semántica (NLP) y finalmente en un Vector medible.</span>
+    </div>
+
+    <div class="concept-card">
+        <h3>La Importancia de las Taxonomías (ESCO / O*NET)</h3>
+        <p>Para que el perfilamiento sea efectivo a escala, debes hablar el idioma estándar. El uso de taxonomías como <strong>ESCO</strong> permite normalizar títulos. Un "Ingeniero de Software II" en una corporación se traduce a las competencias exactas de un "Backend Developer" en una startup .</p>
+    </div>
+
+    <hr>
+
+    <h2>2. Construcción del Candidate Persona (Metodología de 5 Pasos)</h2>
+    <p>Olvida el "Avatar de Marketing" inventado en una lluvia de ideas. El <em>candidate persona</em> en la era de la IA se construye sobre una base sólida de datos internos y externos, no de suposiciones . Es una representación semi-ficticia, pero matemáticamente validada.</p>
+
+    <div class="infographic-container">
+        <img src="assets/talentoriacursos-14.jpg" alt="Ciclo Persona" class="infographic-img">
+        <span class="caption">Fig 2. Ciclo de Ingeniería del Candidate Persona: Datos, Clusters, Mercado y Mensaje.</span>
+    </div>
+
+    <ul class="step-list">
+        <li><span class="step-num">Paso 1:</span> <strong>Análisis de "Top Performers" (Datos 3D).</strong> La IA ingiere datos de éxito reales.</li>
+        <li><span class="step-num">Paso 2:</span> <strong>Investigación Cualitativa Automatizada.</strong> Análisis de rasgos y valores.</li>
+        <li><span class="step-num">Paso 3:</span> <strong>Clustering (K-Means).</strong> Agrupación por similitudes no evidentes.</li>
+        <li><span class="step-num">Paso 4:</span> <strong>Validación de Mercado.</strong> Análisis de disponibilidad y costos.</li>
+        <li><span class="step-num">Paso 5:</span> <strong>Personalización del Mensaje.</strong> Generación de mensajes que resuenan.</li>
+    </ul>
+
+    <div class="char-box biased">
+        <div class="char-avatar">B</div>
+        <div class="char-content">
+            <h4>ALERTA DE BIASED.EXE</h4>
+            <p>"¿Por qué complicarse? Solo clona el perfil de tu último gerente exitoso..."<br>
+            <strong style="color:var(--c-danger)">Error Crítico:</strong> Clonar perfiles pasados perpetúa la falta de diversidad.</p>
+        </div>
+    </div>
+
+    <hr>
+
+    <h2>3. Midiendo lo Invisible: KPIs 5.0</h2>
+    <table>
+        <thead>
+            <tr><th>Métrica Tradicional</th><th>Métrica IA (Recomendada)</th><th>Por qué cambiar</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>Time to Fill</td><td><strong>Time-to-First-Touch</strong></td><td>Mide velocidad de reacción.</td></tr>
+            <tr><td>Costo por Contratación</td><td><strong>Marginal Cost-per-Hire</strong></td><td>Analiza costo incremental.</td></tr>
+            <tr><td>Número de Contrataciones</td><td><strong>Quality of Hire (QoH)</strong></td><td>La métrica reina: Desempeño + Retención.</td></tr>
+        </tbody>
+    </table>
+
+    <h2>4. El Cortafuegos Ético: Mitigación de Sesgos</h2>
+    <p>Los algoritmos pueden actuar como "cajas negras" que replican y amplifican sesgos históricos .</p>
+
+    <div class="infographic-container">
+        <img src="assets/talentoriacursos-16.jpg" alt="Ética" class="infographic-img">
+        <span class="caption">Fig 3. El proceso de purificación de datos: eliminar proxies y filtros de equidad.</span>
+    </div>
+
+    <div class="char-box null">
+        <div class="char-avatar">N</div>
+        <div class="char-content">
+            <h4>Desafío del Curador Null</h4>
+            <p><strong>Caso:</strong> Priorizar palabras como "agresivo".<br>
+            <strong>Corrección:</strong> No. Ese lenguaje sesga contra mujeres. Debes mapear la competencia "Persuasión" (ESCO).</p>
+        </div>
+    </div>
+
+    <div class="quiz-section">
+        <h3>Mini Evaluación: Calibración de Criterio</h3>
+        <div class="question-box">
+            <p><strong>1. ¿Cuál es la principal diferencia entre una búsqueda por palabras clave y una búsqueda semántica con BERT?</strong></p>
+            <label class="option"><input type="radio" name="q1" onclick="alert('Incorrecto. La velocidad no es la diferencia principal.')"> La búsqueda semántica es más rápida.</label>
+            <label class="option"><input type="radio" name="q1" onclick="alert('¡Correcto! BERT entiende el contexto y la intención.')"> La búsqueda semántica entiende el contexto y la intención.</label>
+            <label class="option"><input type="radio" name="q1" onclick="alert('Incorrecto. Ambos pueden usarse.')"> La búsqueda por palabras clave ya no se usa.</label>
+        </div>
+
+        <div class="question-box">
+            <p><strong>2. ¿Qué técnica se utiliza para verificar si un modelo de IA tiene sesgos ocultos?</strong></p>
+            <label class="option"><input type="radio" name="q2" onclick="alert('Incorrecto. Eso agrupa candidatos.')"> Clustering K-Means.</label>
+            <label class="option"><input type="radio" name="q2" onclick="alert('Incorrecto. Eso estandariza puestos.')"> Taxonomía ESCO.</label>
+            <label class="option"><input type="radio" name="q2" onclick="alert('¡Correcto! Cambiar una variable protegida revela el sesgo.')"> Flip Test (Prueba Contrafactual).</label>
+        </div>
+    </div>
+
+    <h2>Compromisos del Reclutador 5.0</h2>
+    <div class="commitments-list">
+        <div class="commitment-card">✓ Basar perfiles en datos de desempeño real.</div>
+        <div class="commitment-card">✓ Traducir requisitos vagos a competencias estandarizadas.</div>
+        <div class="commitment-card">✓ Realizar "Flip Tests" periódicos.</div>
+        <div class="commitment-card">✓ Medir el éxito por la Calidad de Contratación (QoH).</div>
+    </div>
+
+    <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/Kl37oGVpncw?rel=0&modestbranding=1&controls=1&disablekb=1&fs=0&iv_load_policy=3&playsinline=1"
+            title="Video lección"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+    </iframe>
+</div>
+
+    <div class="footer-closure">
+        <h2>¿Estás listo para dejar de describir fantasmas y empezar a medir talento real?</h2>
+        <p>Has completado el módulo de Perfilamiento con IA. Los datos ahora son tu mejor aliado.</p>
+        
+    </div>
+</div>
+
+<script>
+    function sendHeight() {
+        const height = document.getElementById('main-wrapper').scrollHeight;
+        window.parent.postMessage({ 'type': 'iframe-resize', 'height': height }, '*');
+        window.parent.postMessage({ 'type': 'EPL_EMBED_SIZE', 'height': height }, '*');
+    }
+    window.addEventListener('load', sendHeight);
+    window.addEventListener('resize', sendHeight);
+    const resizeObserver = new ResizeObserver(entries => sendHeight());
+    resizeObserver.observe(document.getElementById('main-wrapper'));
+    setInterval(sendHeight, 1200);
+</script>
+</div><!--lmsCaja--></div><!--lmsGrid-->
+</body>
+</html>

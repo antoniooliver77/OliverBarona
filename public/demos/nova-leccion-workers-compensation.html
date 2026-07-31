@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.9 Compensación para trabajadores</title>
+  <style>
+    :root{
+      --azul-oscuro:#0F2A3C;
+      --azul-profundo:#071722;
+      --azul-medio:#1E5FAF;
+      --azul-claro:#2EA3F2;
+      --blanco:#FFFFFF;
+      --gris:#B0B7C3;
+      --gris-claro:#E7EDF3;
+      --dorado:#D4AF37;
+      --ambar:#FFB347;
+      --rojo:#E86F52;
+      --verde:#58D68D;
+      --linea:rgba(255,255,255,.16);
+      --sombra:0 24px 70px rgba(0,0,0,.34);
+    }
+
+    *{box-sizing:border-box}
+
+    html,body{
+      margin:0;
+      padding:0;
+      background:transparent;
+      color:var(--blanco);
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.6;
+    }
+
+    button,input{
+      font:inherit;
+    }
+
+    button:focus-visible,
+    input:focus-visible{
+      outline:3px solid var(--dorado);
+      outline-offset:3px;
+    }
+
+    .lesson{
+      width:100%;
+      max-width:1200px;
+      margin:0 auto;
+      padding:0 0 38px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(46,163,242,.18), transparent 34%),
+        radial-gradient(circle at 85% 9%, rgba(212,175,55,.16), transparent 30%),
+        linear-gradient(180deg, #06131d 0%, #0F2A3C 44%, #081923 100%);
+      border-radius:24px;
+      box-shadow:0 30px 90px rgba(0,0,0,.28);
+    }
+
+    .top-image{
+      padding:22px;
+    }
+
+    .top-image figure,
+    .wide-img{
+      margin:0;
+      border-radius:30px;
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(0,0,0,.22);
+      box-shadow:var(--sombra);
+    }
+
+    .top-image img,
+    .wide-img img{
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:30px;
+    }
+
+    .top-image figcaption,
+    .wide-img figcaption{
+      padding:12px 16px 16px;
+      color:#BFD0DF;
+      font-size:.92rem;
+    }
+
+    .hero-title{
+      padding:8px 28px 20px;
+    }
+
+    .hero-title-inner{
+      padding:28px;
+      border:1px solid rgba(212,175,55,.24);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.03)),
+        radial-gradient(circle at 0% 0%, rgba(212,175,55,.16), transparent 35%);
+      border-radius:30px;
+      box-shadow:var(--sombra);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:8px 12px;
+      border-radius:999px;
+      color:#FFF4C8;
+      background:rgba(212,175,55,.13);
+      border:1px solid rgba(212,175,55,.26);
+      font-weight:800;
+      font-size:.82rem;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+    }
+
+    h1{
+      margin:18px 0 14px;
+      font-size:clamp(2rem, 4vw, 4rem);
+      line-height:1.03;
+      letter-spacing:-.045em;
+    }
+
+    h2{
+      margin:0 0 14px;
+      font-size:clamp(1.55rem, 2.5vw, 2.45rem);
+      line-height:1.15;
+      letter-spacing:-.025em;
+    }
+
+    h3{
+      margin:0 0 10px;
+      color:#FFF2BE;
+      font-size:1.22rem;
+    }
+
+    p{
+      color:#D9E5EF;
+      margin:0 0 14px;
+    }
+
+    strong{
+      color:#FFF1BC;
+    }
+
+    .subtitle,
+    .lead{
+      font-size:clamp(1.02rem, 1.7vw, 1.2rem);
+      color:#EDF6FF;
+    }
+
+    .hero-points{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .micro-card{
+      padding:14px;
+      border-radius:18px;
+      border:1px solid var(--linea);
+      background:rgba(0,0,0,.18);
+    }
+
+    .micro-card strong{
+      display:block;
+      color:#FFF1BC;
+      font-size:.92rem;
+      margin-bottom:3px;
+    }
+
+    .micro-card span{
+      color:#C7D6E4;
+      font-size:.88rem;
+    }
+
+    section{
+      padding:20px 28px;
+    }
+
+    .section-card{
+      padding:28px;
+      border-radius:30px;
+      border:1px solid var(--linea);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.035)),
+        rgba(0,0,0,.12);
+      box-shadow:0 18px 50px rgba(0,0,0,.20);
+    }
+
+    .story{
+      background:
+        linear-gradient(135deg, rgba(0,0,0,.48), rgba(15,42,60,.92)),
+        radial-gradient(circle at 15% 20%, rgba(212,175,55,.22), transparent 26%);
+      border:1px solid rgba(212,175,55,.28);
+      border-radius:30px;
+      padding:30px;
+      box-shadow:0 20px 55px rgba(0,0,0,.32);
+    }
+
+    .story p{
+      font-family:Georgia, 'Times New Roman', serif;
+      font-size:clamp(1.18rem, 2vw, 1.55rem);
+      color:#FFF6D8;
+      margin:0 0 14px;
+    }
+
+    .story .dialogue{
+      margin-top:18px;
+      padding:18px 20px;
+      background:rgba(0,0,0,.28);
+      border-left:4px solid #D4AF37;
+      border-radius:18px;
+      color:#F3D98B;
+      font-family:Georgia, 'Times New Roman', serif;
+      font-size:1.18rem;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .card{
+      padding:20px;
+      border-radius:24px;
+      border:1px solid var(--linea);
+      background:rgba(255,255,255,.075);
+    }
+
+    .card .icon{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:15px;
+      margin-bottom:12px;
+      background:rgba(46,163,242,.16);
+      border:1px solid rgba(46,163,242,.28);
+      color:#BEE7FF;
+      font-size:1.35rem;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:.8rem;
+      font-weight:800;
+      letter-spacing:.025em;
+      background:rgba(46,163,242,.13);
+      border:1px solid rgba(46,163,242,.25);
+      color:#C7ECFF;
+      margin-bottom:10px;
+    }
+
+    .note{
+      margin-top:16px;
+      padding:18px 20px;
+      border-radius:20px;
+      background:rgba(212,175,55,.12);
+      border:1px solid rgba(212,175,55,.28);
+      color:#FFF3C6;
+    }
+
+    .danger-note{
+      margin-top:16px;
+      padding:18px 20px;
+      border-radius:20px;
+      background:rgba(232,111,82,.13);
+      border:1px solid rgba(232,111,82,.30);
+      color:#FFE1D8;
+    }
+
+    .learning-path{
+      display:grid;
+      gap:14px;
+      margin-top:18px;
+      counter-reset:step;
+    }
+
+    .step{
+      counter-increment:step;
+      position:relative;
+      padding:18px 18px 18px 62px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.13);
+      background:rgba(0,0,0,.16);
+    }
+
+    .step::before{
+      content:counter(step);
+      position:absolute;
+      left:18px;
+      top:18px;
+      width:30px;
+      height:30px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(212,175,55,.16);
+      border:1px solid rgba(212,175,55,.35);
+      color:#FFE59B;
+      font-weight:900;
+    }
+
+    .step strong{
+      display:block;
+      margin-bottom:5px;
+    }
+
+    .checklist{
+      display:grid;
+      gap:10px;
+      margin-top:14px;
+    }
+
+    .check{
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:14px;
+      border-radius:18px;
+      background:rgba(0,0,0,.16);
+      border:1px solid rgba(255,255,255,.11);
+      color:#DDEAF4;
+    }
+
+    .check::before{
+      content:"✓";
+      flex:0 0 auto;
+      width:26px;
+      height:26px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(88,214,141,.15);
+      border:1px solid rgba(88,214,141,.32);
+      color:#A7F3C2;
+      font-weight:900;
+    }
+
+    .compare{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      margin-top:18px;
+      border:1px solid var(--linea);
+      border-radius:22px;
+      background:rgba(0,0,0,.15);
+    }
+
+    th,td{
+      padding:15px;
+      text-align:left;
+      vertical-align:top;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+
+    th{
+      background:rgba(212,175,55,.12);
+      color:#FFF1BC;
+      font-size:.92rem;
+    }
+
+    td{
+      color:#D9E5EF;
+      font-size:.95rem;
+    }
+
+    tr:last-child td{
+      border-bottom:0;
+    }
+
+    .acc{
+      display:grid;
+      gap:12px;
+      margin-top:18px;
+    }
+
+    .acc-item{
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:22px;
+      background:rgba(255,255,255,.06);
+    }
+
+    .acc-btn{
+      width:100%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      padding:18px 20px;
+      border:0;
+      background:transparent;
+      color:#FFFFFF;
+      cursor:pointer;
+      text-align:left;
+      font-weight:850;
+    }
+
+    .acc-btn .symbol{
+      width:32px;
+      height:32px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(212,175,55,.16);
+      color:#FFE59B;
+      flex:0 0 auto;
+    }
+
+    .acc-panel{
+      display:none;
+      padding:0 20px 20px;
+    }
+
+    .acc-item.open .acc-panel{
+      display:block;
+    }
+
+    .decision-lab{
+      display:grid;
+      grid-template-columns:.95fr 1.05fr;
+      gap:18px;
+      margin-top:18px;
+    }
+
+    .decision-buttons{
+      display:grid;
+      gap:10px;
+    }
+
+    .decision-btn,
+    .scenario-btn,
+    .calc-btn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.08);
+      color:#FFFFFF;
+      border-radius:18px;
+      padding:14px 16px;
+      cursor:pointer;
+      text-align:left;
+      transition:transform .18s ease, background .18s ease, border-color .18s ease;
+    }
+
+    .decision-btn:hover,
+    .scenario-btn:hover,
+    .calc-btn:hover,
+    .option:hover{
+      transform:translateY(-1px);
+      background:rgba(255,255,255,.13);
+      border-color:rgba(212,175,55,.35);
+    }
+
+    .decision-btn.active,
+    .scenario-btn.active{
+      background:rgba(212,175,55,.16);
+      border-color:rgba(212,175,55,.45);
+      color:#FFF1BC;
+    }
+
+    .decision-output{
+      min-height:260px;
+      padding:22px;
+      border-radius:24px;
+      border:1px solid rgba(212,175,55,.24);
+      background:
+        radial-gradient(circle at 100% 0%, rgba(212,175,55,.13), transparent 28%),
+        rgba(0,0,0,.18);
+    }
+
+    .pill-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:14px;
+    }
+
+    .pill{
+      padding:7px 10px;
+      border-radius:999px;
+      color:#DFF2FF;
+      background:rgba(46,163,242,.14);
+      border:1px solid rgba(46,163,242,.24);
+      font-size:.83rem;
+      font-weight:750;
+    }
+
+    .scenario-box{
+      margin-top:18px;
+      padding:22px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.17);
+    }
+
+    .scenario-actions{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:12px;
+      margin:16px 0;
+    }
+
+    .scenario-result,
+    .calc-result{
+      display:none;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(212,175,55,.26);
+      background:rgba(212,175,55,.10);
+      color:#FFF2C5;
+    }
+
+    .scenario-result.show,
+    .calc-result.show{
+      display:block;
+    }
+
+    .calc-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+      margin-top:16px;
+    }
+
+    .field{
+      display:grid;
+      gap:7px;
+    }
+
+    .field label{
+      color:#FFF1BC;
+      font-weight:800;
+      font-size:.92rem;
+    }
+
+    .field input{
+      width:100%;
+      border:1px solid rgba(255,255,255,.18);
+      border-radius:16px;
+      padding:12px 13px;
+      background:rgba(0,0,0,.20);
+      color:#FFFFFF;
+    }
+
+    .quiz{
+      display:grid;
+      gap:16px;
+      margin-top:18px;
+    }
+
+    .q-card{
+      padding:20px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.065);
+    }
+
+    .q-title{
+      font-weight:850;
+      color:#FFFFFF;
+      margin-bottom:12px;
+    }
+
+    .options{
+      display:grid;
+      gap:10px;
+    }
+
+    .option{
+      width:100%;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.16);
+      color:#E8F2FA;
+      border-radius:16px;
+      padding:13px 14px;
+      text-align:left;
+      cursor:pointer;
+    }
+
+    .option.correct{
+      border-color:rgba(88,214,141,.55);
+      background:rgba(88,214,141,.14);
+      color:#D7FFE6;
+    }
+
+    .option.incorrect{
+      border-color:rgba(232,111,82,.58);
+      background:rgba(232,111,82,.13);
+      color:#FFE0D8;
+    }
+
+    .feedback{
+      display:none;
+      margin-top:12px;
+      padding:14px;
+      border-radius:16px;
+      background:rgba(0,0,0,.22);
+      border:1px solid rgba(255,255,255,.14);
+      color:#DDEAF4;
+    }
+
+    .feedback.show{
+      display:block;
+    }
+
+    .scorebox{
+      margin-top:18px;
+      padding:20px;
+      border-radius:24px;
+      background:
+        linear-gradient(135deg, rgba(46,163,242,.16), rgba(212,175,55,.12)),
+        rgba(0,0,0,.18);
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .progress{
+      width:100%;
+      background:rgba(0,0,0,.26);
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      padding:4px;
+      margin-top:12px;
+    }
+
+    .bar{
+      width:0%;
+      min-height:16px;
+      border-radius:999px;
+      background:linear-gradient(90deg, var(--azul-claro), var(--dorado));
+      transition:width .3s ease;
+    }
+
+    .final-box{
+      padding:28px;
+      border-radius:30px;
+      background:
+        linear-gradient(135deg, rgba(212,175,55,.16), rgba(46,163,242,.12)),
+        rgba(0,0,0,.22);
+      border:1px solid rgba(212,175,55,.30);
+      text-align:center;
+    }
+
+    .final-box p{
+      max-width:860px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    .gold{
+      color:#FFE59B;
+    }
+
+    @media (max-width:900px){
+      .hero-points,
+      .grid-2,
+      .grid-3,
+      .decision-lab,
+      .scenario-actions,
+      .calc-grid{
+        grid-template-columns:1fr;
+      }
+
+      .top-image,
+      .hero-title,
+      section{
+        padding-left:16px;
+        padding-right:16px;
+      }
+
+      .hero-title-inner,
+      .section-card,
+      .story{
+        padding:22px;
+        border-radius:24px;
+      }
+
+      .compare,
+      .compare thead,
+      .compare tbody,
+      .compare th,
+      .compare td,
+      .compare tr{
+        display:block;
+      }
+
+      .compare thead{
+        position:absolute;
+        left:-9999px;
+      }
+
+      .compare tr{
+        border-bottom:1px solid rgba(255,255,255,.13);
+        padding:10px 0;
+      }
+
+      .compare tr:last-child{
+        border-bottom:0;
+      }
+
+      .compare td{
+        border-bottom:0;
+        padding:10px 14px;
+      }
+
+      .compare td::before{
+        content:attr(data-label);
+        display:block;
+        color:#FFE59B;
+        font-weight:850;
+        margin-bottom:4px;
+      }
+    }
+  
+    /* Nova premium deep-blue refinement */
+    .lesson,#lesson-root,#lessonRoot,.main-container{position:relative;overflow:hidden;height:auto !important;min-height:0 !important;background:linear-gradient(115deg, rgba(102,201,255,.05) 0 1px, transparent 1px 92px),linear-gradient(180deg, #020817 0%, #051122 42%, #020817 100%) !important;border:1px solid rgba(102,201,255,.16) !important;box-shadow:0 24px 70px rgba(0,0,0,.38) !important;}
+    .lesson::before,#lesson-root::before,#lessonRoot::before,.main-container::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg, rgba(102,201,255,.052) 1px, transparent 1px),linear-gradient(180deg, rgba(102,201,255,.04) 1px, transparent 1px),radial-gradient(circle at 88% 8%, rgba(15,101,255,.18), transparent 22%),radial-gradient(circle at 14% 20%, rgba(213,167,74,.07), transparent 18%);background-size:74px 74px,74px 74px,auto,auto;opacity:.64;}
+    .lesson > *,#lesson-root > *,#lessonRoot > *,.main-container > *{position:relative;z-index:1;}
+    .hero,.hero-title,header.hero,.section,.section-card,.video-card,.activity,.quiz,.story,.figure,.wide-img,.top-cover,.top-image,.nova-podcast,.card,.intro-card,.case-lab{border-color:rgba(102,201,255,.18) !important;box-shadow:0 20px 48px rgba(0,0,0,.36), inset 0 1px 0 rgba(216,244,255,.055) !important;}
+    .hero,.hero-title,header.hero,.intro-card{background:linear-gradient(135deg, rgba(2,8,23,.94), rgba(5,17,34,.88)),linear-gradient(115deg, rgba(102,201,255,.10), transparent 36%) !important;border-bottom:1px solid rgba(102,201,255,.16) !important;}
+    .section-card,.activity,.quiz,.video-card,.card,.case-lab{background:linear-gradient(180deg, rgba(10,36,71,.88), rgba(5,17,34,.94)) !important;}
+    .story,.nova-podcast{background:linear-gradient(135deg, rgba(2,8,23,.96), rgba(7,25,47,.92)),linear-gradient(115deg, rgba(15,101,255,.12), transparent 40%) !important;border-color:rgba(102,201,255,.22) !important;}
+    h1,h2,h3,.section-card strong,.path-item strong,.feedback strong{color:#f7fbff !important;}
+    p,li,td,.lead,.subtitle,.section-card,.path-item,.feedback{color:#d8f4ff;}
+    .eyebrow,.kicker,.nova-podcast__label{color:#f3d88d !important;border-color:rgba(213,167,74,.24) !important;background:rgba(213,167,74,.08) !important;}
+    .top-cover,.top-image{margin:24px 34px 0 !important;background:rgba(2,8,23,.76) !important;border:1px solid rgba(102,201,255,.18) !important;box-shadow:0 18px 44px rgba(0,0,0,.35) !important;}
+    .top-cover img,.top-image img,.figure img,.wide-img img,.hero-img{filter:saturate(1.06) contrast(1.04) brightness(.98);box-shadow:0 0 0 1px rgba(102,201,255,.14);}
+    .nova-media-section{margin:24px 34px 0;padding:0;background:transparent;border:0;box-shadow:none;}
+    .nova-media-card{padding:clamp(22px,4vw,34px);border-radius:24px;background:linear-gradient(135deg,rgba(2,8,23,.96),rgba(7,25,47,.92)),linear-gradient(115deg,rgba(15,101,255,.12),transparent 40%);border:1px solid rgba(102,201,255,.22);box-shadow:0 22px 52px rgba(0,0,0,.46), inset 0 1px 0 rgba(216,244,255,.06);}
+    .nova-media-label{display:inline-flex;width:max-content;max-width:100%;padding:8px 12px;border-radius:999px;background:rgba(213,167,74,.08);border:1px solid rgba(213,167,74,.24);color:#f3d88d;font-size:.76rem;font-weight:850;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;}
+    .video-frame,.nova-bunny-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:20px;overflow:hidden;background:#020817;border:1px solid rgba(102,201,255,.22);box-shadow:0 22px 52px rgba(0,0,0,.46), inset 0 1px 0 rgba(216,244,255,.06);}
+    .video-frame iframe,.nova-bunny-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:20px;background:#020817;}
+    .nova-podcast__body{width:100%;}
+    @media(max-width:900px){.top-cover,.top-image,.nova-media-section{margin:16px 12px 0 !important}.video-frame,.nova-bunny-frame{border-radius:16px}.video-frame iframe,.nova-bunny-frame iframe{border-radius:16px}.nova-media-card{padding:18px}}
+      .nova-podcast-frame-shell{position:relative;width:100%;height:clamp(118px, 13vw, 168px);border-radius:20px;overflow:hidden;background:#020817;border:1px solid rgba(102,201,255,.22);box-shadow:0 18px 42px rgba(0,0,0,.42), inset 0 1px 0 rgba(216,244,255,.06);}
+    .nova-podcast-frame-shell iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:20px;background:#020817;}
+    @media(max-width:900px){.nova-podcast-frame-shell{height:132px;border-radius:16px}.nova-podcast-frame-shell iframe{border-radius:16px}}
+
+    /* Nova VF color layer: deep premium blue, high contrast, no white over light blue */
+    :root{--azul-oscuro:#07192f;--azul-profundo:#020817;--azul-medio:#0f65ff;--azul-claro:#66c9ff;--blanco:#f7fbff;--gris:#aebbc9;--gris-claro:#d8f4ff;--dorado:#d5a74a;--ambar:#f3d88d;--texto:#d8f4ff;--texto-suave:#aebbc9;--sombra:0 24px 70px rgba(0,0,0,.46);}
+    html,body{background:#020817 !important;color:#d8f4ff !important;}
+    .lesson,.lesson-root,#lesson-root,.page,.module,.app,main{background:linear-gradient(115deg,rgba(102,201,255,.045) 0 1px,transparent 1px 92px),radial-gradient(circle at 12% 4%,rgba(15,101,255,.18),transparent 28%),radial-gradient(circle at 88% 8%,rgba(213,167,74,.10),transparent 24%),linear-gradient(180deg,#020817 0%,#051122 42%,#020817 100%) !important;border-color:rgba(102,201,255,.18) !important;}
+    section,.hero,.story,.card,.panel,.box,.question,.q-card,.scenario,.activity,.quiz-card,.acc-item,.accordion,.result-card,.score-box,.practice,.simulation,.nova-media-card,.nova-video-section,.nova-podcast-section{background:linear-gradient(180deg,rgba(10,36,71,.88),rgba(5,17,34,.94)) !important;border-color:rgba(102,201,255,.18) !important;box-shadow:0 20px 48px rgba(0,0,0,.36),inset 0 1px 0 rgba(216,244,255,.055) !important;}
+    .hero,.story{background:linear-gradient(135deg,rgba(2,8,23,.96),rgba(7,25,47,.92)),linear-gradient(115deg,rgba(15,101,255,.12),transparent 40%) !important;}
+    h1,h2,h3,h4,.title,.section-head h2,.card strong,.question strong,.q-card p,.nova-media-card h2{color:#f7fbff !important;}
+    p,li,td,.subtitle,.lead,.caption,.acc-panel,.feedback,.small,.muted,.nova-media-card p{color:#d8f4ff !important;}
+    .eyebrow,.tag,.badge,.pill,.chip,.kicker,.label,.number,.acc-btn span,.mini-title,.nova-media-label{background:rgba(213,167,74,.08) !important;color:#f3d88d !important;border-color:rgba(213,167,74,.24) !important;}
+    input,select,textarea,.option,.choice,.scenario-btn,.risk-btn,.decision-btn,.q-options button,.answer,.sim-option{background:#07192f !important;color:#f7fbff !important;border-color:rgba(102,201,255,.26) !important;}
+    input:focus,select:focus,textarea:focus{border-color:rgba(102,201,255,.65) !important;box-shadow:0 0 0 3px rgba(102,201,255,.16) !important;}
+    button.verify,.verify,.check-btn,.reset-btn,.btn,.button,.cta,.verify-btn{background:linear-gradient(135deg,#0f65ff,#2385ff 55%,#66c9ff) !important;color:#020817 !important;border-color:rgba(102,201,255,.34) !important;box-shadow:0 16px 34px rgba(15,101,255,.22),0 10px 24px rgba(0,0,0,.30) !important;font-weight:900;}
+    .option:hover,.choice:hover,.scenario-btn:hover,.risk-btn:hover,.decision-btn:hover,.q-options button:hover,.answer:hover,.sim-option:hover{background:#0a2447 !important;color:#f7fbff !important;border-color:rgba(102,201,255,.46) !important;}
+    .selected,.active,.correct,.feedback.good,.sim-option.selected{background:#0a2447 !important;color:#f7fbff !important;border-color:rgba(102,201,255,.56) !important;}
+    .incorrect,.feedback.bad,.feedback.no{background:rgba(232,111,82,.12) !important;color:#f7fbff !important;border-color:rgba(232,111,82,.44) !important;}
+    th{background:#0a2447 !important;color:#f7fbff !important;}td{background:rgba(5,17,34,.72) !important;color:#d8f4ff !important;}
+    .nova-video-frame,.nova-video-shell,.nova-podcast-shell,.nova-podcast-frame,iframe{border-color:rgba(102,201,255,.22) !important;background:#020817 !important;}
+
+  </style>
+<style>
+/* Nova answer-state repair for preserved lesson interactions. */
+html body button.answer.correct,
+html body .answer.correct,
+html body button.option.correct,
+html body .option.correct,
+html body .q-options button.correct,
+html body [data-correct="true"].correct,
+html body [data-ok="true"].correct {
+  background: rgba(98,211,155,.16) !important;
+  border-color: rgba(98,211,155,.78) !important;
+  color: #eafff4 !important;
+}
+html body button.answer.incorrect,
+html body button.answer.wrong,
+html body .answer.incorrect,
+html body .answer.wrong,
+html body button.option.incorrect,
+html body button.option.wrong,
+html body .option.incorrect,
+html body .option.wrong,
+html body .q-options button.incorrect,
+html body .q-options button.wrong,
+html body [data-correct="false"].incorrect,
+html body [data-correct="false"].wrong,
+html body [data-ok="false"].incorrect,
+html body [data-ok="false"].wrong {
+  background: rgba(232,111,82,.16) !important;
+  border-color: rgba(232,111,82,.82) !important;
+  color: #fff2ee !important;
+}
+html body .feedback.show.good,
+html body .feedback.good,
+html body .result.good,
+html body .retro.good {
+  background: rgba(98,211,155,.14) !important;
+  border-color: rgba(98,211,155,.7) !important;
+  color: #eafff4 !important;
+}
+html body .feedback.show.bad,
+html body .feedback.bad,
+html body .feedback.no,
+html body .result.bad,
+html body .retro.bad {
+  background: rgba(232,111,82,.14) !important;
+  border-color: rgba(232,111,82,.76) !important;
+  color: #fff2ee !important;
+}
+</style>
+<style id="lms-shell">
+:root{--sbA:#0d4a86;--sbB:#082a4e;--sbTitulo:#eaf4ff;--sbAcento:#37c4ff;--sbCard:#ffffff;--sbCardTxt:#173352;--sbNum:#0f3c6b;--sbNumTxt:#fff;--sbActiva:#ffffff;--sbActivaTxt:#0b2d55;--cajaBg:#fff}
+  html{background:#e9edf3}
+  body{background:#e9edf3 !important;margin:0 !important;padding:0 !important}
+  .lmsTop{position:sticky;top:0;z-index:90;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:#0f1729;color:#f5f7fb;font-family:system-ui,-apple-system,sans-serif;box-shadow:0 2px 12px rgba(2,8,20,.3)}
+  .lmsTop .lmsMarca{font-weight:800;font-size:15px;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .lmsTop .lmsMarca span{opacity:.6;font-weight:500}
+  .lmsTop a.lmsDemo{font-size:11px;letter-spacing:.1em;background:#FF5C1F;color:#0f1729;padding:5px 10px;font-weight:800;text-decoration:none;white-space:nowrap;border-radius:6px}
+  .lmsGrid{display:grid;grid-template-columns:296px minmax(0,1fr);gap:24px;max-width:1240px;margin:0 auto;padding:24px 16px 64px;align-items:start}
+  .lmsSide{position:sticky;top:64px;background:linear-gradient(170deg,var(--sbA),var(--sbB));border-radius:20px;padding:16px 14px;font-family:system-ui,-apple-system,sans-serif;font-size:14px;box-shadow:0 14px 34px rgba(10,20,40,.22)}
+  .lmsSide h4{margin:2px 4px 14px;font-size:14px;letter-spacing:.02em;color:var(--sbTitulo);border-left:4px solid var(--sbAcento);padding-left:10px;font-weight:800}
+  .lmsSide .lmsItem{display:flex;gap:11px;align-items:center;background:var(--sbCard);color:var(--sbCardTxt);border-radius:12px;padding:11px 12px;margin-bottom:9px;line-height:1.3;box-shadow:0 3px 10px rgba(8,16,32,.14);font-weight:600}
+  .lmsSide .lmsNum{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--sbNum);color:var(--sbNumTxt);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800}
+  .lmsSide .lmsAhora{background:var(--sbActiva);color:var(--sbActivaTxt);box-shadow:0 6px 16px rgba(8,16,32,.22);outline:2px solid var(--sbAcento)}
+  .lmsSide .lmsAhora .lmsNum{background:var(--sbAcento);color:var(--sbActiva)}
+  .lmsSide .lmsLock{opacity:.62;font-weight:500}
+  .lmsSide .lmsProg{margin:12px 4px 2px;font-size:12px;color:var(--sbTitulo);opacity:.9}
+  .lmsSide .lmsBarra{height:7px;background:rgba(127,127,127,.25);margin-top:7px;border-radius:99px;overflow:hidden}
+  .lmsSide .lmsBarra i{display:block;height:100%;background:var(--sbAcento)}
+  .lmsCaja{background:var(--cajaBg,#fff);border:1px solid #d9e0ea;border-radius:18px;box-shadow:0 14px 34px rgba(15,23,41,.09);overflow:hidden;min-width:0}
+  @media(max-width:920px){.lmsGrid{grid-template-columns:1fr}.lmsSide{position:static}}
+</style></style>
+</head>
+
+<body>
+<div class="lmsTop"><span class="lmsMarca">NOVA INSURANCE ACADEMY <span>· campus virtual</span></span><a class="lmsDemo" href="https://oliverbarona.com/portafolio" target="_blank" rel="noopener">DEMO · PORTAFOLIO</a></div>
+<div class="lmsGrid">
+<aside class="lmsSide"><h4>Licencia P&amp;C · Módulo 4</h4>
+<div class="lmsItem"><span class="lmsNum">✓</span><span>Fianzas y garantías</span></div>
+<div class="lmsItem"><span class="lmsNum">✓</span><span>Employers Liability</span></div>
+<div class="lmsItem lmsAhora"><span class="lmsNum">3</span><span>Compensación para trabajadores</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">4</span><span>Umbrella y exceso</span></div>
+<div class="lmsItem lmsLock"><span class="lmsNum">5</span><span>Examen del módulo 4</span></div>
+<div class="lmsProg">Tu avance del módulo<span class="lmsBarra"><i style="width:64%"></i></span></div></aside></aside>
+<div class="lmsCaja">
+
+  <main class="lesson" id="lesson"><header class="hero-title">
+      <div class="hero-title-inner">
+        <span class="eyebrow">Módulo 4 · Responsabilidad civil, fianzas y términos relacionados</span>
+        <h1 id="lesson-title">4.9 Compensación para trabajadores</h1>
+        <p class="subtitle">
+          En esta lección profundizarás en la póliza de <strong>Workers’ Compensation and Employers Liability</strong>: sus tres partes, los beneficios de la Parte Uno, la función de la Parte Dos, la cobertura de otros estados, el principio de <strong>exclusive remedy</strong> y cómo se determina la prima.
+        </p>
+
+        <div class="hero-points">
+          <div class="micro-card">
+            <strong>Primero</strong>
+            <span>Verás la estructura de la póliza.</span>
+          </div>
+          <div class="micro-card">
+            <strong>Después</strong>
+            <span>Entenderás beneficios y condiciones.</span>
+          </div>
+          <div class="micro-card">
+            <strong>Finalmente</strong>
+            <span>Practicarás prima, E-Mod y trampas de examen.</span>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="nova-media-section" aria-label="Video de la lección">
+      <article class="nova-media-card">
+        <span class="nova-media-label">VIDEO DE LA LECCIÓN</span>
+        <h2>Video de apertura</h2>
+        <p>Reproduce el video cuando estés listo para comenzar la ruta de estudio.</p>
+        <div class="video-frame">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#0b1220,#1c2a47);color:#eaf2ff;text-align:center;padding:26px;font-family:system-ui,sans-serif"><div style="font-size:48px">🎬</div><strong style="font-size:17px">Aquí se reproduce el video de la lección</strong><span style="font-size:14px;opacity:.85;max-width:48ch;line-height:1.5">El video existe y acompaña esta lección en la academia real — pero es propiedad del cliente y sus derechos se respetan. El video de tu academia va a quedar igual de bien, y ese sí será tuyo.</span></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="top-image">
+      <figure>
+        <img src="assets/novainsurance-08.jpg" alt="La Ajustadora, Alex Rivera, Luna Valdés y Víctor Sombra revisan un expediente de compensación para trabajadores y responsabilidad patronal." />
+        <figcaption>La compensación laboral no es un trámite: es una red de protección para el empleado, el patrón y la continuidad del negocio.</figcaption>
+      </figure>
+    </div>
+
+
+    <section>
+      <div class="story">
+        <p>
+          La Ajustadora volvió al expediente del trabajador lesionado y colocó tres separadores sobre la mesa: Parte Uno, Parte Dos y Parte Tres. El dueño del negocio no preguntó solo si estaba cumpliendo; preguntó cuánto podía costarle la incertidumbre.
+        </p>
+        <p>
+          Víctor Sombra sonrió y dijo que aquello era “solo un trámite obligatorio”. Alex, en cambio, miró la nómina, las operaciones fuera del estado y el historial de accidentes antes de responder.
+        </p>
+        <div class="dialogue">
+          “No se vende como papeleo”, dijo Alex. “Se explica como una red de protección para el trabajador y para la estabilidad financiera del negocio.”
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Primero: esta póliza no es una sola cobertura</h2>
+        <p class="lead">
+          En el tema anterior viste la idea general de Workers’ Compensation y Employers Liability. Ahora vamos a profundizar en la póliza completa. Su nombre ya da una pista: <strong>Workers’ Compensation and Employers Liability</strong>. No es una simple cobertura médica para empleados. Es un contrato estructurado para responder a varias capas de riesgo laboral.
+        </p>
+        <p>
+          Para entenderla sin memorizar de forma aislada, piensa en tres preguntas: ¿qué recibe el trabajador lesionado?, ¿qué protege al empleador si surge una demanda? y ¿qué pasa si el empleado trabaja temporalmente en otro estado?
+        </p>
+
+        <div class="learning-path">
+          <div class="step">
+            <strong>Parte Uno: Workers’ Compensation.</strong>
+            Paga los beneficios estatutarios que la ley exige para el empleado lesionado. Aquí el centro es el trabajador.
+          </div>
+          <div class="step">
+            <strong>Parte Dos: Employers Liability.</strong>
+            Defiende al patrón ante ciertas demandas civiles relacionadas con una lesión laboral. Aquí el centro es la responsabilidad legal del empleador.
+          </div>
+          <div class="step">
+            <strong>Parte Tres: Other States’ Insurance.</strong>
+            Atiende exposiciones temporales o incidentales en estados distintos a los principales declarados en la póliza.
+          </div>
+          <div class="step">
+            <strong>Determinación de prima.</strong>
+            El costo no sale de la nada: depende de nómina, clasificación laboral y experiencia de pérdidas.
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Idea base:</strong> la póliza no solo cumple una obligación legal; también reduce incertidumbre financiera, litigios, interrupciones y errores de asesoría.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-09.jpg" alt="Infografía de la estructura de la póliza Workers Compensation and Employers Liability: Parte Uno, Parte Dos y Parte Tres." />
+        <figcaption>La póliza se entiende mejor cuando separas sus tres partes: beneficios, responsabilidad patronal y otros estados.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Parte Uno: Workers’ Compensation</h2>
+        <p class="lead">
+          La <strong>Parte Uno</strong> es la sección que paga los beneficios obligatorios al trabajador lesionado conforme a la ley estatal aplicable.
+        </p>
+        <p>
+          Aquí no debes pensar como en una póliza de responsabilidad con un límite típico de “$500,000” o “$1,000,000”. En la Parte Uno, la aseguradora se compromete a pagar lo que la ley estatal exige para una lesión laboral cubierta. Por eso se dice que es una cobertura estatutaria.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>¿Qué significa “estatutaria”?</h3>
+            <p>
+              Significa que la ley define los beneficios. El contrato no inventa libremente cuánto recibe el empleado. La póliza sigue el marco legal del estado donde aplica la lesión.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>¿Por qué importa al agente?</h3>
+            <p>
+              Porque el cliente empresario puede creer que solo compra “una póliza más”. En realidad compra un mecanismo para cumplir obligaciones legales y evitar que una lesión laboral desordene sus finanzas.
+            </p>
+          </article>
+        </div>
+
+        <div class="danger-note">
+          <strong>Trampa de examen:</strong> si preguntan por el límite máximo de gastos médicos en la Parte Uno, la respuesta no es una cifra de la página de declaraciones. La Parte Uno paga los beneficios exigidos por ley.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-10.jpg" alt="Infografía de beneficios de la Parte Uno: gastos médicos, reemplazo de ingresos, fallecimiento y rehabilitación vocacional." />
+        <figcaption>Los beneficios de la Parte Uno se enfocan en recuperar, sostener o indemnizar al trabajador y a sus dependientes.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Los cuatro beneficios principales de la Parte Uno</h2>
+        <p>
+          Ahora que sabes que la Parte Uno responde conforme a la ley, podemos separar sus beneficios. Esta separación ayuda mucho en el examen porque las preguntas suelen cambiar el tipo de pérdida: una cirugía, incapacidad, muerte o reentrenamiento.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <div class="icon">🏥</div>
+            <h3>1. Gastos médicos</h3>
+            <p>
+              Cubren tratamiento, hospitalización, cirugía, medicamentos, terapias y servicios necesarios para atender la lesión o enfermedad laboral. El empleado no debe tratarlo como si fuera un reclamo común con deducible personal.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">💵</div>
+            <h3>2. Reemplazo de ingresos</h3>
+            <p>
+              Si el trabajador pierde ingresos por incapacidad, puede recibir pagos conforme a fórmulas estatales. Las incapacidades pueden ser temporales, permanentes, totales o parciales.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">👨‍👩‍👧</div>
+            <h3>3. Beneficios por fallecimiento</h3>
+            <p>
+              Si la lesión laboral causa la muerte, la ley puede exigir beneficios para dependientes, además de una partida para gastos funerarios.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🧭</div>
+            <h3>4. Rehabilitación vocacional</h3>
+            <p>
+              Busca que el trabajador pueda regresar al empleo o capacitarse para una ocupación compatible con sus nuevas capacidades físicas.
+            </p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Conexión práctica:</strong> el cliente empresario no solo quiere “cumplir”. Quiere saber que una lesión no se convertirá en caos financiero, operativo y humano.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Parte Dos: Employers Liability</h2>
+        <p class="lead">
+          La <strong>Parte Dos</strong> protege al empleador cuando aparece una demanda civil relacionada con una lesión laboral que no queda totalmente contenida por la Parte Uno.
+        </p>
+        <p>
+          La diferencia clave es que Workers’ Compensation paga beneficios al empleado bajo un sistema estatutario. Employers Liability, en cambio, se parece más a una cobertura de responsabilidad civil: defiende al empleador y paga reclamaciones cubiertas, pero está sujeta a límites de póliza.
+        </p>
+
+        <table class="compare" aria-label="Comparación Parte Uno y Parte Dos">
+          <thead>
+            <tr>
+              <th>Pregunta</th>
+              <th>Parte Uno: Workers’ Compensation</th>
+              <th>Parte Dos: Employers Liability</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-label="Pregunta"><strong>¿A quién protege directamente?</strong></td>
+              <td data-label="Parte Uno">Al empleado lesionado o sus dependientes.</td>
+              <td data-label="Parte Dos">Al empleador asegurado.</td>
+            </tr>
+            <tr>
+              <td data-label="Pregunta"><strong>¿Qué paga?</strong></td>
+              <td data-label="Parte Uno">Beneficios estatutarios: médicos, incapacidad, muerte, rehabilitación.</td>
+              <td data-label="Parte Dos">Defensa legal, acuerdos o sentencias cubiertas.</td>
+            </tr>
+            <tr>
+              <td data-label="Pregunta"><strong>¿Tiene límite de póliza?</strong></td>
+              <td data-label="Parte Uno">No funciona con un límite monetario común de póliza.</td>
+              <td data-label="Parte Dos">Sí tiene límites expresados en declaraciones.</td>
+            </tr>
+            <tr>
+              <td data-label="Pregunta"><strong>Ejemplo típico</strong></td>
+              <td data-label="Parte Uno">Empleado se fractura el brazo operando maquinaria durante su turno.</td>
+              <td data-label="Parte Dos">Cónyuge demanda por pérdida de consorcio o fabricante demanda al empleador.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="danger-note">
+          <strong>No lo mandes a CGL:</strong> una póliza CGL normalmente excluye lesiones a empleados derivadas del empleo. Las demandas laborales especiales se analizan bajo Employers Liability.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Exclusive Remedy: el pacto que sostiene el sistema</h2>
+        <p class="lead">
+          El principio de <strong>exclusive remedy</strong> significa que, por regla general, Workers’ Compensation es el recurso exclusivo del empleado contra su empleador por una lesión laboral.
+        </p>
+        <p>
+          Este principio crea un intercambio: el empleado recibe beneficios sin probar culpa, y el patrón recibe protección frente a demandas ordinarias por negligencia. Pero no debes memorizarlo como una barrera absoluta. Tiene excepciones.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <span class="tag">Regla general</span>
+            <h3>El empleado recibe beneficios</h3>
+            <p>
+              No necesita probar negligencia del patrón para recibir atención médica y beneficios aplicables.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="tag">Intercambio</span>
+            <h3>No demanda por negligencia ordinaria</h3>
+            <p>
+              A cambio de beneficios rápidos, normalmente renuncia a demandar civilmente al empleador por descuido común.
+            </p>
+          </article>
+
+          <article class="card">
+            <span class="tag">Excepciones</span>
+            <h3>No es un escudo perfecto</h3>
+            <p>
+              Puede romperse por conducta intencional, falta de seguro obligatorio o demandas de terceros y familiares.
+            </p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>Idea de examen:</strong> exclusive remedy bloquea la demanda directa ordinaria del empleado, pero no necesariamente una demanda de cónyuge, un tercero fabricante o un caso de doble capacidad.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Parte Tres: Other States’ Insurance</h2>
+        <p class="lead">
+          La <strong>Parte Tres</strong> existe porque los negocios no siempre se quedan en un solo estado. Un empleado puede viajar temporalmente a otro estado para dar mantenimiento, capacitar a un cliente o atender una operación incidental.
+        </p>
+        <p>
+          La póliza distingue entre estados principales y otros estados. Los estados principales de operación conocida deben estar en el <strong>Item 3.A</strong>. Los estados donde puede haber exposición incidental o imprevista deben estar en el <strong>Item 3.C</strong>.
+        </p>
+
+        <div class="grid-2">
+          <article class="card">
+            <h3>Item 3.A: estados principales</h3>
+            <p>
+              Incluye los estados donde el empleador ya tiene operaciones conocidas, permanentes o habituales al iniciar la póliza. Si la operación ya existe, no debe ocultarse aquí.
+            </p>
+          </article>
+
+          <article class="card">
+            <h3>Item 3.C: otros estados</h3>
+            <p>
+              Puede extender cobertura para exposiciones incidentales o temporales que surgen después de la emisión. Si empieza una operación en uno de esos estados, debe notificarse al asegurador, típicamente dentro de 30 días.
+            </p>
+          </article>
+        </div>
+
+        <div class="danger-note">
+          <strong>Trampa crítica:</strong> la Parte Tres no sirve para esconder operaciones permanentes ya existentes. Si el negocio ya tenía empleados trabajando en un estado y no lo declaró en Item 3.A, puede haber denegación.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-11.jpg" alt="Infografía sobre Other States Insurance, Item 3.A, Item 3.C, regla de 30 días y estados monopolísticos." />
+        <figcaption>Other States’ Insurance cubre movilidad incidental, no operaciones permanentes omitidas.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Estados monopolísticos: cuidado con OH, WA, ND y WY</h2>
+        <p>
+          Hay estados donde el seguro primario de Workers’ Compensation debe comprarse a través de fondos estatales monopolísticos. Para efectos del examen, debes memorizar estos cuatro: <strong>Ohio, Washington, North Dakota y Wyoming</strong>.
+        </p>
+        <p>
+          La Parte Tres de una póliza privada estándar no extiende cobertura automáticamente para estos estados. Si el negocio opera allí, debe cumplir con el sistema estatal correspondiente y revisar posibles brechas de Employers Liability mediante Stop Gap.
+        </p>
+
+        <div class="note">
+          <strong>Atajo de memoria:</strong> OH, WA, ND, WY. Si aparecen en la pregunta, no trates el caso como un “otro estado” común bajo Item 3.C.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Determinación de la prima: por qué el costo cambia tanto entre negocios</h2>
+        <p class="lead">
+          El costo de Workers’ Compensation no se calcula como una tarifa plana igual para todos. Depende de la exposición real del negocio y de su historial de pérdidas.
+        </p>
+        <p>
+          La fórmula básica se entiende así: <strong>Payroll ÷ 100 × Classification Rate × Experience Modifier = Prima estimada</strong>.
+        </p>
+
+        <div class="grid-3">
+          <article class="card">
+            <div class="icon">🧾</div>
+            <h3>Payroll</h3>
+            <p>
+              Es la nómina o remuneración usada como base de exposición. Mientras más nómina expuesta haya, más grande será la base para calcular prima.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">🏷️</div>
+            <h3>Classification Rate</h3>
+            <p>
+              Es la tasa según la ocupación o clase de riesgo. Un administrativo tiene menor tasa que un trabajador en alturas porque la exposición física es distinta.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="icon">📊</div>
+            <h3>Experience Modifier</h3>
+            <p>
+              Ajusta la prima según el historial de pérdidas del negocio comparado con empresas similares. Menor a 1.00 reduce; mayor a 1.00 aumenta.
+            </p>
+          </article>
+        </div>
+
+        <div class="note">
+          <strong>El mensaje para el empresario:</strong> invertir en seguridad puede reducir accidentes, mejorar el E-Mod y proteger el costo futuro del seguro.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-12.jpg" alt="Infografía del cálculo de prima de Workers Compensation: payroll, classification rate y experience modifier." />
+        <figcaption>La prima refleja exposición, tipo de trabajo y desempeño histórico de seguridad.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Mini calculadora de prima</h2>
+        <p>
+          Practica la fórmula básica. Ingresa una nómina, una tasa por cada $100 de nómina y un E-Mod. El resultado es una prima estimada antes de otros cargos, descuentos o ajustes.
+        </p>
+
+        <div class="scenario-box">
+          <div class="calc-grid">
+            <div class="field">
+              <label for="payroll">Payroll total</label>
+              <input id="payroll" type="number" min="0" value="500000" />
+            </div>
+            <div class="field">
+              <label for="rate">Classification Rate</label>
+              <input id="rate" type="number" min="0" step="0.01" value="3.50" />
+            </div>
+            <div class="field">
+              <label for="emod">Experience Modifier</label>
+              <input id="emod" type="number" min="0" step="0.01" value="1.00" />
+            </div>
+          </div>
+
+          <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:10px;">
+            <button class="calc-btn" type="button" id="calcBtn">Calcular prima estimada</button>
+            <button class="calc-btn" type="button" id="calcResetBtn" aria-label="Limpiar la calculadora y reiniciar los valores">Limpiar / reiniciar</button>
+          </div>
+
+          <div class="calc-result" id="calcResult" aria-live="polite"></div>
+        </div>
+
+        <div class="danger-note">
+          <strong>Recuerda:</strong> esta fórmula ayuda a entender la lógica de examen, pero en la vida real la prima puede incluir ajustes estatales, auditorías, cargos mínimos, descuentos, dividendos o recargos.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-07.jpg" alt="Alex Rivera explica la póliza de Workers Compensation al dueño del negocio mientras Víctor Sombra intenta venderla como un trámite." />
+        <figcaption>Alex diferencia una venta rápida de una asesoría real: explicar la red de protección reduce incertidumbre.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Laboratorio de diagnóstico: ¿qué parte de la póliza aplica?</h2>
+        <p>
+          Haz clic en cada situación. El objetivo es leer el caso y decidir si estás ante Parte Uno, Parte Dos, Parte Tres, prima o una trampa de declaración.
+        </p>
+
+        <div class="decision-lab">
+          <div class="decision-buttons" role="group" aria-label="Situaciones de Workers Compensation">
+            <button class="decision-btn active" data-case="partone">Empleado se lesiona en su estado habitual</button>
+            <button class="decision-btn" data-case="parttwo">Cónyuge demanda por pérdida de consorcio</button>
+            <button class="decision-btn" data-case="otherstates">Empleado viaja temporalmente a otro estado</button>
+            <button class="decision-btn" data-case="hidden">Operación conocida fue omitida</button>
+            <button class="decision-btn" data-case="emod">Negocio tiene E-Mod de 1.25</button>
+          </div>
+
+          <div class="decision-output" id="decisionOutput" aria-live="polite">
+            <h3>Empleado se lesiona en su estado habitual</h3>
+            <p>Si el accidente ocurre en el estado principal declarado, durante el curso del empleo, la respuesta inicial es Parte Uno: Workers’ Compensation. Paga beneficios estatutarios al empleado.</p>
+            <div class="pill-row">
+              <span class="pill">Parte Uno</span>
+              <span class="pill">Beneficios estatutarios</span>
+              <span class="pill">Exclusive remedy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Acordeón de conceptos que más confunden</h2>
+        <p>
+          Abre cada punto para reforzar la diferencia entre conceptos parecidos.
+        </p>
+
+        <div class="acc">
+          <article class="acc-item open">
+            <button class="acc-btn" type="button" aria-expanded="true">
+              <span>Parte Uno no tiene límite común de póliza</span>
+              <span class="symbol">−</span>
+            </button>
+            <div class="acc-panel">
+              <p>
+                La Parte Uno paga los beneficios exigidos por la ley estatal aplicable. No busques un límite de responsabilidad civil en dólares para restringir gastos médicos estatutarios.
+              </p>
+            </div>
+          </article>
+
+          <article class="acc-item">
+            <button class="acc-btn" type="button" aria-expanded="false">
+              <span>Parte Dos sí tiene límites</span>
+              <span class="symbol">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>
+                Employers Liability funciona como cobertura de responsabilidad civil para el empleador. Por eso sí tiene límites de póliza, como por accidente o por enfermedad.
+              </p>
+            </div>
+          </article>
+
+          <article class="acc-item">
+            <button class="acc-btn" type="button" aria-expanded="false">
+              <span>Item 3.C no arregla operaciones ocultas</span>
+              <span class="symbol">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>
+                Other States’ Insurance es para exposiciones incidentales o nuevas, no para operaciones que ya existían cuando se emitió la póliza y no fueron declaradas en Item 3.A.
+              </p>
+            </div>
+          </article>
+
+          <article class="acc-item">
+            <button class="acc-btn" type="button" aria-expanded="false">
+              <span>E-Mod menor a 1.00 no es malo</span>
+              <span class="symbol">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>
+                Un E-Mod menor a 1.00 normalmente representa crédito o descuento por experiencia de pérdidas mejor que el promedio. Mayor a 1.00 representa débito o recargo.
+              </p>
+            </div>
+          </article>
+
+          <article class="acc-item">
+            <button class="acc-btn" type="button" aria-expanded="false">
+              <span>La frecuencia pesa mucho</span>
+              <span class="symbol">+</span>
+            </button>
+            <div class="acc-panel">
+              <p>
+                En el cálculo del modificador de experiencia, la frecuencia de accidentes suele preocupar más que un evento aislado severo, porque revela problemas repetitivos de seguridad.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <figure class="wide-img">
+        <img src="assets/novainsurance-13.jpg" alt="Infografía de trampas de examen de Workers Compensation." />
+        <figcaption>Estas trampas aparecen porque el examen prueba diferencias finas, no solo definiciones generales.</figcaption>
+      </figure>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Simulador breve: ¿trámite o asesoría?</h2>
+        <p>
+          Caso: un dueño de negocio dice: “Solo quiero comprar lo mínimo. Tengo empleados en mi estado principal y a veces mando técnicos a otros estados. Además, mi historial de accidentes ha subido.”
+        </p>
+
+        <div class="scenario-box">
+          <h3>¿Qué respuesta representa mejor a Alex?</h3>
+
+          <div class="scenario-actions">
+            <button class="scenario-btn" data-scenario="victor">“No se preocupe, es solo un trámite obligatorio.”</button>
+            <button class="scenario-btn" data-scenario="partial">“Solo revisemos el precio más bajo.”</button>
+            <button class="scenario-btn" data-scenario="alex">“Revisemos estados declarados, E-Mod, nómina, clases y brechas.”</button>
+          </div>
+
+          <div class="scenario-result" id="scenarioResult" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-card">
+        <h2>Mini evaluación aplicada</h2>
+        <p>
+          Responde cada pregunta. El objetivo es distinguir estructura de póliza, beneficios, Other States, exclusive remedy y cálculo de prima.
+        </p>
+
+        <div class="quiz" id="quiz">
+          <article class="q-card" data-answer="b">
+            <div class="q-title">1. ¿Cuál afirmación describe correctamente la Parte Uno de Workers’ Compensation?</div>
+            <div class="options">
+              <button class="option" data-choice="a">Tiene siempre un límite máximo de $1,000,000 por accidente.</button>
+              <button class="option" data-choice="b">Paga los beneficios que exige la ley estatal aplicable, sin límite monetario común de póliza.</button>
+              <button class="option" data-choice="c">Solo defiende al empleador ante demandas de cónyuges.</button>
+              <button class="option" data-choice="d">Solo aplica a viajes fuera del estado.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: B.</strong> La Parte Uno es estatutaria y paga los beneficios exigidos por la ley del estado aplicable.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="a">
+            <div class="q-title">2. Una demanda de pérdida de consorcio presentada por el cónyuge de un empleado lesionado se analiza principalmente bajo:</div>
+            <div class="options">
+              <button class="option" data-choice="a">Parte Dos: Employers Liability.</button>
+              <button class="option" data-choice="b">Parte Tres: Other States’ Insurance.</button>
+              <button class="option" data-choice="c">Seguro de propiedad comercial.</button>
+              <button class="option" data-choice="d">Cobertura de robo.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: A.</strong> Loss of consortium es una reclamación clásica de Employers Liability.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="c">
+            <div class="q-title">3. Para que Other States’ Insurance aplique a una exposición incidental, el estado debe estar listado en:</div>
+            <div class="options">
+              <button class="option" data-choice="a">Coverage C.</button>
+              <button class="option" data-choice="b">La póliza personal del empleado.</button>
+              <button class="option" data-choice="c">Item 3.C.</button>
+              <button class="option" data-choice="d">El endoso de Garagekeepers.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: C.</strong> Item 3.C enumera otros estados donde puede existir exposición incidental o temporal, sujeto a condiciones.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="d">
+            <div class="q-title">4. ¿Qué ocurre si una operación permanente ya existía en otro estado al iniciar la póliza y no fue declarada en Item 3.A?</div>
+            <div class="options">
+              <button class="option" data-choice="a">Siempre queda cubierta por Item 3.C.</button>
+              <button class="option" data-choice="b">Se cubre automáticamente si el empleado era temporal.</button>
+              <button class="option" data-choice="c">La CGL paga los beneficios estatutarios.</button>
+              <button class="option" data-choice="d">Puede haber denegación porque la Parte Tres no cubre operaciones permanentes omitidas.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: D.</strong> Las operaciones conocidas deben declararse como principales. Item 3.C no es una solución para omisiones.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="b">
+            <div class="q-title">5. Un E-Mod de 0.85 normalmente indica:</div>
+            <div class="options">
+              <button class="option" data-choice="a">Un recargo del 85%.</button>
+              <button class="option" data-choice="b">Un crédito o reducción frente a la prima manual.</button>
+              <button class="option" data-choice="c">Que la empresa no necesita Workers’ Compensation.</button>
+              <button class="option" data-choice="d">Que la Parte Dos desaparece.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: B.</strong> Un E-Mod menor a 1.00 normalmente premia un historial de pérdidas mejor que el promedio.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="a">
+            <div class="q-title">6. ¿Cuál fórmula resume mejor la determinación básica de prima?</div>
+            <div class="options">
+              <button class="option" data-choice="a">Payroll ÷ 100 × Classification Rate × Experience Modifier.</button>
+              <button class="option" data-choice="b">Valor del edificio × deducible.</button>
+              <button class="option" data-choice="c">Número de empleados ÷ edad promedio.</button>
+              <button class="option" data-choice="d">Límite de CGL × coinsurance.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: A.</strong> La prima básica se entiende con nómina, tasa de clasificación y modificador de experiencia.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="c">
+            <div class="q-title">7. ¿Cuál de estos estados es monopolístico para Workers’ Compensation?</div>
+            <div class="options">
+              <button class="option" data-choice="a">Texas.</button>
+              <button class="option" data-choice="b">Florida.</button>
+              <button class="option" data-choice="c">Washington.</button>
+              <button class="option" data-choice="d">California.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: C.</strong> Los estados monopolísticos que debes recordar son Ohio, Washington, North Dakota y Wyoming.
+            </div>
+          </article>
+
+          <article class="q-card" data-answer="a">
+            <div class="q-title">8. ¿Qué frase resume mejor el rol profesional de Alex en esta lección?</div>
+            <div class="options">
+              <button class="option" data-choice="a">Presentar Workers’ Compensation como una red de protección, no como un trámite.</button>
+              <button class="option" data-choice="b">Reducir toda explicación al precio más bajo.</button>
+              <button class="option" data-choice="c">Evitar hablar de Other States porque complica la venta.</button>
+              <button class="option" data-choice="d">Decir que la CGL cubre cualquier lesión de empleado.</button>
+            </div>
+            <div class="feedback">
+              <strong>Respuesta correcta: A.</strong> Alex aprende a vender con criterio: explicar beneficios, obligaciones, condiciones, límites y brechas.
+            </div>
+          </article>
+        </div>
+
+        <div class="scorebox" aria-live="polite">
+          <strong>Índice de criterio profesional:</strong>
+          <span id="scoreText">0 de 8 respuestas completadas.</span>
+          <div class="progress" aria-label="Progreso de evaluación">
+            <div class="bar" id="scoreBar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="final-box">
+        <h2>Conclusión</h2>
+        <p>
+          Víctor intentó reducir el expediente a un trámite. Alex eligió verlo completo: beneficios del trabajador, defensa del patrón, estados declarados, historial de pérdidas, clasificación, nómina y estabilidad financiera.
+        </p>
+        <p class="gold">
+          En seguros, asesorar bien es convertir una obligación legal en una estrategia de protección para personas y negocios.
+        </p>
+      </div>
+    </section>
+
+
+
+
+
+    <section class="nova-podcast" id="novaPodcast">
+      <div class="nova-podcast__cover">
+        <span class="nova-podcast__label">PODCAST FINAL</span>
+        <strong>Cierre del expediente</strong>
+        <small>Repaso narrativo de la lección</small>
+      </div>
+      <div class="nova-podcast__body">
+        <h2>Escucha el cierre del expediente</h2>
+        <p>Usa este audio para reforzar los puntos clave antes de avanzar al siguiente tema.</p>
+        <div class="nova-podcast-frame-shell">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:14px;background:linear-gradient(135deg,#0b1220,#1c2a47);color:#eaf2ff;text-align:left;padding:16px 22px;font-family:system-ui,sans-serif"><div style="font-size:38px">🎧</div><div><strong style="font-size:15px;display:block">Aquí se escucha el podcast de repaso</strong><span style="font-size:13px;opacity:.85;line-height:1.45;display:block;max-width:52ch">Es del cliente y sus derechos se respetan — el de tu academia sonará igual de bien.</span></div></div>
+        </div>
+      </div>
+    </section>
+</main>
+  <script>
+    (function(){
+      var lastHeight = 0;
+      var lockedHeight = 0;
+      var bootUntil = Date.now() + 5200;
+      var bootSends = 0;
+      var bottomBuffer = 180;
+
+      function rootNode(){
+        return document.getElementById('lesson-root') || document.getElementById('lessonRoot') || document.getElementById('lesson') || document.querySelector('.lesson') || document.querySelector('.main-container') || document.body;
+      }
+
+      function getEmbedHeight(){
+        var root = rootNode();
+        if(!root) return lastHeight || 1;
+        var height = root.offsetHeight || 0;
+        var children = root.children || [];
+        for(var i = 0; i < children.length; i += 1){
+          var child = children[i];
+          var bottom = child.offsetTop + child.offsetHeight;
+          if(bottom > height) height = bottom;
+        }
+        return Math.max(1, Math.ceil(height + bottomBuffer));
+      }
+
+      function canGrow(userDriven){
+        bootSends += 1;
+        return Boolean(userDriven) || Date.now() < bootUntil || bootSends <= 16;
+      }
+
+      function sendEmbedSize(userDriven){
+        var height = getEmbedHeight();
+        if(!lockedHeight) lockedHeight = height;
+        var allowGrowth = canGrow(userDriven);
+        var nextHeight = height;
+        if(!allowGrowth && lastHeight && height > lastHeight) nextHeight = lastHeight;
+        if(!allowGrowth && lockedHeight && height > lockedHeight) nextHeight = lockedHeight;
+        if(allowGrowth && height > lockedHeight) lockedHeight = height;
+        if(height < lockedHeight - bottomBuffer){ lockedHeight = height; nextHeight = height; }
+        if(nextHeight === lastHeight) return;
+        lastHeight = nextHeight;
+        window.parent.postMessage({ type:'EPL_EMBED_SIZE', height:nextHeight }, '*');
+      }
+
+      function scheduleSize(userDriven){
+        var allowGrowth = userDriven !== false;
+        sendEmbedSize(allowGrowth);
+        window.setTimeout(function(){ sendEmbedSize(allowGrowth); }, 80);
+        window.setTimeout(function(){ sendEmbedSize(allowGrowth); }, 260);
+        window.setTimeout(function(){ sendEmbedSize(allowGrowth); }, 700);
+        window.setTimeout(function(){ sendEmbedSize(allowGrowth); }, 1400);
+      }
+
+      function show(el){ if(el){ el.classList.add('show'); el.style.display = 'block'; } }
+      function hide(el){ if(el){ el.classList.remove('show'); el.style.display = 'none'; } }
+      window.EPL_SEND_SIZE = function(){ sendEmbedSize(false); };
+      window.addEventListener('load', function(){ scheduleSize(false); });
+
+      document.querySelectorAll('img, iframe, video, audio').forEach(function(media){
+        if(media.tagName === 'IMG' && media.complete){ scheduleSize(false); }
+        media.addEventListener('load', function(){ scheduleSize(false); });
+        media.addEventListener('error', function(){ scheduleSize(false); });
+        media.addEventListener('loadedmetadata', function(){ scheduleSize(false); });
+        media.addEventListener('play', function(){ scheduleSize(true); });
+        media.addEventListener('pause', function(){ scheduleSize(true); });
+      });
+
+      document.querySelectorAll('details').forEach(function(detail){
+        detail.addEventListener('toggle', function(){ scheduleSize(true); });
+      });
+
+      document.querySelectorAll('.flip-card, .flash').forEach(function(card){
+        function flip(){
+          card.classList.toggle('is-flipped');
+          card.classList.toggle('flipped');
+          card.setAttribute('aria-pressed', (card.classList.contains('is-flipped') || card.classList.contains('flipped')) ? 'true' : 'false');
+          scheduleSize(true);
+        }
+        card.addEventListener('click', flip);
+        card.addEventListener('keydown', function(event){
+          if(event.key === 'Enter' || event.key === ' '){ event.preventDefault(); flip(); }
+        });
+      });
+
+      document.querySelectorAll('[data-reveal]').forEach(function(button){
+        button.addEventListener('click', function(){
+          var target = document.getElementById(button.getAttribute('data-reveal'));
+          if(!target) return;
+          target.classList.toggle('show');
+          target.style.display = target.classList.contains('show') ? 'block' : 'none';
+          button.setAttribute('aria-expanded', target.classList.contains('show') ? 'true' : 'false');
+          scheduleSize(true);
+        });
+      });
+
+      document.querySelectorAll('.acc-btn').forEach(function(button){
+        button.addEventListener('click', function(){
+          var item = button.closest('.acc-item');
+          if(!item) return;
+          var group = button.closest('.accordion') || button.closest('.acc');
+          var isOpen = item.classList.contains('open') || item.getAttribute('data-open') === 'true';
+          if(group){
+            group.querySelectorAll('.acc-item').forEach(function(acc){
+              acc.classList.remove('open');
+              acc.setAttribute('data-open','false');
+              var symbol = acc.querySelector('.symbol') || acc.querySelector('.acc-btn span');
+              var btn = acc.querySelector('.acc-btn');
+              if(btn) btn.setAttribute('aria-expanded','false');
+              if(symbol) symbol.textContent = '+';
+            });
+          }
+          if(!isOpen){
+            item.classList.add('open');
+            item.setAttribute('data-open','true');
+            button.setAttribute('aria-expanded','true');
+            var activeSymbol = item.querySelector('.symbol') || item.querySelector('.acc-btn span');
+            if(activeSymbol) activeSymbol.textContent = '-';
+          }
+          scheduleSize(true);
+        });
+      });
+
+      function activateButton(btn, selector){
+        document.querySelectorAll(selector).forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+      }
+      /* Datos interactivos originales restaurados */
+      var decisionData={
+              partone:{
+                title:'Empleado se lesiona en su estado habitual',
+                text:'Si el accidente ocurre en el estado principal declarado, durante el curso del empleo, la respuesta inicial es Parte Uno: Workers’ Compensation. Paga beneficios estatutarios al empleado.',
+                pills:['Parte Uno','Beneficios estatutarios','Exclusive remedy']
+              },
+              parttwo:{
+                title:'Cónyuge demanda por pérdida de consorcio',
+                text:'La lesión inicial del empleado puede estar cubierta por Parte Uno, pero la demanda del cónyuge es una reclamación civil especial. Se analiza bajo Parte Dos: Employers Liability, sujeta a límites.',
+                pills:['Parte Dos','Loss of consortium','Límites de póliza']
+              },
+              otherstates:{
+                title:'Empleado viaja temporalmente a otro estado',
+                text:'Si el viaje es incidental o temporal y el estado está en Item 3.C, puede activarse Other States’ Insurance, con obligación de notificar al asegurador conforme a la regla aplicable.',
+                pills:['Parte Tres','Item 3.C','30 días']
+              },
+              hidden:{
+                title:'Operación conocida fue omitida',
+                text:'Si el negocio ya tenía operaciones permanentes en otro estado al iniciar la póliza y no lo declaró en Item 3.A, la Parte Tres no debe usarse para corregir esa omisión. Puede haber brecha o denegación.',
+                pills:['Omisión','Item 3.A','Brecha de cobertura']
+              },
+              emod:{
+                title:'Negocio tiene E-Mod de 1.25',
+                text:'Un E-Mod mayor a 1.00 normalmente indica experiencia de pérdidas peor que el promedio y aumenta la prima. Es una señal para hablar de seguridad, prevención y costo futuro.',
+                pills:['E-Mod','Débito','Prima mayor']
+              }
+            };
+            var scenarioMessages={
+              victor:'Esa respuesta es peligrosa. Reduce una póliza compleja a papeleo y puede dejar sin revisar estados, límites, experiencia de pérdidas y obligaciones de notificación.',
+              partial:'El precio importa, pero no basta. Si solo se revisa la prima, pueden quedar brechas en Other States, errores de clasificación o un E-Mod mal entendido.',
+              alex:'Correcto. Alex actúa como asesor: revisa estructura de póliza, estados declarados, historial de pérdidas, clasificación laboral, nómina y posibles brechas.'
+            };
+
+      function renderOutput(out, title, text, pills){
+        if(!out) return;
+        var pillHtml = (pills || []).map(function(p){ return '<span class="pill">' + p + '</span>'; }).join('');
+        out.innerHTML = '<h3>' + title + '</h3><p>' + text + '</p>' + (pillHtml ? '<div class="pill-row">' + pillHtml + '</div>' : '');
+        show(out);
+      }
+
+      document.querySelectorAll('.risk-btn, .decision-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var selector = btn.classList.contains('risk-btn') ? '.risk-btn' : '.decision-btn';
+          activateButton(btn, selector);
+          var key = btn.getAttribute('data-risk') || btn.getAttribute('data-case') || btn.getAttribute('data-decision') || btn.textContent.trim();
+          var out = document.getElementById('riskOutput') || document.getElementById('decisionOutput') || document.querySelector('.decision-output') || document.querySelector('.risk-output');
+          var data = (typeof riskData !== 'undefined' && riskData[key]) ? riskData[key] : ((typeof decisionData !== 'undefined' && decisionData[key]) ? decisionData[key] : null);
+          if(data){ renderOutput(out, data.title || btn.textContent.trim(), data.text || '', data.pills || []); }
+          else { renderOutput(out, btn.textContent.trim(), 'Revisa este criterio dentro del contexto de la lección y compáralo con la póliza antes de prometer cobertura.', [key]); }
+          scheduleSize(true);
+        });
+      });
+
+      if(typeof scenarioMessages === 'undefined'){ var scenarioMessages = {
+        primary:'Correcto. Esta opción responde mejor al objetivo planteado.',
+        legal:'No es la mejor respuesta para este escenario; revisa si exige probar negligencia.',
+        excess:'Puede ayudar, pero normalmente funciona como exceso y no siempre cumple el objetivo principal.',
+        wc:'No es la mejor respuesta si deja fuera una brecha de Employers Liability.',
+        cgl:'Cuidado: la CGL estándar normalmente excluye lesiones a empleados derivadas del empleo.',
+        stopgap:'Correcto. Stop Gap Liability ayuda a cubrir la brecha de Employers Liability en estados monopolísticos.'
+      }; }
+
+      document.querySelectorAll('.scenario-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          activateButton(btn, '.scenario-btn');
+          var result = document.getElementById('scenarioResult') || btn.closest('section')?.querySelector('.result, .feedback');
+          var key = btn.getAttribute('data-scenario') || btn.getAttribute('data-case') || btn.textContent.trim();
+          if(result){ result.innerHTML = scenarioMessages[key] || 'Criterio registrado. Revisa propiedad, uso, disponibilidad, límites y exclusiones antes de confirmar cobertura.'; show(result); }
+          scheduleSize(true);
+        });
+      });
+
+      if(typeof scenarioExplanations === 'undefined'){ var scenarioExplanations = {
+        owned:'Es el vehículo declarado o tratado como propio. Normalmente es el riesgo tarifado y se analiza como cobertura primaria según las coberturas contratadas.',
+        temporary:'Temporary substitute exige que el auto cubierto esté fuera de servicio por avería, reparación, servicio, pérdida o destrucción.',
+        hired:'Hired auto apunta a vehículo alquilado, contratado o prestado para uso del negocio.',
+        review:'Debe revisarse como posible uso regular. Si está disponible habitualmente, puede no encajar como non-owned auto casual.',
+        'non-owned':'Non-owned auto requiere uso casual, permisivo y no regular.'
+      }; }
+
+      document.querySelectorAll('.scenario select').forEach(function(select){
+        select.addEventListener('change', function(){
+          var box = select.closest('.scenario');
+          if(!box) return;
+          var answer = box.getAttribute('data-answer');
+          var result = box.querySelector('.result');
+          if(!result) return;
+          if(!select.value){ box.classList.remove('done'); hide(result); result.textContent = ''; scheduleSize(true); return; }
+          if(select.value === answer){
+            result.innerHTML = '<strong>Bien clasificado.</strong> ' + (scenarioExplanations[answer] || 'La clasificación coincide con el expediente.');
+          }else{
+            result.innerHTML = '<strong>Revisa el criterio.</strong> La clasificación depende de propiedad, uso, disponibilidad y contexto personal o comercial.';
+          }
+          box.classList.add('done');
+          show(result);
+          scheduleSize(true);
+        });
+      });
+
+      function updateScore(container){
+        var root = container || document;
+        var cards = root.querySelectorAll('.q-card');
+        if(!cards.length) cards = document.querySelectorAll('.q-card');
+        var answered = 0;
+        var correct = 0;
+        cards.forEach(function(card){
+          if(card.getAttribute('data-answered') === 'true') answered += 1;
+          if(card.getAttribute('data-correct-answer') === 'true') correct += 1;
+        });
+        var scoreText = document.getElementById('scoreText');
+        var scoreBar = document.getElementById('scoreBar');
+        if(scoreText) scoreText.textContent = answered + ' de ' + cards.length + ' respuestas completadas. Correctas: ' + correct + '.';
+        if(scoreBar) scoreBar.style.width = cards.length ? ((answered / cards.length) * 100) + '%' : '0%';
+      }
+
+      document.querySelectorAll('.q-card, [data-question], .question, .q, .practice').forEach(function(question){
+        var answer = question.getAttribute('data-answer') || question.getAttribute('data-correct');
+        var feedback = question.querySelector('.feedback');
+        question.querySelectorAll('.option').forEach(function(option){
+          option.addEventListener('click', function(){
+            var choice = option.getAttribute('data-choice') || option.getAttribute('data-option') || option.value || option.textContent.trim();
+            var isCorrect = option.getAttribute('data-correct') === 'true' || (answer && choice === answer);
+            question.querySelectorAll('.option').forEach(function(btn){
+              btn.classList.remove('correct','incorrect','wrong');
+              if(answer && (btn.getAttribute('data-choice') || btn.getAttribute('data-option') || btn.value) === answer) btn.classList.add('correct');
+            });
+            option.classList.add(isCorrect ? 'correct' : 'incorrect');
+            question.setAttribute('data-answered','true');
+            question.setAttribute('data-correct-answer', isCorrect ? 'true' : 'false');
+            if(feedback){ show(feedback); feedback.classList.toggle('good', isCorrect); feedback.classList.toggle('bad', !isCorrect); }
+            updateScore(question.closest('section') || document);
+            scheduleSize(true);
+          });
+        });
+      });
+
+      document.querySelectorAll('.verify').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var question = btn.closest('.question, .practice, .q-card, .activity, [data-question]');
+          if(!question) return;
+          var selected = question.querySelector('input[type="radio"]:checked');
+          var answer = question.getAttribute('data-answer') || question.getAttribute('data-correct');
+          var feedback = question.querySelector('.feedback');
+          if(!feedback) return;
+          if(!selected){ feedback.textContent = 'Selecciona una opción antes de verificar.'; feedback.className = 'feedback show bad'; show(feedback); scheduleSize(true); return; }
+          var ok = selected.value === answer;
+          var radio = question.querySelector('input[type="radio"]');
+          var groupName = radio ? radio.name : '';
+          var copy = (typeof feedbackText !== 'undefined' && feedbackText[groupName]) ? feedbackText[groupName] : null;
+          feedback.className = 'feedback show ' + (ok ? 'good' : 'bad');
+          feedback.textContent = copy ? (ok ? copy.correct : copy.wrong) : (ok ? 'Correcto.' : 'No es correcto. Revisa el criterio.');
+          show(feedback);
+          scheduleSize(true);
+        });
+      });
+
+      document.addEventListener('click', function(){ window.setTimeout(function(){ scheduleSize(true); }, 60); }, true);
+      document.addEventListener('change', function(){ scheduleSize(true); }, true);
+      document.addEventListener('input', function(){ scheduleSize(true); }, true);
+      scheduleSize(false);
+      window.setTimeout(function(){ scheduleSize(false); }, 1000);
+      window.setTimeout(function(){ scheduleSize(false); }, 2500);
+      window.setTimeout(function(){ scheduleSize(false); }, 4800);
+    })();
+  </script>
+<script>
+(function(){
+  // Nova answer-state behavior repair: preserve existing handlers, then normalize answer states.
+  function paint(el, state){
+    if(!el || !el.style) return;
+    el.style.setProperty('transition', 'none', 'important');
+    if(state === 'correct'){
+      el.style.setProperty('background', 'rgba(98,211,155,.16)', 'important');
+      el.style.setProperty('border-color', 'rgba(98,211,155,.78)', 'important');
+      el.style.setProperty('color', '#eafff4', 'important');
+    }else if(state === 'wrong'){
+      el.style.setProperty('background', 'rgba(232,111,82,.16)', 'important');
+      el.style.setProperty('border-color', 'rgba(232,111,82,.82)', 'important');
+      el.style.setProperty('color', '#fff2ee', 'important');
+    }
+  }
+  function isAnswerControl(el){
+    return !!(el && el.matches && el.matches('.answer, .option, .q-options button, [data-correct], [data-ok]'));
+  }
+  function closestQuestion(el){
+    return el.closest('[data-question], .question, .q-card, .quiz-card, .quiz, .activity, .card') || el.parentElement;
+  }
+  function findFeedback(box){
+    if(!box) return null;
+    return box.querySelector('.feedback, .retro, .result, [data-feedback]');
+  }
+  function correctValue(el){
+    if(!el) return null;
+    if(el.dataset && Object.prototype.hasOwnProperty.call(el.dataset, 'correct')) return el.dataset.correct === 'true';
+    if(el.dataset && Object.prototype.hasOwnProperty.call(el.dataset, 'ok')) return el.dataset.ok === 'true';
+    if(el.classList.contains('correct')) return true;
+    if(el.classList.contains('incorrect') || el.classList.contains('wrong')) return false;
+    return null;
+  }
+  function paintKnownOptions(box, clicked, clickedCorrect){
+    if(!box) return;
+    const options = Array.from(box.querySelectorAll('.answer, .option, .q-options button, [data-correct], [data-ok]')).filter(isAnswerControl);
+    options.forEach(function(option, index){
+      let state = correctValue(option);
+      if(state === null && box.dataset && box.dataset.correct !== undefined){
+        const correctIndex = Number(box.dataset.correct);
+        if(Number.isFinite(correctIndex)) state = index === correctIndex;
+      }
+      if(state === true || option.classList.contains('correct')) paint(option, 'correct');
+      if(option === clicked && clickedCorrect === false) paint(option, 'wrong');
+      if(option.classList.contains('incorrect') || option.classList.contains('wrong')) paint(option, 'wrong');
+    });
+  }
+  function repairFeedback(box, clickedCorrect){
+    const feedback = findFeedback(box);
+    if(!feedback || clickedCorrect !== false) return;
+    const current = (feedback.textContent || '').trim();
+    if(!current || feedback.dataset.novaWrongPrefix === '1') return;
+    if(/^correcto/i.test(current) || /^correct/i.test(current)){
+      feedback.dataset.novaOriginalFeedback = current;
+      feedback.textContent = 'No es correcto. Revisa la opcion marcada en verde y compara la explicacion: ' + current;
+      feedback.dataset.novaWrongPrefix = '1';
+    }
+    feedback.classList.remove('good','yes');
+    feedback.classList.add('bad');
+  }
+  document.addEventListener('click', function(event){
+    const clicked = event.target && event.target.closest ? event.target.closest('.answer, .option, .q-options button, [data-correct], [data-ok]') : null;
+    if(!isAnswerControl(clicked)) return;
+    window.setTimeout(function(){
+      const box = closestQuestion(clicked);
+      const clickedCorrect = correctValue(clicked);
+      if(clickedCorrect === true){
+        paint(clicked, 'correct');
+        const feedback = findFeedback(box);
+        if(feedback){
+          feedback.classList.remove('bad','no');
+          if(feedback.dataset.novaOriginalFeedback){
+            feedback.textContent = feedback.dataset.novaOriginalFeedback;
+            delete feedback.dataset.novaOriginalFeedback;
+          }
+          delete feedback.dataset.novaWrongPrefix;
+          feedback.classList.add('good');
+        }
+      }else if(clickedCorrect === false){
+        clicked.classList.add(clicked.classList.contains('wrong') ? 'wrong' : 'incorrect');
+        paint(clicked, 'wrong');
+      }
+      paintKnownOptions(box, clicked, clickedCorrect);
+      repairFeedback(box, clickedCorrect);
+    }, 0);
+  }, true);
+})();
+</script>
+
+<script>
+(function(){
+  var root = document.getElementById('lesson') || document.getElementById('lesson-root') || document.querySelector('.lesson');
+  if(!root) return;
+
+  var btn = root.querySelector('#calcBtn');
+  var resetBtn = root.querySelector('#calcResetBtn');
+  var payrollInput = root.querySelector('#payroll');
+  var rateInput = root.querySelector('#rate');
+  var emodInput = root.querySelector('#emod');
+  var result = root.querySelector('#calcResult');
+
+  if(!btn || !payrollInput || !rateInput || !emodInput || !result) return;
+
+  function parseAmount(input){
+    var raw = String(input.value || '').replace(/,/g, '').trim();
+    if(raw === '') return NaN;
+    return Number(raw);
+  }
+
+  function money(value){
+    return value.toLocaleString('en-US', {
+      style:'currency',
+      currency:'USD',
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+  }
+
+  function number(value){
+    return value.toLocaleString('en-US', {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+  }
+
+  function resizeEmbed(){
+    if(typeof window.EPL_SEND_SIZE === 'function'){
+      window.EPL_SEND_SIZE();
+      window.setTimeout(window.EPL_SEND_SIZE, 80);
+      window.setTimeout(window.EPL_SEND_SIZE, 260);
+    }
+  }
+
+  function calculatePremium(){
+    var payroll = parseAmount(payrollInput);
+    var rate = parseAmount(rateInput);
+    var emod = parseAmount(emodInput);
+
+    result.classList.add('show');
+
+    if(!Number.isFinite(payroll) || !Number.isFinite(rate) || !Number.isFinite(emod)){
+      result.innerHTML = '<strong>Revisa los datos.</strong> Ingresa valores numéricos en Payroll, Classification Rate y Experience Modifier.';
+      resizeEmbed();
+      return;
+    }
+
+    if(payroll < 0 || rate < 0 || emod < 0){
+      result.innerHTML = '<strong>Revisa los datos.</strong> La nómina, la tasa y el E-Mod no deben ser negativos.';
+      resizeEmbed();
+      return;
+    }
+
+    var manualPremium = (payroll / 100) * rate;
+    var estimatedPremium = manualPremium * emod;
+
+    result.innerHTML =
+      '<strong>Prima estimada: ' + money(estimatedPremium) + '.</strong><br>' +
+      'Cálculo: ' + money(payroll) + ' ÷ 100 × ' + number(rate) + ' × ' + number(emod) + ' = ' + money(estimatedPremium) + '.<br>' +
+      'Prima manual antes del E-Mod: ' + money(manualPremium) + '.';
+
+    resizeEmbed();
+  }
+
+  function resetCalculator(){
+    payrollInput.value = payrollInput.getAttribute('value') || '500000';
+    rateInput.value = rateInput.getAttribute('value') || '3.50';
+    emodInput.value = emodInput.getAttribute('value') || '1.00';
+    result.innerHTML = '';
+    result.classList.remove('show');
+    resizeEmbed();
+  }
+
+  btn.addEventListener('click', calculatePremium);
+
+  if(resetBtn){
+    resetBtn.addEventListener('click', resetCalculator);
+  }
+
+  [payrollInput, rateInput, emodInput].forEach(function(input){
+    input.addEventListener('keydown', function(event){
+      if(event.key === 'Enter'){
+        event.preventDefault();
+        calculatePremium();
+      }
+    });
+  });
+})();
+</script>
+
+</div><!--lmsCaja--></div><!--lmsGrid-->
+</body>
+</html>

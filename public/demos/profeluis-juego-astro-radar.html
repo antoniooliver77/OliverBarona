@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astro-Radar de Historia Numérica - Profe Luis</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+
+        /* PALETA DE COLORES
+           Primario: #5EC3F4 | Secundario: #FFC94D | Terciario: #2D3A55
+           Acento: #E86F52 | Fondos: #FFFFFF, #F4F8FB */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
+        }
+
+        #game-container {
+            width: 100%;
+            max-width: 900px;
+            min-height: 500px;
+            background-color: #2D3A55;
+            border-radius: 16px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(45, 58, 85, 0.4);
+            border: 4px solid #1F1F1F;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* PANTALLAS */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: #F4F8FB;
+            z-index: 20;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .hidden { display: none !important; }
+
+        h1 {
+            color: #2D3A55;
+            font-size: clamp(1.5rem, 5vw, 2.2rem);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            line-height: 1.1;
+        }
+
+        /* INSTRUCCIONES RESPONSIVE */
+        .instructions-box {
+            background-color: #FFFFFF;
+            border: 3px dashed #5EC3F4;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            width: 100%;
+            max-width: 500px;
+            font-size: clamp(0.85rem, 3vw, 1rem);
+        }
+
+        .instructions-box ul {
+            text-align: left;
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            background-color: #5EC3F4;
+            color: #1F1F1F;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            font-weight: 900;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #2D3A55;
+            transition: all 0.1s;
+        }
+
+        .btn:active { transform: translateY(5px); box-shadow: none; }
+
+        /* JUEGO */
+        #game-ui {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: radial-gradient(circle at center, #2D3A55 0%, #171f2e 100%);
+            position: relative;
+        }
+
+        #hud {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: rgba(31, 31, 31, 0.9);
+            border-bottom: 3px solid #5EC3F4;
+            color: #FFF;
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .hud-item span { color: #FFC94D; font-weight: 900; }
+
+        #mission-panel {
+            margin: 15px auto;
+            width: 90%;
+            background-color: #F4F8FB;
+            border: 4px solid #FFC94D;
+            border-radius: 12px;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 0 15px rgba(255, 201, 77, 0.3);
+        }
+
+        #mission-text {
+            color: #2D3A55;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-weight: 700;
+        }
+
+        /* RADAR AREA */
+        #radar-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        svg#radar {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+        }
+
+        .main-line { stroke: #FFFFFF; stroke-width: 4; }
+        .tick-line { stroke: #5EC3F4; stroke-width: 3; }
+        .tick-line-sub { stroke: rgba(94, 195, 244, 0.4); stroke-width: 2; }
+        .tick-text { fill: #FFFFFF; font-size: 18px; font-weight: bold; text-anchor: middle; }
+        .tick-zero { fill: #FFC94D; font-size: 22px; }
+        .hitbox { fill: transparent; cursor: pointer; }
+        .hitbox:hover { fill: rgba(255, 201, 77, 0.1); }
+
+        /* TOAST FEEDBACK */
+        #feedback-toast {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            background: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 3px solid #E86F52;
+            font-weight: bold;
+            opacity: 0;
+            transition: 0.3s;
+            z-index: 100;
+            width: 80%;
+            text-align: center;
+        }
+
+        #feedback-toast.show { opacity: 1; transform: translate(-50%, 0); }
+        #feedback-toast.good { border-color: #5EC3F4; }
+
+        /* ANIMACIÓN SHAKE */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake { animation: shake 0.3s ease-in-out 2; }
+
+        @media (max-width: 600px) {
+            #game-container { min-height: 550px; }
+            #hud { font-size: 0.8rem; }
+            .tick-text { font-size: 22px; } /* Más grandes para ver en cel */
+        }
+    </style>
+<style id="lms-mini">
+  .lmsTop{position:sticky;top:0;z-index:900;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 16px;background:#0f1729;color:#f5f7fb;font-family:system-ui,sans-serif;box-shadow:0 2px 12px rgba(2,8,20,.35)}
+  .lmsTop .lmsMarca{font-weight:800;font-size:14px}
+  .lmsTop .lmsMarca span{opacity:.6;font-weight:500}
+  .lmsTop a.lmsDemo{font-size:10.5px;letter-spacing:.08em;background:#FF5C1F;color:#0f1729;padding:4px 9px;font-weight:800;text-decoration:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="lmsTop"><span class="lmsMarca">ELPROFELUIS.COM <span>· práctica del Tema 1</span></span><a class="lmsDemo" href="https://oliverbarona.com/portafolio" target="_blank" rel="noopener">DEMO · PORTAFOLIO</a></div>
+
+
+    <div id="game-container">
+        <div id="start-screen" class="screen">
+            <h1>EL RADAR NUMÉRICO</h1>
+            <div class="instructions-box">
+                <p><strong>¡Misión Espacial!</strong> Ubica los eventos en la recta numérica:</p>
+                <ul>
+                    <li><strong>Derecha (+):</strong> Ganancias, ovejas, calor.</li>
+                    <li><strong>Izquierda (-):</strong> Deudas, frío, pozos.</li>
+                    <li><strong>Medio:</strong> ¡Fracciones y pedazos!</li>
+                </ul>
+            </div>
+            <button class="btn" onclick="startGame()">¡DESPEGAR!</button>
+        </div>
+
+        <div id="game-ui" class="hidden">
+            <div id="hud">
+                <div class="hud-item">NIVEL: <span id="level-display">1</span></div>
+                <div class="hud-item">PUNTOS: <span id="score-display">0</span></div>
+                <div class="hud-item">ENERGÍA: <span id="lives-display">⚡⚡⚡</span></div>
+            </div>
+
+            <div id="mission-panel">
+                <div id="mission-text">Cargando coordenadas...</div>
+            </div>
+
+            <div id="radar-area">
+                <svg id="radar" viewBox="0 0 1000 200">
+                    <line class="main-line" x1="50" y1="100" x2="950" y2="100" />
+                    <polygon fill="white" points="950,90 970,100 950,110" />
+                    <polygon fill="white" points="50,90 30,100 50,110" />
+                    
+                    <g id="radar-ticks"></g>
+
+                    <g id="target-marker" style="opacity:0; transition: 0.4s;">
+                        <circle cx="0" cy="0" r="10" fill="#FFC94D" stroke="#2D3A55" stroke-width="2" />
+                        <path d="M-10,-15 L10,-15 L0,-5 Z" fill="#E86F52" />
+                    </g>
+                </svg>
+            </div>
+            <div id="feedback-toast">¡Mensaje!</div>
+        </div>
+
+        <div id="level-screen" class="screen hidden">
+            <h1 id="level-title">¡ÉXITO!</h1>
+            <p id="level-msg"></p>
+            <button class="btn" onclick="nextLevel()">CONTINUAR</button>
+        </div>
+
+        <div id="game-over-screen" class="screen hidden">
+            <h1 style="color:#E86F52">MISIÓN FALLIDA</h1>
+            <p>Tu energía llegó a cero. ¡Inténtalo de nuevo!</p>
+            <p>Puntaje: <span id="final-score">0</span></p>
+            <button class="btn" onclick="startGame()">REINTENTAR</button>
+        </div>
+    </div>
+
+    <script>
+        const config = { min: -5, max: 5, startX: 80, endX: 920, y: 100 };
+        const pixelsPerUnit = (config.endX - config.startX) / (config.max - config.min);
+
+        let state = { level: 1, score: 0, lives: 3, correctInRow: 0, target: 0 };
+
+        function buildRadar() {
+            const container = document.getElementById('radar-ticks');
+            container.innerHTML = '';
+            for (let v = config.min; v <= config.max; v += 0.5) {
+                const x = config.startX + (v - config.min) * pixelsPerUnit;
+                const isInt = Number.isInteger(v);
+                
+                // Línea visual
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", x); line.setAttribute("x2", x);
+                line.setAttribute("y1", config.y - (isInt ? 15 : 8));
+                line.setAttribute("y2", config.y + (isInt ? 15 : 8));
+                line.setAttribute("class", isInt ? "tick-line" : "tick-line-sub");
+                container.appendChild(line);
+
+                if (isInt) {
+                    const txt = document.createElementNS("http://www.w3.org/2000/svg", "text");
+                    txt.setAttribute("x", x); txt.setAttribute("y", config.y + 45);
+                    txt.setAttribute("class", v === 0 ? "tick-text tick-zero" : "tick-text");
+                    txt.textContent = v;
+                    container.appendChild(txt);
+                }
+
+                const hb = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+                hb.setAttribute("x", x - 20); hb.setAttribute("y", config.y - 40);
+                hb.setAttribute("width", 40); hb.setAttribute("height", 80);
+                hb.setAttribute("class", "hitbox");
+                hb.onclick = () => checkAnswer(v, x);
+                container.appendChild(hb);
+            }
+        }
+
+        function generateMission() {
+            let val;
+            let type = state.level === 1 ? 'pos' : (state.level === 2 ? (Math.random() > 0.5 ? 'pos' : 'neg') : 'mix');
+            if (type === 'mix') {
+                const r = Math.random();
+                type = r < 0.3 ? 'pos' : (r < 0.6 ? 'neg' : 'frac');
+            }
+
+            if (type === 'pos') {
+                val = Math.floor(Math.random() * 5) + 1;
+                const texts = [`¡Ganaste ${val} estrellas!`, `Avanza ${val} metros.`, `Tienes ${val} manzanas.`];
+                return { v: val, t: texts[Math.floor(Math.random() * texts.length)] };
+            } else if (type === 'neg') {
+                val = -(Math.floor(Math.random() * 5) + 1);
+                const texts = [`Debes ${Math.abs(val)} monedas.`, `Bajó la temperatura a ${val}°C.`, `Retrocede ${Math.abs(val)} pasos.`];
+                return { v: val, t: texts[Math.floor(Math.random() * texts.length)] };
+            } else {
+                let base = Math.floor(Math.random() * 4);
+                val = (Math.random() > 0.5 ? 1 : -1) * (base + 0.5);
+                return { v: val, t: `Ubica el punto ${val > 0 ? 'positivo' : 'negativo'} a la mitad de ${Math.floor(Math.abs(val))} y ${Math.ceil(Math.abs(val))}.` };
+            }
+        }
+
+        function checkAnswer(selected, x) {
+            const marker = document.getElementById('target-marker');
+            if (marker.style.opacity == "1") return;
+
+            if (selected === state.target) {
+                state.score += 100; state.correctInRow++;
+                marker.setAttribute("transform", `translate(${x}, ${config.y})`);
+                marker.style.opacity = "1";
+                showToast("¡EXCELENTE! Directo al blanco.", "good");
+                updateUI();
+                setTimeout(processProgression, 1500);
+            } else {
+                state.lives--; state.correctInRow = 0;
+                document.getElementById('mission-panel').classList.add('shake');
+                setTimeout(() => document.getElementById('mission-panel').classList.remove('shake'), 400);
+                showToast(selected > state.target ? "¡Te pasaste!" : "¡Te falta un poco!", "bad");
+                updateUI();
+                if (state.lives <= 0) showScreen('game-over-screen');
+            }
+        }
+
+        function processProgression() {
+            document.getElementById('target-marker').style.opacity = "0";
+            if (state.level === 1 && state.correctInRow >= 3) levelUp(2, "¡HOLA NEGATIVOS!", "Ahora el radar detecta deudas y frío a la izquierda.");
+            else if (state.level === 2 && state.correctInRow >= 3) levelUp(3, "MODO FRACCIONES", "¡Cuidado! Hay puntos entre los números enteros.");
+            else loadMission();
+        }
+
+        function levelUp(n, title, msg) {
+            state.level = n; state.correctInRow = 0;
+            document.getElementById('level-title').innerText = title;
+            document.getElementById('level-msg').innerText = msg;
+            showScreen('level-screen');
+        }
+
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById('game-ui').classList.add('hidden');
+            document.getElementById(id).classList.remove('hidden');
+            updateHeight();
+        }
+
+        function startGame() {
+            state = { level: 1, score: 0, lives: 3, correctInRow: 0, target: 0 };
+            buildRadar(); updateUI();
+            showScreen('game-ui'); loadMission();
+        }
+
+        function nextLevel() { showScreen('game-ui'); loadMission(); }
+
+        function loadMission() {
+            const m = generateMission();
+            state.target = m.v;
+            document.getElementById('mission-text').innerText = m.t;
+            updateHeight();
+        }
+
+        function updateUI() {
+            document.getElementById('level-display').innerText = state.level;
+            document.getElementById('score-display').innerText = state.score;
+            document.getElementById('lives-display').innerText = "⚡".repeat(state.lives);
+            document.getElementById('final-score').innerText = state.score;
+        }
+
+        function showToast(m, type) {
+            const t = document.getElementById('feedback-toast');
+            t.innerText = m; t.className = type === 'good' ? 'show good' : 'show';
+            setTimeout(() => t.classList.remove('show'), 2000);
+        }
+
+        function updateHeight() {
+            var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+            window.parent.postMessage({ type: 'EPL_EMBED_SIZE', height: h }, '*');
+        }
+        window.addEventListener('load', updateHeight);
+        window.addEventListener('resize', updateHeight);
+    </script>
+<script id="lmsIframeCheck">if(window.self!==window.top){var b=document.querySelector('.lmsTop');if(b)b.style.display='none';}</script>
+</body>
+</html>
